@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>     
+    <color name="black">#000000</color> 
+    <color name="white">#ffffff</color>
+    <color name="grey">#8B8B83</color>
+    <color name="orange">#FFA500</color>
+    <color name="blue">#1874CD</color>
+    <color name="red">#CC0000</color>
+    <color name="green">#018f38</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="pressed_seis">#CCd43639</color>
+</resources>

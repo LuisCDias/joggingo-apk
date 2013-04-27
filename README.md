@@ -1,4 +1,4 @@
 joggingo-apk
 ============
 
-Aplicação Android para o JogginGo1
+Aplicação Android para o JogginGo

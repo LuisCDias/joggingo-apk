@@ -1,0 +1,77 @@
+<resources>
+
+<style name="Theme.seis" parent="@style/Theme.Sherlock">
+        <item name="actionBarItemBackground">@drawable/selectable_background_seis</item>
+        <item name="popupMenuStyle">@style/seis_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/seis_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/seis_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/seis_DropDownNav</item>
+        <item name="actionBarStyle">@style/seis_solid_ActionBar</item>
+
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_seis</item>
+        <item name="android:popupMenuStyle">@style/seis_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/seis_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/seis_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/seis_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/seis_solid_ActionBar</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_seis</item>
+        
+        
+    </style>
+
+    <style name="seis_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_seis</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_seis</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_seis</item>
+        <item name="progressBarStyle">@style/seis_ProgressBar</item>
+
+        <item name="android:background">@drawable/ab_solid_seis</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_seis</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_seis</item>
+        <item name="android:progressBarStyle">@style/seis_ProgressBar</item>
+    </style>
+
+    <style name="seis_transparent_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_seis</item>
+        <item name="progressBarStyle">@style/seis_ProgressBar</item>
+        
+        <item name="android:background">@drawable/ab_transparent_seis</item>
+        <item name="android:progressBarStyle">@style/seis_ProgressBar</item>
+    </style>
+	
+    <style name="seis_PopupMenu" parent="@style/Widget.Sherlock.Light.ListPopupWindow">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_seis</item>	
+    </style>
+	
+    <style name="seis_DropDownListView" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_seis</item>
+    </style>
+
+    <style name="seis_ActionBarTabStyle" parent="@style/Widget.Sherlock.Light.ActionBar.TabView">
+        <item name="background">@drawable/tab_indicator_ab_seis</item>
+
+        <item name="android:background">@drawable/tab_indicator_ab_seis</item>
+    </style>
+	
+    <style name="seis_DropDownNav" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
+        <item name="background">@drawable/spinner_background_ab_seis</item>
+
+        <item name="android:background">@drawable/spinner_background_ab_seis</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_seis</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_seis</item>
+    </style>
+    
+    <style name="seis_ProgressBar" parent="@style/Widget.Sherlock.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_seis</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.seis.widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/seis_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/seis_DropDownListView</item>
+        
+        <item name="android:popupMenuStyle">@style/seis_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/seis_DropDownListView</item>
+    </style>
+  
+</resources>

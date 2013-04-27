@@ -1,0 +1,85 @@
+<resources>
+
+    <string name="app_name">Book Partner</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="login_title">Please Log In</string>
+    <string name="login_button">Sign in</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_register">Register</string>
+    <string name="login_forgot">Forgot Password</string>
+    <string name="register_name">Name</string>
+    <string name="register_hint_name">Enter your name</string>
+    <string name="register_country">Country</string>
+    <string name="register_hint_country">Enter your country</string>
+    <string name="register_email">E-mail</string>
+    <string name="register_hint_email">Enter your e-mail</string>
+    <string name="register_username">Username</string>
+    <string name="register_hint_username">Enter your username</string>
+    <string name="register_password">Password</string>
+    <string name="register_hint_password">Enter your password</string>
+    <string name="register_button">Sign up</string>
+    <string name="recover_button">Recover password</string>
+    <string name="recover_info">Enter your e-mail below to recover</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="username">User</string>
+    <string name="offerName">Offer</string>
+    <string name="design">Web Design</string>
+    <string name="webdev">Web Development</string>
+    <string name="mobile">Mobile Programming</string>
+    <string name="image">Image Editing</string>
+    <string name="sound">Sound Editing</string>
+    <string name="video">Video Editing</string>
+    <string name="database">Database Management</string>
+    <string name="allCats">All</string>
+    <string name="offerdescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet turpis id.</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_messages">MessagesActivity</string>
+    <string name="title_activity_users">UsersActivity</string>
+    <string name="title_activity_favorites">FavoritesActivity</string>
+    <string name="title_activity_results">ResultsActivity</string>
+    <string name="title_activity_browse">BrowseActivity</string>
+    <string name="title_activity_favourites_frament">FavouritesFrament</string>
+    <string name="title_activity_browse_fragment">BrowseFragment</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_message_pop_up">MessagePopUpActivity</string>
+    <string name="title_activity_message_panel">MessagePanelActivity</string>
+    <string name="title_activity_feed_back_panle">FeedBackPanleActivity</string>
+    <string name="search_activitty">search_activity</string>
+    <string name="search_something">Type keywords</string>
+    <string name="select_category">Select Category:</string>
+    <string name="select_rating">Minimum Rating:</string>
+    <string name="select_user">User Name:</string>
+    <string name="select_offer">Offer Name:</string>
+    <string name="title_activity_recover">RecoverActivity</string>
+
+    <string-array name="ratings_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string name="title_activity_lauch">LauchActivity</string>
+    <string name="title_activity_try_again">TryAgainActivity</string>
+    <string name="try_again">Try Again</string>
+    <string name="title_activity_wishlist_results">WishlistResultsActivity</string>
+    <string name="title_activity_browse_users">BrowseUsersActivity</string>
+    <string name="from">Start Date</string>
+    <string name="to">Delivery Date</string>
+    <string name="initial_date">Click to set initial date</string>
+    <string name="new_contract">Propose a Date</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="final_date">Click to set end date</string>
+    <string name="confirmation">Are You Sure?</string>
+    <string name="title_activity_edit_name_pop_up">EditNamePopUpActivity</string>
+    <string name="title_activity_edit_mail_pop_up">EditMailPopUpActivity</string>
+    <string name="title_activity_edit_password_pop_up">EditPasswordPopUpActivity</string>
+    <string name="title_activity_edit_avatar_pop_up">EditAvatarPopUpActivity</string>
+    <string name="title_activity_compose_message_pop_up">ComposeMessagePopUpActivity</string>
+
+</resources>

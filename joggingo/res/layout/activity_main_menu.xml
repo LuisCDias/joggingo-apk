@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/layoutstyle"
+    android:clickable="true"
+    android:onClick="getLoggedUser" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/userNamelayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/grey"
+            android:clickable="true"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/userNameOnMainMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/layoutstyle2"
+                android:gravity="right|center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/iconListLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userNamelayout"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" 
+            android:visibility="gone">
+			
+            
+            <ImageButton
+                android:id="@+id/mySix"
+                android:layout_width="115dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.33"
+                android:gravity="right"
+                android:onClick="openMySix"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageButton
+                android:id="@+id/sellService"
+                android:layout_width="115dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.33"
+                android:gravity="left"
+                android:onClick="sellOffer"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageButton
+                android:id="@+id/goWeb"
+                android:layout_width="115dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.33"
+                android:gravity="left"
+                android:onClick="goWeb"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mysixlayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/iconListLayout"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layoutstyle"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="openMySix"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/mysixImg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/default_offer" />
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/mysixText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="My Six"
+                    android:textSize="18dp" />
+			                  
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient0"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/mysixlayout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gradient" >
+        </View>
+        
+        
+        <LinearLayout
+            android:id="@+id/messageslayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/gradient0"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layoutstyle"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="getMessages"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/messagesImg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/message_cinza" />
+
+            <!--
+            <TextView  
+            android:id="@+id/messagesText"
+            android:layout_width="0dip" 
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:layout_weight="1"             
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginRight="5dp"
+        	android:layout_marginTop="5dp"
+        	android:textSize="18dp"
+            android:text="Messages"
+            /> 
+            -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/messagesText"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Messages"
+                    android:textSize="18dp" />
+			                  
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient1"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/messageslayout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gradient" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/favouriteslayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/gradient1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layoutstyle"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="getFavorites"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/favouritesImg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/favorites_cinza" />
+
+            <TextView
+                android:id="@+id/favouriteText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="Favorites"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient2"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/favouriteslayout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gradient" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/browselayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/gradient2"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layoutstyle"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="getCategories"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/browseImg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/categories_cinza" />
+
+            <TextView
+                android:id="@+id/browseText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="Browse Categories"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient3"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/browselayout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gradient" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/savedSearcheslayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/gradient3"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layoutstyle"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:onClick="getAdvancedSearch"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/savedSearchesImg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/search_cinza" />
+
+            <TextView
+                android:id="@+id/savedSearchText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="Advanced Search"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient4"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/savedSearcheslayout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/gradient" >
+        </View>
+
+        <LinearLayout
+            android:id="@+id/settingslayout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/gradient4"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/layoutstyle"
+            android:clickable="true"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/settingsImg"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left|center_vertical"
+                android:src="@drawable/settings_cinza" />
+
+            <TextView
+                android:id="@+id/settingsText"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:text="Settings"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

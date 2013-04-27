@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layoutstyle" 
+     >
+    
+    <LinearLayout
+        android:id="@+id/allcatsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/layoutstyle"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        
+        
+          <TextView  
+            android:id="@+id/catText"
+            android:layout_width="0dip" 
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:layout_weight="1"             
+        	android:layout_marginLeft="5dp"
+        	android:layout_marginRight="5dp"
+        	android:layout_marginTop="5dp"
+        	android:textSize="18dp"
+            />        
+
+    </LinearLayout>
+    
+    <View
+        android:id="@+id/gradient"
+        android:layout_width="wrap_content"
+        android:background="@drawable/gradient"
+        android:layout_below="@id/allcatsLayout"                 
+       	android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="1dp"></View>
+
+    
+    <!--<View
+        android:id="@+id/gradient7"
+        android:layout_width="wrap_content"
+        android:background="@drawable/gradient"
+        android:layout_below="@id/databaseLayout"                 
+       	android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="1dp"></View>-->
+    
+    
+</RelativeLayout>
+
+
+    
