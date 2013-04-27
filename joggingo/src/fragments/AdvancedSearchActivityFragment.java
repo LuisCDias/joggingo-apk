@@ -27,9 +27,9 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 
-import fe.up.pt.partner.MultiSearchableActivity;
-import fe.up.pt.partner.JoggingoAPI;
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.JoggingoAPI;
+import fe.up.pt.joggingo.MultiSearchableActivity;
+import fe.up.pt.joggingo.R;
 
 
 

@@ -32,8 +32,8 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import fe.up.pt.partner.MainActivity;
-import fe.up.pt.partner.JoggingoAPI;
+import fe.up.pt.joggingo.JoggingoAPI;
+import fe.up.pt.joggingo.MainActivity;
 /**
  * Execute the OAuthRequestTokenTask to retrieve the request, and authorize the
  * request. After the request is authorized by the user, the callback URL will

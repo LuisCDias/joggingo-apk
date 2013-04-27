@@ -1,4 +1,4 @@
-package fe.up.pt.partner;
+package fe.up.pt.joggingo;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -12,7 +12,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 import fragments.ResultsFragment;
 
 public class ResultsActivity extends SherlockFragmentActivity {

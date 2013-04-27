@@ -1,4 +1,4 @@
-package fe.up.pt.partner;
+package fe.up.pt.joggingo;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,7 +14,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 import fragments.OffersPanelActivityFragment;
 
 public class OffersPanelActivity extends SherlockFragmentActivity implements TabListener {

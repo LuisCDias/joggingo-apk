@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 
 public class OffersAdapter extends BaseAdapter {
     

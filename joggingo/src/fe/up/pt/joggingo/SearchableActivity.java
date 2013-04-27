@@ -1,4 +1,4 @@
-package fe.up.pt.partner;
+package fe.up.pt.joggingo;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 import fragments.SearchableActivityFragment;
 
 public class SearchableActivity extends SherlockFragmentActivity {

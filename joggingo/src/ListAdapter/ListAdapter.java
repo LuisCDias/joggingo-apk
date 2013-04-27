@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import fe.up.pt.partner.JoggingoAPI;
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.JoggingoAPI;
+import fe.up.pt.joggingo.R;
 
 public class ListAdapter extends BaseAdapter {
     

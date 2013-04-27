@@ -15,7 +15,7 @@ import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,5 +1,5 @@
 # cache for current jar dependecy. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1356709439140 271754 53307dc2bd2b69fd5533458ee11885f55807de4b C:\Users\Luis\Documents\FEUP\4 Ano\LDSO\seis_android\seis\libs\android-support-v4.jar
-1356709437299 271754 53307dc2bd2b69fd5533458ee11885f55807de4b C:\Users\Luis\Documents\FEUP\4 Ano\LDSO\seis_android\library\libs\android-support-v4.jar
+1367075665000 271754 53307dc2bd2b69fd5533458ee11885f55807de4b /home/luis/workspace/joggingo-apk/library/libs/android-support-v4.jar
+1367075665000 271754 53307dc2bd2b69fd5533458ee11885f55807de4b /home/luis/workspace/joggingo-apk/joggingo/libs/android-support-v4.jar

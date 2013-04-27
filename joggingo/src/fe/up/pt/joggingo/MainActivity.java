@@ -1,4 +1,4 @@
-package fe.up.pt.partner;
+package fe.up.pt.joggingo;
 
 import oauth2.OAuthAccessTokenActivity;
 import android.app.SearchManager;
@@ -23,7 +23,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 import fragments.MainFragment;
 import fragments.MainFragment_Results;
 

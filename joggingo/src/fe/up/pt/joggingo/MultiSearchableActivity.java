@@ -1,4 +1,4 @@
-package fe.up.pt.partner;
+package fe.up.pt.joggingo;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.R;
 import fragments.SearchableActivityFragment;
 
 public class MultiSearchableActivity extends SherlockFragmentActivity {

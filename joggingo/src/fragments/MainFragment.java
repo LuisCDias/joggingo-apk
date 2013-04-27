@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import fe.up.pt.partner.JoggingoAPI;
-import fe.up.pt.partner.R;
+import fe.up.pt.joggingo.JoggingoAPI;
+import fe.up.pt.joggingo.R;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
