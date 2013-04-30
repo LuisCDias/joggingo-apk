@@ -25,9 +25,7 @@ public class MultiSearchableActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
-		
-		setTheme(R.style.Theme_seis);   
+  
 		super.onCreate(savedInstanceState);
 		act = this;
 

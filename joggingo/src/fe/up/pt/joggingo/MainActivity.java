@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera.Size;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,13 +45,28 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		setTheme(R.style.Theme_seis);
 		super.onCreate(savedInstanceState);
 		
 		Bundle b = new Bundle();
 		
-		b.putString("book", "Book");
-		b.putString("partner", "Partner");
+		String tab_title = "GPS ";
+		
+		GPSTracker gps = new GPSTracker(this);
+		if(gps.canGetLocation()){
+			
+			double latitude = gps.getLatitude(); // returns latitude
+			double longitude = gps.getLongitude(); // returns longitude
+			Toast.makeText(getApplicationContext(), 
+							"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
+							Toast.LENGTH_LONG).show();
+			b.putDouble("latitude", latitude);
+			b.putDouble("longitude", longitude);
+			tab_title+="enabled";
+		}
+		else{
+			gps.showSettingsAlert();
+			tab_title+="disabled";
+		}
 		
 
 		mViewPager = new ViewPager(this);
@@ -66,7 +83,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
 		/*mTabsAdapter.addTab(mActionBar.newTab().setText("Hot Offers"),
 				MainFragment_Results.MainFragment_Results_Aux.class, b);*/
-		mTabsAdapter.addTab(mActionBar.newTab().setText("Home"),
+		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
 
 

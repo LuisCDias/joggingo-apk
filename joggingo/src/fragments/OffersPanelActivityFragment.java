@@ -35,8 +35,6 @@ public class OffersPanelActivityFragment extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-
-		setTheme(R.style.Theme_seis); // Used for theme switching in samples
 		super.onCreate(savedInstanceState);
 		// Create the list fragment and add it as our sole content.
 		if (getSupportFragmentManager().findFragmentById(android.R.id.content) == null) {

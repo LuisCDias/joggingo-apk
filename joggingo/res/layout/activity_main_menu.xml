@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -13,10 +14,8 @@
         <LinearLayout
             android:id="@+id/userNamelayout"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="center_vertical"
-            android:background="@color/grey"
-            android:clickable="true"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
 
@@ -30,62 +29,18 @@
                 android:gravity="right|center_vertical" />
         </LinearLayout>
 
+
+
         <LinearLayout
-            android:id="@+id/iconListLayout"
+            android:id="@+id/mysixlayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/userNamelayout"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" 
-            android:visibility="gone">
-			
-            
-            <ImageButton
-                android:id="@+id/mySix"
-                android:layout_width="115dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.33"
-                android:gravity="right"
-                android:onClick="openMySix"
-                android:src="@drawable/ic_launcher" />
-
-            <ImageButton
-                android:id="@+id/sellService"
-                android:layout_width="115dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.33"
-                android:gravity="left"
-                android:onClick="sellOffer"
-                android:src="@drawable/ic_launcher" />
-
-            <ImageButton
-                android:id="@+id/goWeb"
-                android:layout_width="115dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.33"
-                android:gravity="left"
-                android:onClick="goWeb"
-                android:src="@drawable/ic_launcher" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mysixlayout"
-            android:layout_width="fill_parent"
-            android:layout_height="70dp"
-            android:layout_below="@id/iconListLayout"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:background="@drawable/layoutstyle"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:onClick="openMySix"
+            android:gravity="right|center_vertical"
             android:orientation="horizontal" >
 
             <ImageView
@@ -115,12 +70,11 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="My Six"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
 			                  
             </LinearLayout>
         </LinearLayout>
-
+ 
         <View
             android:id="@+id/gradient0"
             android:layout_width="wrap_content"
@@ -131,6 +85,21 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/gradient" >
         </View>
+        
+        <LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:orientation="vertical" 
+			android:layout_below="@id/gradient0"
+			>
+		    <!-- This FrameLayout will be the PlaceHolder of the Fragments. -->
+		    <FrameLayout android:id="@+id/fragment_container"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent" />
+		
+		</LinearLayout>
+   
+<!--       
         
         
         <LinearLayout
@@ -156,20 +125,7 @@
                 android:gravity="left|center_vertical"
                 android:src="@drawable/message_cinza" />
 
-            <!--
-            <TextView  
-            android:id="@+id/messagesText"
-            android:layout_width="0dip" 
-            android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:layout_weight="1"             
-        	android:layout_marginLeft="5dp"
-        	android:layout_marginRight="5dp"
-        	android:layout_marginTop="5dp"
-        	android:textSize="18dp"
-            android:text="Messages"
-            /> 
-            -->
+           
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -381,7 +337,10 @@
                 android:gravity="left|center_vertical"
                 android:text="Settings"
                 android:textSize="18dp" />
+                
+                 
         </LinearLayout>
+-->
     </RelativeLayout>
 
 </ScrollView>

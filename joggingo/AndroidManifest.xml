@@ -4,17 +4,32 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.Sherlock" >
+        
+         <uses-library android:name="com.google.android.maps"/> 
+        
+        <activity
+			android:name=".MapswithfragmentsActivity"
+			android:label="@string/app_name" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		
         <activity
             android:name="fe.up.pt.joggingo.MainActivity"
             android:configChanges="orientation"
@@ -105,6 +120,8 @@
                                 <data android:scheme="http" android:host="localhost"  />
                         </intent-filter>
                 </activity>
+                
+        
     </application>
 
 </manifest>

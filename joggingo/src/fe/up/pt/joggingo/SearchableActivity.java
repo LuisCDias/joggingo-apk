@@ -23,12 +23,8 @@ public class SearchableActivity extends SherlockFragmentActivity {
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.Theme_seis);   
+	public void onCreate(Bundle savedInstanceState) {  
 		super.onCreate(savedInstanceState);
-
-
-
 
 		mViewPager = new ViewPager(this);
 		mViewPager.setId(R.id.pager);

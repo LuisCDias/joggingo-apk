@@ -34,7 +34,6 @@ public class ResultsActivity extends SherlockFragmentActivity {
 			title = extras.getString("title");
 		}
 		useMode = extras.getString(JoggingoAPI.Strings.USE_MODE_BUNDLE);
-		setTheme(R.style.Theme_seis);
 		super.onCreate(savedInstanceState);
 
 		mViewPager = new ViewPager(this);

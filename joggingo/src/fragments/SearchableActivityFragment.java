@@ -32,7 +32,6 @@ public class SearchableActivityFragment extends SherlockFragmentActivity {
 	private static int adapterFlag  = 0; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.Theme_seis); //Used for theme switching in samples
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_browse);
 

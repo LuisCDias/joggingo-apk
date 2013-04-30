@@ -20,7 +20,6 @@ public class MainFragment extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.Theme_seis); //Used for theme switching in samples
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 
@@ -37,14 +36,13 @@ public class MainFragment extends SherlockFragmentActivity {
 			Bundle b= super.getArguments();
 			//get values from bundles
 
-			String book= b.getString("book");
-
-			String partner = b.getString("partner");
+			double latitude = b.getDouble("latitude");
+			double longitude = b.getDouble("longitude");
 
 			View v = inflater.inflate(R.layout.activity_main_menu, container, false);
 
-			TextView userNameTextView = (TextView) v.findViewById(R.id.userNameOnMainMenu);
-			userNameTextView.setText(book+"-"+partner);
+			TextView coordenadas_text = (TextView) v.findViewById(R.id.mysixText);
+			coordenadas_text.setText(String.valueOf(latitude) + ", "+ String.valueOf(longitude));
 
 			return v;
 		}
