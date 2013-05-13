@@ -158,18 +158,11 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		startActivity(browserIntent);
 	}
 
-	public void openOfferPage(View v){
-		Intent intent = new Intent(MainActivity.this, OffersPanelActivity.class);
-		startActivity(intent);
-	}
-
 	
 	//--------------------------------------------------------------------------------------
 	public void getAdvancedSearch(View v){
 
-		Intent intent = new Intent(MainActivity.this, AdvancedSearchActivity.class);
-		intent.putExtra(JoggingoAPI.Strings.USE_MODE_BUNDLE, useMode);
-		startActivity(intent);  
+		
 	}
 
 

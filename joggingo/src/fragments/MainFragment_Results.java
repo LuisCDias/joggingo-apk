@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fe.up.pt.joggingo.JoggingoAPI;
-import fe.up.pt.joggingo.OffersPanelActivity;
 import fe.up.pt.joggingo.R;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -134,7 +133,7 @@ public class MainFragment_Results extends SherlockFragmentActivity {
 			String id_offer = ids.get(position);
 			String title_offer = titles.get(position);
 			String owner_offer = owners.get(position);
-			Intent intent = new Intent(this.getSherlockActivity(), OffersPanelActivity.class );
+			/*Intent intent = new Intent(this.getSherlockActivity(), OffersPanelActivity.class );
 
 			intent.putExtra("id", id_offer);
 			intent.putExtra("title", title_offer);
@@ -143,7 +142,7 @@ public class MainFragment_Results extends SherlockFragmentActivity {
 			intent.putExtra(JoggingoAPI.Strings.USE_MODE_BUNDLE, useMode);
 			
 
-			startActivity(intent);
+			startActivity(intent);*/
 
 
 		}

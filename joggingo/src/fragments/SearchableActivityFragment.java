@@ -20,7 +20,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import fe.up.pt.joggingo.JoggingoAPI;
-import fe.up.pt.joggingo.OffersPanelActivity;
 import fe.up.pt.joggingo.R;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -251,13 +250,13 @@ public class SearchableActivityFragment extends SherlockFragmentActivity {
 			
 			
 
-			Intent intent = new Intent(this.getSherlockActivity(), OffersPanelActivity.class );
+			/*Intent intent = new Intent(this.getSherlockActivity(), OffersPanelActivity.class );
 			intent.putExtra("id", id_offer);
 			intent.putExtra("title", title_offer);
 			intent.putExtra("owner", owner_offer);
 			intent.putExtra("adapterFlag", adapterFlag);
 			intent.putExtra(JoggingoAPI.Strings.USE_MODE_BUNDLE, useMode);
-			startActivity(intent);
+			startActivity(intent);*/
 
 		}
 
