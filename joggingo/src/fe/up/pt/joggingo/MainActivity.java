@@ -11,11 +11,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +45,13 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	String title;
 	Bundle extras;
 	GPSTracker gps = null;
+	private Handler handler = new Handler();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
 		
 		Bundle b = new Bundle();
 		
@@ -63,6 +67,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			Toast.makeText(getApplicationContext(), 
 							"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
 							Toast.LENGTH_LONG).show();
+			
 			b.putDouble("latitude", latitude);
 			b.putDouble("longitude", longitude);
 			tab_title+="enabled";
@@ -89,8 +94,49 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				MainFragment_Results.MainFragment_Results_Aux.class, b);*/
 		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
+		
+		
+		
+		setContentView(R.layout.activity_main_menu);
 
+        final Button begin = (Button) findViewById(R.id.button_begin);
+        begin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	
+            	handler.postDelayed(runnable, 100);
+		
+            }
+        });
+        
+        
+        final Button end = (Button) findViewById(R.id.button_stop);
+        end.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	handler.removeCallbacks(runnable);
+            }
+            });
 	}	
+	
+	private Runnable runnable = new Runnable() {
+		   @Override
+		   public void run() {
+		      /* do what you need to do */
+			   gps = new GPSTracker(MainActivity.this);
+				if(gps.canGetLocation()){
+					
+					double latitude = gps.getLatitude(); // returns latitude
+					double longitude = gps.getLongitude(); // returns longitude
+//					Toast.makeText(getApplicationContext(), 
+//									"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
+//									Toast.LENGTH_LONG).show();
+					TextView coordenadas_text = (TextView) findViewById(R.id.mysixText);
+					coordenadas_text.setText(latitude + ", "+longitude);
+				}
+		      /* and here comes the "trick" */
+		      handler.postDelayed(this, 100);
+		   }
+		};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,8 +159,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				Toast.makeText(getApplicationContext(), 
 								"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
 								Toast.LENGTH_LONG).show();
-				TextView coordenadas_text = (TextView) findViewById(R.id.mysixText);
-				coordenadas_text.setText(latitude + ", "+longitude);
+//				TextView coordenadas_text = (TextView) findViewById(R.id.mysixText);
+//				coordenadas_text.setText(latitude + ", "+longitude);
 			}
 			return false;
 		
