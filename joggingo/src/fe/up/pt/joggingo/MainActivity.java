@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -41,7 +42,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	String userName;
 	String title;
 	Bundle extras;
-
+	GPSTracker gps = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,7 +53,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		
 		String tab_title = "GPS ";
 		
-		GPSTracker gps = new GPSTracker(this);
+		gps = new GPSTracker(this);
+		
+	
 		if(gps.canGetLocation()){
 			
 			double latitude = gps.getLatitude(); // returns latitude
@@ -86,7 +90,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
 
-
 	}	
 
 	@Override
@@ -102,8 +105,19 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// TODO handle clicking the app icon/logo
+			gps = new GPSTracker(this);
+			if(gps.canGetLocation()){
+				
+				double latitude = gps.getLatitude(); // returns latitude
+				double longitude = gps.getLongitude(); // returns longitude
+				Toast.makeText(getApplicationContext(), 
+								"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
+								Toast.LENGTH_LONG).show();
+				TextView coordenadas_text = (TextView) findViewById(R.id.mysixText);
+				coordenadas_text.setText(latitude + ", "+longitude);
+			}
 			return false;
+		
 		case R.id.menu_search:
 			//startSearch(title, false,null,false);
 			onSearchRequested();
