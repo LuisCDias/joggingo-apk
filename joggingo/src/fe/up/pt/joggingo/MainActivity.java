@@ -147,8 +147,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				//									Toast.LENGTH_LONG).show();
 				TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
 				coordenadas_text.setText(latitude + ", "+longitude);
-				//Log.d("latitude: ", latitude+"");
-				//Log.d("longitude: ", longitude+"");
+
 			}
 			/* and here comes the "trick" */
 			handler.postDelayed(this, 1000);
