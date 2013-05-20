@@ -51,12 +51,12 @@ public class ListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
-            vi = inflater.inflate(R.layout.user_offers, null);
+            vi = inflater.inflate(R.layout.user_tracks, null);
      
        // TextView text=(TextView)vi.findViewById(R.id.user_offerText);
-        ImageView image=(ImageView)vi.findViewById(R.id.user_offerImg);
-        TextView title = (TextView)vi.findViewById(R.id.user_offerTitle);
-        TextView owner = (TextView)vi.findViewById(R.id.user_offerOwner);
+        ImageView image=(ImageView)vi.findViewById(R.id.useLogo);
+        TextView title = (TextView)vi.findViewById(R.id.userNamelayout);
+        TextView owner = (TextView)vi.findViewById(R.id.userNameOnMainMenu);
         if(flag != 1)
         	 owner.setText(owners.get(position));
         

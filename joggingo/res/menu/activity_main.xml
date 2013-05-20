@@ -4,11 +4,6 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
     
-    <item android:id="@+id/menu_search" android:showAsAction="ifRoom"
-                android:icon="@android:drawable/ic_menu_search"
-                android:title="Search"
-                android:actionViewClass="android.widget.SearchView"/>
-    
     <item android:id="@+id/menu_LogIn" android:showAsAction="never|withText"
                 android:title="Log In"/>
 </menu>

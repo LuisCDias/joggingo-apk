@@ -38,9 +38,9 @@ public class ImageLoader {
     public void DisplayImage(String url, ImageView imageView, String stub_type)
     {
     	if(stub_type.equals("offer")) 
-    		stub_id = R.drawable.default_offer;
+    		stub_id = R.drawable.ic_launcher;
     	else if(stub_type.equals("user")) 
-    		stub_id = R.drawable.default_user;
+    		stub_id = R.drawable.ic_launcher;
         imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null)
