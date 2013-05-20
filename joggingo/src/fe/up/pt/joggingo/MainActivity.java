@@ -114,7 +114,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				map.setVisibility(View.GONE);
 				main_text.setText("Go!");
 				//map.setEnabled(false);
-				handler.postDelayed(runnable, 100);
+				handler.postDelayed(runnable, 1000);
 
 			}
 		});
@@ -147,9 +147,11 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				//									Toast.LENGTH_LONG).show();
 				TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
 				coordenadas_text.setText(latitude + ", "+longitude);
+				//Log.d("latitude: ", latitude+"");
+				//Log.d("longitude: ", longitude+"");
 			}
 			/* and here comes the "trick" */
-			handler.postDelayed(this, 100);
+			handler.postDelayed(this, 1000);
 		}
 	};
 

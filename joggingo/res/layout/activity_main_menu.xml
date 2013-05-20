@@ -109,7 +109,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:visibility="gone"
-            android:text="COORDINATES PLACEHOLDER"
+            android:text="Getting coordinates..."
             android:textSize="18sp" />
         
         <View
