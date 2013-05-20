@@ -1,5 +1,7 @@
 package fe.up.pt.joggingo;
 
+import java.util.List;
+
 import oauth2.OAuthAccessTokenActivity;
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -46,6 +48,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	Bundle extras;
 	GPSTracker gps = null;
 	private Handler handler = new Handler();
+	
+	private DatabaseHandler db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,23 +103,62 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		
 		setContentView(R.layout.activity_main_menu);
 
-        final Button begin = (Button) findViewById(R.id.button_begin);
+        
+		db = new DatabaseHandler(this);
+        
+		//RETIRAR QUANDO FOR A SÉRIO!
+		db.restartDB();
+        
+		
+		final Button begin = (Button) findViewById(R.id.button_begin);
         begin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
             	
-            	handler.postDelayed(runnable, 100);
-		
+            	handler.postDelayed(runnable, 1000);
+            	
+            	/**
+                 * CRUD Operations
+                 * */
+                // Inserting Contacts
+                Log.d("Insert: ", "Inserting ..");
+
+                db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
             }
         });
         
         
         final Button end = (Button) findViewById(R.id.button_stop);
         end.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	handler.removeCallbacks(runnable);
-            }
-            });
+        	public void onClick(View v) {
+        		handler.removeCallbacks(runnable);
+
+        		// Reading all tracks
+        		Log.d("Reading: ", "Reading all tracks.."); 
+        		List<Track> tracks = db.getAllTracks();      
+
+        		for (Track cn : tracks) {
+        			String log = "Id: "+cn.getId()+" ,Name: " + cn.getName() + " ,Country: " + cn.getCountry();
+        			// Writing Contacts to log
+        			Log.d("Name: ", log);
+
+
+        		}
+
+        		//Reading all points
+        		Log.d("Reading: ", "Reading all points.."); 
+        		List<Point> points= db.getAllPoint();      
+
+        		for (Point p : points) {
+        			String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
+        			// Writing Contacts to log
+        			Log.d("Name: ", log2);
+
+        		}
+        		db.deleteAllTracks();
+        		db.deleteAllPoints();
+        	}
+        });
 	}	
 	
 	private Runnable runnable = new Runnable() {
@@ -124,7 +167,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		      /* do what you need to do */
 			   gps = new GPSTracker(MainActivity.this);
 				if(gps.canGetLocation()){
-					
 					double latitude = gps.getLatitude(); // returns latitude
 					double longitude = gps.getLongitude(); // returns longitude
 //					Toast.makeText(getApplicationContext(), 
@@ -132,9 +174,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 //									Toast.LENGTH_LONG).show();
 					TextView coordenadas_text = (TextView) findViewById(R.id.mysixText);
 					coordenadas_text.setText(latitude + ", "+longitude);
+					//Log.d("latitude", String.valueOf(latitude));
+					//Log.d("longitude", String.valueOf(longitude));
+					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),1));
 				}
 		      /* and here comes the "trick" */
-		      handler.postDelayed(this, 100);
+		      handler.postDelayed(this, 1000);
 		   }
 		};
 

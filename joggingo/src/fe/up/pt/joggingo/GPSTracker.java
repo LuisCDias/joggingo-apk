@@ -182,8 +182,8 @@ public class GPSTracker extends Service implements LocationListener {
  
     @Override
     public void onLocationChanged(Location location) {
-    	Log.d("new latitude", String.valueOf(latitude));
-    	Log.d("new longitude", String.valueOf(longitude));
+    	//Log.d("new latitude", String.valueOf(latitude));
+    	//Log.d("new longitude", String.valueOf(longitude));
     }
  
     @Override
