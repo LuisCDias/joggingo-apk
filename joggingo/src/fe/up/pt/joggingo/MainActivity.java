@@ -88,7 +88,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		setContentView(mViewPager);
 
 		mActionBar = getSupportActionBar();
-		mActionBar.setDisplayShowTitleEnabled(false);
+		mActionBar.setDisplayShowTitleEnabled(true);
 		mActionBar.setHomeButtonEnabled(true);
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
