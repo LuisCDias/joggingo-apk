@@ -32,10 +32,10 @@ public class MapFragment extends SherlockFragment {
 		 * won't be necessary. In other cases it was, but in this case I
 		 * don't this should happen.
 		 */
-		/*
-		 * final ViewGroup parent = (ViewGroup) Exchanger.mMapView.getParent();
-		 * if (parent != null) parent.removeView(Exchanger.mMapView);
-		 */
+		
+		  final ViewGroup parent = (ViewGroup) Exchanger.mMapView.getParent();
+		  if (parent != null) parent.removeView(Exchanger.mMapView);
+		 
 		
 		return Exchanger.mMapView;
 	}
