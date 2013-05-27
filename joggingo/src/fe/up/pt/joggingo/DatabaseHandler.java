@@ -172,10 +172,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
     
     // Getting All Points
-    public List<Point> getAllPoint() {
+    public List<Point> getAllPoint(int track_id) {
         List<Point> pointList= new ArrayList<Point>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_POINTS;
+        String selectQuery = "SELECT  * FROM " + TABLE_POINTS +
+        		" WHERE "+POINT_KEY_TRACK+" = '"+track_id+"'";
      
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

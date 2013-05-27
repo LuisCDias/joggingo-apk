@@ -87,8 +87,8 @@ OnMyLocationChangeListener {
 
 			if (savedInstanceState == null) {
 
-				//CameraUpdate center= CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude));
-				CameraUpdate center= CameraUpdateFactory.newLatLng(new LatLng(37.35, -122.0));
+				CameraUpdate center= CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude));
+				
 				CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
 
 				map.moveCamera(center);
@@ -96,7 +96,7 @@ OnMyLocationChangeListener {
 			}
 
 			Log.d("Reading: ", "Reading all points.."); 
-			List<Point> points= db.getAllPoint();      
+			List<Point> points= db.getAllPoint(track_id);      
 
 			for (Point p : points) {
 				String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
@@ -110,18 +110,6 @@ OnMyLocationChangeListener {
 				
 			}
 
-
-
-			/*addMarker(map, 40.748963847316034, -73.96807193756104,
-                R.string.un, R.string.united_nations);
-      addMarker(map, 40.76866299974387, -73.98268461227417,
-                R.string.lincoln_center,
-                R.string.lincoln_center_snippet);
-      addMarker(map, 40.765136435316755, -73.97989511489868,
-                R.string.carnegie_hall, R.string.practice_x3);
-      addMarker(map, 40.70686417491799, -74.01572942733765,
-                R.string.downtown_club, R.string.heisman_trophy);
-			 */
 			map.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
 			map.setOnInfoWindowClickListener(this);
 
