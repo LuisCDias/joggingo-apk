@@ -23,6 +23,9 @@ public class Track {
 		this.privat = privat;
 		this.approved = approved;
 	}
+	
+	/*Isto não vai ser usado*/
+	
 	public Track(int id, String name, String city, String country, int user_id,
 			int privat, int approved) {
 		super();

@@ -69,9 +69,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
     
     // Adding new track
-    public void addTrack(Track track) {
+    public long addTrack(Track track) {
         SQLiteDatabase db = this.getWritableDatabase();
         
+        long i;
         ContentValues values = new ContentValues();
         values.put(TRACK_KEY_NAME, track.getName()); 
         values.put(TRACK_KEY_CITY, track.getCity());
@@ -81,8 +82,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         values.put(TRACK_KEY_APPROVED, track.isApproved());
      
         // Inserting Row
-        db.insert(TABLE_TRACKS, null, values);
+        i = db.insert(TABLE_TRACKS, null, values);
         db.close(); // Closing database connection
+        return i;
     }
      
     // Getting single track

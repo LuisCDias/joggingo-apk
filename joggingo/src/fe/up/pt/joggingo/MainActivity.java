@@ -49,7 +49,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	GPSTracker gps = null;
 	private Handler handler = new Handler();
 
-	private int track_id;
+	private long track_id;
 	private DatabaseHandler db;
 
 
@@ -112,6 +112,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		//RETIRAR QUANDO FOR A SÉRIO!
 		db.restartDB();
+		
 		begin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// Perform action on click
@@ -126,10 +127,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				Log.d("Insert: ", "Inserting ..");
 
 				
-				db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
-				
+				/* CRIAR INTERFACE PARA INTRODUZIR O NOME DA TRACK */
+				track_id = db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
 				/*Trocar pelo respectivo track_id*/
-				track_id = 1;
 				
 				handler.postDelayed(runnable, 1000);
 
@@ -145,6 +145,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				map.setVisibility(View.VISIBLE);
 				main_text.setText("Well done!");
 				handler.removeCallbacks(runnable);
+				
 				// Reading all tracks
 //				Log.d("Reading: ", "Reading all tracks.."); 
 //				List<Track> tracks = db.getAllTracks();      
