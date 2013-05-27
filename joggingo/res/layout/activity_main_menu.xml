@@ -76,7 +76,7 @@
                     android:id="@+id/button_begin"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Begin" />
+                    android:text="Start track" />
 
                 <Button
                     android:id="@+id/button_stop"
@@ -97,12 +97,34 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/gradient" >
         </View>
-
+		
+        <EditText
+            android:id="@+id/track_name"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/gradient0"
+            android:layout_height="75dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Enter track name..."
+            android:inputType="text"
+            android:visibility="gone" />
+        
+        <Button
+           android:id="@+id/button_start_tracking"
+           android:layout_below="@+id/track_name"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:text="Begin!"
+           android:visibility="gone" />
+        
         <TextView
             android:id="@+id/coordinates_text"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
-            android:layout_below="@+id/gradient0"
+            android:layout_below="@+id/button_start_tracking"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
@@ -135,6 +157,19 @@
             android:onClick="goToMap"
             android:visibility="gone"
             android:text="Go to map" />
+        
+        <Button
+            android:id="@+id/button_sincronize"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_map"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:onClick="goToMap"
+            android:visibility="gone"
+            android:text="Syncronize account" />
+        
         
     </RelativeLayout>
 

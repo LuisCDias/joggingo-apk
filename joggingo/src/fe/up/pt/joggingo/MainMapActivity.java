@@ -66,7 +66,7 @@ OnMyLocationChangeListener {
 
 		Bundle extras = getIntent().getExtras();
 
-		int track_id = extras.getInt("track");
+		long track_id = extras.getLong("track");
 		double latitude = extras.getDouble("latitude");
 		double longitude = extras.getDouble("longitude");
 
@@ -81,7 +81,7 @@ OnMyLocationChangeListener {
 			SupportMapFragment mapFrag=
 					(SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
 
-			initListNav();
+			//initListNav();
 
 			map=mapFrag.getMap();
 
@@ -96,6 +96,7 @@ OnMyLocationChangeListener {
 			}
 
 			Log.d("Reading: ", "Reading all points.."); 
+			Log.d("from track: ", track_id+"");
 			List<Point> points= db.getAllPoint(track_id);      
 
 			for (Point p : points) {
@@ -192,7 +193,6 @@ OnMyLocationChangeListener {
 	public void onStop() {
 		super.onStop();
 
-		Log.d("STOPPED", "MAP");
 		db.close();
 
 	}

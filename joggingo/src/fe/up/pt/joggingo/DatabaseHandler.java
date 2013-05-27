@@ -174,7 +174,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
     
     // Getting All Points
-    public List<Point> getAllPoint(int track_id) {
+    public List<Point> getAllPoint(long track_id) {
         List<Point> pointList= new ArrayList<Point>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_POINTS +

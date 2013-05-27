@@ -1,5 +1,7 @@
 package fe.up.pt.joggingo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import oauth2.OAuthAccessTokenActivity;
@@ -20,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +55,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	private long track_id;
 	private DatabaseHandler db;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -61,7 +63,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		Bundle b = new Bundle();
 
-		String tab_title = "JogginGo!";
+		String tab_title = "Welcome to JogginGo!";
 
 		gps = new GPSTracker(this);
 
@@ -101,10 +103,16 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		setContentView(R.layout.activity_main_menu);
 
+
+
 		final Button begin = (Button) findViewById(R.id.button_begin);
 		final Button end = (Button) findViewById(R.id.button_stop);
+		final Button start_track = (Button) findViewById(R.id.button_start_tracking);
 		final Button map = (Button) findViewById(R.id.button_map);
+		final Button sync = (Button) findViewById(R.id.button_sincronize);
+
 		final TextView coordinates_text = (TextView) findViewById(R.id.coordinates_text);
+		final EditText track_name = (EditText) findViewById(R.id.track_name);
 		final TextView main_text = (TextView) findViewById(R.id.joggingo_main_text);
 		final View gradient_text = (View) findViewById(R.id.gradient_coordinates);
 
@@ -112,69 +120,83 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		//RETIRAR QUANDO FOR A SÉRIO!
 		db.restartDB();
-		
+
 		begin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				// Perform action on click
+
 				begin.setVisibility(View.GONE);
+				coordinates_text.setVisibility(View.GONE);
+				map.setVisibility(View.GONE);
+				sync.setVisibility(View.GONE);
+				main_text.setText("Enter track name!");
+
+				Calendar c = Calendar.getInstance(); 
+				Log.d("current",c.getTime()+""); 
+				SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
+				String formattedDate = df.format(c.getTime());
+
+				track_name.setHint(formattedDate);
+				track_name.setVisibility(View.VISIBLE);
+				start_track.setVisibility(View.VISIBLE);
+
+			}
+		});
+
+
+
+		end.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				begin.setVisibility(View.VISIBLE);
+				begin.setText("Start again");
+				end.setVisibility(View.GONE);
+				coordinates_text.setVisibility(View.VISIBLE);
+				map.setVisibility(View.VISIBLE);
+				sync.setVisibility(View.VISIBLE);
+				main_text.setText("Well done!");
+				handler.removeCallbacks(runnable);
+			}
+		});
+
+		start_track.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				// Perform action on click
+
+				String name = track_name.getText().toString();
+
 				end.setVisibility(View.VISIBLE);
 				coordinates_text.setVisibility(View.VISIBLE);
 				gradient_text.setVisibility(View.VISIBLE);
 				map.setVisibility(View.GONE);
 				main_text.setText("Go!");
-				//map.setEnabled(false);
+				track_name.setVisibility(View.GONE);
+				start_track.setVisibility(View.GONE);
 
 				Log.d("Insert: ", "Inserting ..");
+				if(!name.matches("")){
 
-				
-				/* CRIAR INTERFACE PARA INTRODUZIR O NOME DA TRACK */
-				track_id = db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
-				/*Trocar pelo respectivo track_id*/
-				
+					Log.d("Track name: ", track_name.getText().toString());
+					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 1, 1,0));
+				}
+				else{
+					Log.d("Track name: ", track_name.getHint().toString());
+					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 1, 1,0));
+				}
+
 				handler.postDelayed(runnable, 1000);
-
 			}
 		});
 
-		end.setOnClickListener(new View.OnClickListener() {
+		sync.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				begin.setVisibility(View.VISIBLE);
-				begin.setText("New run");
-				end.setVisibility(View.GONE);
-				coordinates_text.setVisibility(View.VISIBLE);
-				map.setVisibility(View.VISIBLE);
-				main_text.setText("Well done!");
-				handler.removeCallbacks(runnable);
-				
-				// Reading all tracks
-//				Log.d("Reading: ", "Reading all tracks.."); 
-//				List<Track> tracks = db.getAllTracks();      
-//
-//				for (Track cn : tracks) {
-//					String log = "Id: "+cn.getId()+" ,Name: " + cn.getName() + " ,Country: " + cn.getCountry();
-//					// Writing Contacts to log
-//					Log.d("Name: ", log);
-//
-//
-//				}
-//
-//				//Reading all points
-//				Log.d("Reading: ", "Reading all points.."); 
-//				List<Point> points= db.getAllPoint();      
-//
-//				for (Point p : points) {
-//					String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
-//					// Writing Contacts to log
-//					Log.d("Name: ", log2);
-//
-//				}
-				//db.deleteAllTracks();
-				//db.deleteAllPoints();
+
+				//TODO POST /tracks/
+
 			}
-
 		});
-
 	}	
+
 
 	private Runnable runnable = new Runnable() {
 
@@ -185,9 +207,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			if(gps.canGetLocation()){
 				double latitude = gps.getLatitude(); // returns latitude
 				double longitude = gps.getLongitude(); // returns longitude
-				//					Toast.makeText(getApplicationContext(), 
-				//									"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
-				//									Toast.LENGTH_LONG).show();
+
 				TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
 				coordenadas_text.setText(latitude + ", "+longitude);
 				//Log.d("latitude", String.valueOf(latitude));
@@ -200,20 +220,21 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	};
 
 	public void goToMap(View v){
-		
+
 		gps = new GPSTracker(this);
 
 		if(gps.canGetLocation()){
 
 			double latitude = gps.getLatitude(); // returns latitude
 			double longitude = gps.getLongitude(); // returns longitude
-			
+
 			Intent intent = new Intent(this, MainMapActivity.class);
-			
+
+			Log.d("TRACK_ID", track_id+"");
 			intent.putExtra("track", track_id);
 			intent.putExtra("latitude", latitude);
 			intent.putExtra("longitude", longitude);
-			
+
 			startActivity(intent);
 		}
 		else{

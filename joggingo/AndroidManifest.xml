@@ -95,10 +95,22 @@
         <activity android:name="fe.up.pt.joggingo.LegalNoticesActivity" >
         </activity>
         
+		<activity
+            android:name="fe.up.pt.joggingo.ComposeMessagePopUpActivity"
+            android:label="Begin new track..."
+            android:theme="@android:style/Theme.Dialog"  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCTnWuWj3VCBON_6n3XUan6tfUCqkMXoto" />
+            android:value="AIzaSyD769CsyMRs6naJ9t3-_NDyWVbtVn-FdCI"/>
+            <!-- AIzaSyCTnWuWj3VCBON_6n3XUan6tfUCqkMXoto -->
+             
     </application>
 
 </manifest>
