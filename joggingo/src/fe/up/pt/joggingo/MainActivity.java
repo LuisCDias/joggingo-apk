@@ -49,9 +49,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	GPSTracker gps = null;
 	private Handler handler = new Handler();
 
-	
+
 	private DatabaseHandler db;
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +99,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
 
-
-
 		setContentView(R.layout.activity_main_menu);
 
 		final Button begin = (Button) findViewById(R.id.button_begin);
@@ -109,9 +107,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final TextView coordinates_text = (TextView) findViewById(R.id.coordinates_text);
 		final TextView main_text = (TextView) findViewById(R.id.joggingo_main_text);
 		final View gradient_text = (View) findViewById(R.id.gradient_coordinates);
-		
+
 		db = new DatabaseHandler(this);
-        
+
 		//RETIRAR QUANDO FOR A SÉRIO!
 		db.restartDB();
 		begin.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +122,11 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				map.setVisibility(View.GONE);
 				main_text.setText("Go!");
 				//map.setEnabled(false);
-				
+
 				Log.d("Insert: ", "Inserting ..");
 
-                db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
-                
+				db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
+
 				handler.postDelayed(runnable, 1000);
 
 			}
@@ -144,30 +142,30 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				main_text.setText("Well done!");
 				handler.removeCallbacks(runnable);
 				// Reading all tracks
-        		Log.d("Reading: ", "Reading all tracks.."); 
-        		List<Track> tracks = db.getAllTracks();      
+				Log.d("Reading: ", "Reading all tracks.."); 
+				List<Track> tracks = db.getAllTracks();      
 
-        		for (Track cn : tracks) {
-        			String log = "Id: "+cn.getId()+" ,Name: " + cn.getName() + " ,Country: " + cn.getCountry();
-        			// Writing Contacts to log
-        			Log.d("Name: ", log);
+				for (Track cn : tracks) {
+					String log = "Id: "+cn.getId()+" ,Name: " + cn.getName() + " ,Country: " + cn.getCountry();
+					// Writing Contacts to log
+					Log.d("Name: ", log);
 
 
-        		}
+				}
 
-        		//Reading all points
-        		Log.d("Reading: ", "Reading all points.."); 
-        		List<Point> points= db.getAllPoint();      
+				//Reading all points
+				Log.d("Reading: ", "Reading all points.."); 
+				List<Point> points= db.getAllPoint();      
 
-        		for (Point p : points) {
-        			String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
-        			// Writing Contacts to log
-        			Log.d("Name: ", log2);
+				for (Point p : points) {
+					String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
+					// Writing Contacts to log
+					Log.d("Name: ", log2);
 
-        		}
-        		db.deleteAllTracks();
-        		db.deleteAllPoints();
-        	}
+				}
+				db.deleteAllTracks();
+				db.deleteAllPoints();
+			}
 
 		});
 
@@ -175,32 +173,46 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 	private Runnable runnable = new Runnable() {
 
-		   @Override
-		   public void run() {
-		      /* do what you need to do */
-			   gps = new GPSTracker(MainActivity.this);
-				if(gps.canGetLocation()){
-					double latitude = gps.getLatitude(); // returns latitude
-					double longitude = gps.getLongitude(); // returns longitude
-//					Toast.makeText(getApplicationContext(), 
-//									"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
-//									Toast.LENGTH_LONG).show();
-					TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
-					coordenadas_text.setText(latitude + ", "+longitude);
-					//Log.d("latitude", String.valueOf(latitude));
-					//Log.d("longitude", String.valueOf(longitude));
-					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),1));
-				}
-		      /* and here comes the "trick" */
-		      handler.postDelayed(this, 1000);
-		   }
-		};
+		@Override
+		public void run() {
+			/* do what you need to do */
+			gps = new GPSTracker(MainActivity.this);
+			if(gps.canGetLocation()){
+				double latitude = gps.getLatitude(); // returns latitude
+				double longitude = gps.getLongitude(); // returns longitude
+				//					Toast.makeText(getApplicationContext(), 
+				//									"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
+				//									Toast.LENGTH_LONG).show();
+				TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
+				coordenadas_text.setText(latitude + ", "+longitude);
+				//Log.d("latitude", String.valueOf(latitude));
+				//Log.d("longitude", String.valueOf(longitude));
+				db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),1));
+			}
+			/* and here comes the "trick" */
+			handler.postDelayed(this, 1000);
+		}
+	};
 
 	public void goToMap(View v){
+		
+		gps = new GPSTracker(this);
 
-		Intent intent = new Intent(this, MapswithfragmentsActivity.class);
+		if(gps.canGetLocation()){
 
-		startActivity(intent);
+			double latitude = gps.getLatitude(); // returns latitude
+			double longitude = gps.getLongitude(); // returns longitude
+			
+			Intent intent = new Intent(this, MainMapActivity.class);
+
+			intent.putExtra("latitude", latitude);
+			intent.putExtra("longitude", longitude);
+			
+			startActivity(intent);
+		}
+		else{
+			gps.showSettingsAlert();
+		}	
 	}
 
 	@Override
@@ -250,13 +262,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		if(resultCode==3){
 			finish();
 		}
-	}
-
-
-	public void goWeb(View v){
-		//opens six webpage
-		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(JoggingoAPI.getURL()));
-		startActivity(browserIntent);
 	}
 
 
