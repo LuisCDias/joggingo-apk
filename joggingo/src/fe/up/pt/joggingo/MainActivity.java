@@ -49,7 +49,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	GPSTracker gps = null;
 	private Handler handler = new Handler();
 
-
+	private int track_id;
 	private DatabaseHandler db;
 
 
@@ -125,8 +125,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 				Log.d("Insert: ", "Inserting ..");
 
+				
 				db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0));
-
+				
+				/*Trocar pelo respectivo track_id*/
+				track_id = 1;
+				
 				handler.postDelayed(runnable, 1000);
 
 			}
@@ -142,29 +146,29 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				main_text.setText("Well done!");
 				handler.removeCallbacks(runnable);
 				// Reading all tracks
-				Log.d("Reading: ", "Reading all tracks.."); 
-				List<Track> tracks = db.getAllTracks();      
-
-				for (Track cn : tracks) {
-					String log = "Id: "+cn.getId()+" ,Name: " + cn.getName() + " ,Country: " + cn.getCountry();
-					// Writing Contacts to log
-					Log.d("Name: ", log);
-
-
-				}
-
-				//Reading all points
-				Log.d("Reading: ", "Reading all points.."); 
-				List<Point> points= db.getAllPoint();      
-
-				for (Point p : points) {
-					String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
-					// Writing Contacts to log
-					Log.d("Name: ", log2);
-
-				}
-				db.deleteAllTracks();
-				db.deleteAllPoints();
+//				Log.d("Reading: ", "Reading all tracks.."); 
+//				List<Track> tracks = db.getAllTracks();      
+//
+//				for (Track cn : tracks) {
+//					String log = "Id: "+cn.getId()+" ,Name: " + cn.getName() + " ,Country: " + cn.getCountry();
+//					// Writing Contacts to log
+//					Log.d("Name: ", log);
+//
+//
+//				}
+//
+//				//Reading all points
+//				Log.d("Reading: ", "Reading all points.."); 
+//				List<Point> points= db.getAllPoint();      
+//
+//				for (Point p : points) {
+//					String log2 = "Id: "+p.getId()+" ,Latitude: " + p.getLatitude() + " ,Longitude: " + p.getLongitude();
+//					// Writing Contacts to log
+//					Log.d("Name: ", log2);
+//
+//				}
+				//db.deleteAllTracks();
+				//db.deleteAllPoints();
 			}
 
 		});
@@ -204,7 +208,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			double longitude = gps.getLongitude(); // returns longitude
 			
 			Intent intent = new Intent(this, MainMapActivity.class);
-
+			
+			intent.putExtra("track", track_id);
 			intent.putExtra("latitude", latitude);
 			intent.putExtra("longitude", longitude);
 			
