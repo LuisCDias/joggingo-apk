@@ -1,6 +1,7 @@
 package fe.up.pt.joggingo;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,8 +13,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import oauth2.OAuthAccessTokenActivity;
 import android.app.SearchManager;
@@ -205,23 +210,76 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				//TODO POST /tracks/
 				// Create a new HttpClient and Post Header
 			    HttpClient httpclient = new DefaultHttpClient();
-			    HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
-
+			    HttpPost httppost = new HttpPost("http://belele.herokuapp.com/mobile");
+			    
+			    JSONObject json = new JSONObject();
 			    try {
-			        // Add your data
-			        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			        nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-			        nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
-			        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+					json.put("user_id", 1);
+					json.put("approved", false);
+					json.put("name", db.getAllTracks().get(0).getName());
+					json.put("private", true);
+					json.put("intial_time", "2013:1:1:20:10:1:987");
+					json.put("final_time", "2013:1:1:20:15:1:0");
+					JSONArray pontos = new JSONArray();
+					JSONObject ponto = new JSONObject();
+					ponto.put("latitude", "41.157671");
+					ponto.put("longitude", "-8.627787");
+					pontos.put(ponto);
+					json.put("points", pontos);
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			    Log.d("SYNC", json.toString());
+			    try {
+					httppost.setEntity(new ByteArrayEntity(json.toString().getBytes("UTF8")));
+					httppost.setHeader( "Content-Type", "application/json" );
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}   
+		        try {
+					HttpResponse response = httpclient.execute(httppost);
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    /*
+			     * {
+					\"user_id\":1,
+					\"approved\":false,
+					\"name\": \"Trilho da Boavista\",
+					\"city\": \"Porto\",
+					\"private\":true,
+					\"initial_time\": \"2013:1:1:20:10:1:987\",
+					\"final_time\": \"2013:1:1:20:15:1:0\",
+					\"points\":[{\"latitude\": \"41.157671\",
+						\"longitude\": \"-8.627787\"},
+						{\"latitude\": \"41.158818\",
+						\"longitude\": \"-8.628495\"},
+						{\"latitude\": \"41.158725\",
+						\"longitude\": \"-8.62982\"},
+						{\"latitude\": \"41.157898\",
+						\"longitude\": \"-8.63034\"},
+						{\"latitude\": \"41.157009\",
+						\"longitude\": \"-8.629589\"},
+						{\"latitude\": \"41.15734\",
+						\"longitude\": \"-8.625716\"},
+						{\"latitude\": \"41.15709\",
+						\"longitude\": \"-8.624107\"},
+						{\"latitude\": \"41.156896\",
+						\"longitude\": \"-8.623055\"},
+						{\"latitude\": \"41.156702\",
+						\"longitude\": \"-8.6218\"},
+						{\"latitude\": \"41.156492\",
+						\"longitude\": \"-8.62077\"}
+						]
+					}*/
+			    	
 
-			        // Execute HTTP Post Request
-			        HttpResponse response = httpclient.execute(httppost);
-			        
-			    } catch (ClientProtocolException e) {
-			        // TODO Auto-generated catch block
-			    } catch (IOException e) {
-			        // TODO Auto-generated catch block
-			    }
 
 			}
 		});
