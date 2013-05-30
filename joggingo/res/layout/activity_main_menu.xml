@@ -71,19 +71,39 @@
                     android:gravity="center|center_vertical"
                     android:text="Start running!"
                     android:textSize="22sp" />
-
-                <Button
-                    android:id="@+id/button_begin"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Start track" />
-
-                <Button
-                    android:id="@+id/button_stop"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Stop"
-                    android:visibility="gone" />
+				
+                <LinearLayout
+	                android:id="@+id/start_stop_layout"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center_vertical"
+	                android:weightSum="1"
+	                android:background="@drawable/layoutstyle"
+	                android:orientation="horizontal" >
+	                
+	                <Button
+	                    android:id="@+id/button_begin"
+	                    android:layout_width="0dp"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="1"
+	                    android:text="Start track" />
+	                
+	                <Button
+	                    android:id="@+id/button_pause"
+	                    android:layout_width="0dp"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="0.5"
+	                    android:text="Pause" 
+	                    android:visibility="gone" />
+	
+	                <Button
+	                    android:id="@+id/button_stop"
+	                    android:layout_width="0dp"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="0.5"
+	                    android:text="Stop"
+	                    android:visibility="gone" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -120,11 +140,38 @@
            android:text="Begin!"
            android:visibility="gone" />
         
+        <!-- Colocar em layout horizontal juntamente com outra textview para os km -->
+        <TextView
+            android:id="@+id/statistics_text"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/button_start_tracking"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="00:00:00"
+            android:textSize="30dp" />
+        <!--                                                                        -->
+        
+        <View
+            android:id="@+id/gradient_statistics"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/statistics_text"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:background="@drawable/gradient" />
+        
         <TextView
             android:id="@+id/coordinates_text"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
-            android:layout_below="@+id/button_start_tracking"
+            android:layout_below="@+id/gradient_statistics"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
