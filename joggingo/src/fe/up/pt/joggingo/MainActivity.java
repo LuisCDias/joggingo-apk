@@ -1,6 +1,9 @@
 package fe.up.pt.joggingo;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +16,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import oauth2.OAuthAccessTokenActivity;
 import android.app.SearchManager;
@@ -50,7 +57,6 @@ import com.actionbarsherlock.view.MenuItem;
 import fe.up.pt.joggingo.R;
 import fragments.MainFragment;
 import fragments.MainFragment_Results;
-import fragments.ProfileFragment;
 
 public class MainActivity extends SherlockFragmentActivity implements TabListener {
 
@@ -250,26 +256,15 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			public void onClick(View v) {
 
 				//TODO POST /tracks/
-				// Create a new HttpClient and Post Header
-				HttpClient httpclient = new DefaultHttpClient();
-				HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
 
+				URL url;
 				try {
-					// Add your data
-					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-					nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-					nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
-					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-					// Execute HTTP Post Request
-					HttpResponse response = httpclient.execute(httppost);
-
-				} catch (ClientProtocolException e) {
+					url = new URL("http://belele.herokuapp.com/mobile");
+					new DownloadFilesTask().execute(url);
+				} catch (MalformedURLException e) {
 					// TODO Auto-generated catch block
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
 			}
 		});
 	}	
