@@ -1,0 +1,123 @@
+package fe.up.pt.joggingo;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.AsyncTask;
+import android.util.Log;
+
+class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+    // Do the long-running work in here
+    protected Long doInBackground(URL... urls) {
+
+    	HttpClient httpclient = new DefaultHttpClient();
+	    HttpPost httppost = new HttpPost("http://belele.herokuapp.com/mobile");
+	    
+
+	    JSONObject json = new JSONObject();
+	    try {
+			json.put("user_id", 1);
+			json.put("approved", false);
+			json.put("name", "asd");
+			json.put("city", "Porto");
+			json.put("country", "Portugal");
+			json.put("private", true);
+			json.put("intial_time", "2013:1:1:20:10:1:987");
+			json.put("final_time", "2013:1:1:20:15:1:0");
+			/*JSONArray pontos = new JSONArray();
+			JSONObject ponto = new JSONObject();
+			ponto.put("latitude", "41.157671");
+			ponto.put("longitude", "-8.627787");
+			pontos.put(ponto);
+			JSONObject ponto1 = new JSONObject();
+			ponto1.put("latitude", "41.158818");
+			ponto1.put("longitude", "-8.628495");
+			pontos.put(ponto1);
+			JSONObject ponto2 = new JSONObject();
+			ponto2.put("latitude", "41.158725");
+			ponto2.put("longitude", "-8.62982");
+			pontos.put(ponto2);
+			json.put("points", pontos);*/
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    Log.d("SYNC", json.toString());
+	    try {
+			httppost.setEntity(new ByteArrayEntity(json.toString().getBytes("UTF8")));
+            
+			httppost.setHeader( "Content-Type", "application/json" );
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}   
+        try {
+			HttpResponse response = httpclient.execute(httppost);
+
+			String jsonString = EntityUtils.toString(response.getEntity());
+			Log.d("response", jsonString);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    /*
+	     * {
+			\"user_id\":1,
+			\"approved\":false,
+			\"name\": \"Trilho da Boavista\",
+			\"city\": \"Porto\",
+			\"private\":true,
+			\"initial_time\": \"2013:1:1:20:10:1:987\",
+			\"final_time\": \"2013:1:1:20:15:1:0\",
+			\"points\":[{\"latitude\": \"41.157671\",
+				\"longitude\": \"-8.627787\"},
+				{\"latitude\": \"41.158818\",
+				\"longitude\": \"-8.628495\"},
+				{\"latitude\": \"41.158725\",
+				\"longitude\": \"-8.62982\"},
+				{\"latitude\": \"41.157898\",
+				\"longitude\": \"-8.63034\"},
+				{\"latitude\": \"41.157009\",
+				\"longitude\": \"-8.629589\"},
+				{\"latitude\": \"41.15734\",
+				\"longitude\": \"-8.625716\"},
+				{\"latitude\": \"41.15709\",
+				\"longitude\": \"-8.624107\"},
+				{\"latitude\": \"41.156896\",
+				\"longitude\": \"-8.623055\"},
+				{\"latitude\": \"41.156702\",
+				\"longitude\": \"-8.6218\"},
+				{\"latitude\": \"41.156492\",
+				\"longitude\": \"-8.62077\"}
+				]
+			}*/
+        return (long) 1;
+    }
+
+    // This is called each time you call publishProgress()
+    protected void onProgressUpdate(Integer... progress) {
+    }
+
+    // This is called when doInBackground() is finished
+    protected void onPostExecute(Long result) {
+    }
+}
