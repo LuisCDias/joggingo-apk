@@ -3,6 +3,7 @@ package fe.up.pt.joggingo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera.Size;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -34,6 +36,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +66,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	Bundle extras;
 	GPSTracker gps = null;
 	private int elapsed_time = 0;
+	private float distance_ran = 0;
 	private Handler handler = new Handler();
 
 	private boolean paused = false;
@@ -70,11 +74,14 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	private long track_id;
 	private DatabaseHandler db;
 
+	private double latitude_was = 0.0;
+	private double longitude_was = 0.0;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
 
 		Bundle b = new Bundle();
 
@@ -87,9 +94,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 			double latitude = gps.getLatitude(); // returns latitude
 			double longitude = gps.getLongitude(); // returns longitude
-			/*Toast.makeText(getApplicationContext(), 
-					"Localização - \nLat: " + latitude + "\nLong: " + longitude, 
-					Toast.LENGTH_LONG).show();*/
 
 			b.putDouble("latitude", latitude);
 			b.putDouble("longitude", longitude);
@@ -109,17 +113,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		mActionBar.setHomeButtonEnabled(true);
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
 
 		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
 
-		//		mTabsAdapter.addTab(mActionBar.newTab().setText("Profile"),
-		//				ProfileFragment.ProfileFragmentAux.class, b);
-
 		setContentView(R.layout.activity_main_menu);
-
 
 
 		final Button begin = (Button) findViewById(R.id.button_begin);
@@ -134,23 +133,33 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final TextView main_text = (TextView) findViewById(R.id.joggingo_main_text);
 		final View gradient_text = (View) findViewById(R.id.gradient_coordinates);
 
-		final TextView statistics_text = (TextView) findViewById(R.id.statistics_text);
+		final TextView elapsed_time_text = (TextView) findViewById(R.id.elapsed_time_text);
+		final TextView distance_ran_text = (TextView) findViewById(R.id.distance_ran_text);
+		final LinearLayout statistics_layout = (LinearLayout) findViewById(R.id.statistics_layout);
 		final View gradient_statistics = (View) findViewById(R.id.gradient_statistics);
 
 		db = new DatabaseHandler(this);
 
 		//RETIRAR QUANDO FOR A SÉRIO!
-		db.restartDB();
 
+		db.restartDB();
 		begin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
 				elapsed_time = 0;
+				distance_ran = 0;
+				latitude_was = 0.0;
+				longitude_was = 0.0;
+
 				begin.setVisibility(View.GONE);
 				coordinates_text.setVisibility(View.GONE);
 				map.setVisibility(View.GONE);
 				sync.setVisibility(View.GONE);
 				main_text.setText("Enter track name!");
+				statistics_layout.setVisibility(View.GONE);
+				elapsed_time_text.setText("00:00:00");
+				distance_ran_text.setText("0.0 km");
+				gradient_statistics.setVisibility(View.GONE);
 
 				Calendar c = Calendar.getInstance(); 
 				Log.d("current",c.getTime()+""); 
@@ -166,7 +175,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		pause.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				
+
 				if(paused){
 					paused = false;
 					pause.setText("Pause");
@@ -191,7 +200,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				end.setVisibility(View.GONE);
 
 				coordinates_text.setVisibility(View.GONE);
-				statistics_text.setVisibility(View.VISIBLE);
+				statistics_layout.setVisibility(View.VISIBLE);
 
 				map.setVisibility(View.VISIBLE);
 				sync.setVisibility(View.VISIBLE);
@@ -214,7 +223,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				coordinates_text.setVisibility(View.VISIBLE);
 				gradient_text.setVisibility(View.VISIBLE);
 
-				statistics_text.setVisibility(View.VISIBLE);
+				statistics_layout.setVisibility(View.VISIBLE);
 				gradient_statistics.setVisibility(View.VISIBLE);
 
 				map.setVisibility(View.GONE);
@@ -239,33 +248,36 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		sync.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				
+
 				//TODO POST /tracks/
 				// Create a new HttpClient and Post Header
-			    HttpClient httpclient = new DefaultHttpClient();
-			    HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
+				HttpClient httpclient = new DefaultHttpClient();
+				HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
 
-			    try {
-			        // Add your data
-			        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			        nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-			        nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
-			        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+				try {
+					// Add your data
+					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+					nameValuePairs.add(new BasicNameValuePair("id", "12345"));
+					nameValuePairs.add(new BasicNameValuePair("stringdata", "AndDev is Cool!"));
+					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-			        // Execute HTTP Post Request
-			        HttpResponse response = httpclient.execute(httppost);
-			        
-			    } catch (ClientProtocolException e) {
-			        // TODO Auto-generated catch block
-			    } catch (IOException e) {
-			        // TODO Auto-generated catch block
-			    }
+					// Execute HTTP Post Request
+					HttpResponse response = httpclient.execute(httppost);
+
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+				}
 
 			}
 		});
 	}	
 
-
+	/*TODO CRONOMETRO TEM DE SER LANÇADO NOUTRO RUNNABLE
+	 * 	   PORQUE ESTE VAI SER DE 500*60 ou 1000*60
+	 * 	   ENQUANTO QUE O DO CRONOMETRO É DE 1000
+	 * */
 	private Runnable runnable = new Runnable() {
 
 		@Override
@@ -278,15 +290,41 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					double longitude = gps.getLongitude(); // returns longitude
 
 					TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
-					TextView statistics_text = (TextView) findViewById(R.id.statistics_text);
+					TextView elapsed_time_text = (TextView) findViewById(R.id.elapsed_time_text);
+					TextView distance_ran_text = (TextView) findViewById(R.id.distance_ran_text);
+
+
+					if(latitude_was != 0.0 && longitude_was != 0.0){
+
+						float[] results = new float[3];
+						Location.distanceBetween(latitude, longitude, latitude_was, longitude_was,  results);
+						Log.d("distancia entre A e B results", Arrays.toString(results));
+
+						distance_ran += Math.abs(results[0]);
+						distance_ran = (float)Math.round(distance_ran*100)/100;
+
+						/*TODO 
+						 * Para já está a ser guardado o valor em metros como se fossem KM
+						 * porque senão não se viam alterações
+						 * Depois mudar para distance_ran/1000
+						 * */
+						distance_ran_text.setText(String.valueOf(distance_ran)+" km");
+
+					}
+
 					elapsed_time +=1;
 					String result = String.format("%02d:%02d:%02d", elapsed_time / 3600, elapsed_time / 60 % 60, elapsed_time % 60);
 
 					coordenadas_text.setText(latitude + ", "+longitude);
-					statistics_text.setText(result);
-					//Log.d("latitude", String.valueOf(latitude));
-					//Log.d("longitude", String.valueOf(longitude));
-					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),1));
+					elapsed_time_text.setText(result);
+
+					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),track_id));
+
+					if(latitude_was != latitude)
+						latitude_was = latitude;
+					if(longitude_was != longitude)
+						longitude_was = longitude;
+
 				}
 				/* and here comes the "trick" */
 				handler.postDelayed(this, 1000);

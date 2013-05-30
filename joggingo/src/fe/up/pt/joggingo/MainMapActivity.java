@@ -96,6 +96,7 @@ OnMyLocationChangeListener {
 			}
 
 			Log.d("Reading: ", "Reading all points.."); 
+			
 			Log.d("from track: ", track_id+"");
 			List<Point> points= db.getAllPoint(track_id);      
 

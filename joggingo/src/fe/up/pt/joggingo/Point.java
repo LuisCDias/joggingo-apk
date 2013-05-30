@@ -5,11 +5,11 @@ public class Point {
 	int id;
 	String latitude;
 	String longitude;
-	int track_id;
+	long track_id;
 	
 	public Point(){}
 
-	public Point(int id, String latitude, String longitude, int track) {
+	public Point(int id, String latitude, String longitude, long track) {
 		super();
 		this.id = id;
 		this.latitude = latitude;
@@ -17,7 +17,7 @@ public class Point {
 		this.track_id = track;
 	}
 	
-	public Point(String latitude, String longitude, int track) {
+	public Point(String latitude, String longitude, long track) {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -48,7 +48,7 @@ public class Point {
 		this.longitude = longitude;
 	}
 	
-	public int getTrack_id() {
+	public long getTrack_id() {
 		return track_id;
 	}
 

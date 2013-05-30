@@ -201,6 +201,32 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         return pointList;
     }
     
+    public List<Point> getAllPoint() {
+        List<Point> pointList= new ArrayList<Point>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_POINTS;
+     
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+     
+        
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Point p = new Point();
+                p.setId(Integer.parseInt(cursor.getString(0)));
+                p.setLatitude(cursor.getString(1));
+                p.setLongitude(cursor.getString(2));
+                
+                
+                // Adding contact to list
+                pointList.add(p);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return pointList;
+    }
+    
     public void deleteAllPoints(){
     	SQLiteDatabase db = this.getWritableDatabase();
     	db.delete(TABLE_POINTS, null, null);
