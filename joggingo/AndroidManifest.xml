@@ -44,23 +44,11 @@
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivity" />
         </activity>
+        
         <activity
-            android:name="fe.up.pt.joggingo.SearchableActivity"
+            android:name="fe.up.pt.joggingo.TracksActivity"
             android:configChanges="orientation"
-            android:label="@string/search_activitty"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-        <activity
-            android:name="fe.up.pt.joggingo.AdvancedSearchActivity"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_main"
+            android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,6 +56,19 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="fe.up.pt.joggingo.TrackActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        
         <activity
             android:name="oauth2.OAuthAccessTokenActivity"
             android:launchMode="singleTask" >
