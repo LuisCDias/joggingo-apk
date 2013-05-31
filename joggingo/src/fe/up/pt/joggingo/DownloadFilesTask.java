@@ -3,16 +3,21 @@ package fe.up.pt.joggingo;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -28,7 +33,7 @@ class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
 
     	HttpClient httpclient = new DefaultHttpClient();
 	    HttpPost httppost = new HttpPost("http://belele.herokuapp.com/mobile");
-
+	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 
 	    JSONObject json = new JSONObject();
 	    try {
@@ -38,9 +43,10 @@ class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
 			json.put("city", "Porto");
 			json.put("country", "Portugal");
 			json.put("private", true);
-			json.put("intial_time", "2013:1:1:20:10:1:987");
+			json.put("initial_time", "2013:1:1:20:10:1:987");
 			json.put("final_time", "2013:1:1:20:15:1:0");
-			/*JSONArray pontos = new JSONArray();
+			
+			JSONArray pontos = new JSONArray();
 			JSONObject ponto = new JSONObject();
 			ponto.put("latitude", "41.157671");
 			ponto.put("longitude", "-8.627787");
@@ -53,16 +59,31 @@ class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
 			ponto2.put("latitude", "41.158725");
 			ponto2.put("longitude", "-8.62982");
 			pontos.put(ponto2);
-			json.put("points", pontos);*/
+			json.put("points", pontos);
+			
+			
+			nameValuePairs = new ArrayList<NameValuePair>(2);
+	        nameValuePairs.add(new BasicNameValuePair("user_id", "1"));
+	        nameValuePairs.add(new BasicNameValuePair("approved", "false"));
+	        nameValuePairs.add(new BasicNameValuePair("name", "asd"));
+	        nameValuePairs.add(new BasicNameValuePair("city", "Porto"));
+	        nameValuePairs.add(new BasicNameValuePair("country", "Portugal"));
+	        nameValuePairs.add(new BasicNameValuePair("initial_time", "2013:1:1:20:10:1:987"));
+	        nameValuePairs.add(new BasicNameValuePair("final_time", "2013:1:1:20:15:1:0"));
+	        
+			
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	    Log.d("SYNC", json.toString());
 	    try {
-			httppost.setEntity(new ByteArrayEntity(json.toString().getBytes("UTF8")));
+	    	StringEntity se = new StringEntity(json.toString());  
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+			httppost.setEntity(se);
+	    	//httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             
-			httppost.setHeader( "Content-Type", "application/json" );
+			//httppost.setHeader( "Content-Type", "application/json" );
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
