@@ -28,7 +28,7 @@ class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
 
     	HttpClient httpclient = new DefaultHttpClient();
 	    HttpPost httppost = new HttpPost("http://belele.herokuapp.com/mobile");
-	    
+
 
 	    JSONObject json = new JSONObject();
 	    try {

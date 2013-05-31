@@ -1140,8 +1140,8 @@ containing a value of this type.
         public static final int abs__title=0x7f06001f;
         public static final int abs__titleDivider=0x7f060020;
         public static final int abs__up=0x7f06000f;
-        public static final int book_author=0x7f060058;
-        public static final int book_title=0x7f060057;
+        public static final int book_author=0x7f060054;
+        public static final int book_title=0x7f060053;
         public static final int button_begin=0x7f06003e;
         public static final int button_map=0x7f06004a;
         public static final int button_pause=0x7f06003f;
@@ -1155,7 +1155,7 @@ containing a value of this type.
         public static final int elapsed_time_text=0x7f060045;
         public static final int fragment_container=0x7f06004e;
         public static final int gradient0=0x7f060041;
-        public static final int gradient1=0x7f060059;
+        public static final int gradient1=0x7f060055;
         public static final int gradient_coordinates=0x7f060049;
         public static final int gradient_statistics=0x7f060047;
         public static final int homeAsUp=0x7f06000a;
@@ -1165,16 +1165,12 @@ containing a value of this type.
         public static final int legal=0x7f06004d;
         public static final int listMode=0x7f060006;
         public static final int map=0x7f060037;
-        public static final int menu_LogIn=0x7f06005b;
-        public static final int menu_settings=0x7f06005a;
+        public static final int menu_LogIn=0x7f060057;
+        public static final int menu_settings=0x7f060056;
         public static final int mysixlayout=0x7f06003a;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
         public static final int pager=0x7f06004c;
-        public static final int profile_best_times=0x7f060055;
-        public static final int profile_name=0x7f060052;
-        public static final int profile_total_ran=0x7f060053;
-        public static final int profile_total_time=0x7f060054;
         public static final int satellite=0x7f060002;
         public static final int showCustom=0x7f06000c;
         public static final int showHome=0x7f060009;
@@ -1190,7 +1186,7 @@ containing a value of this type.
         public static final int userNameOnMainMenu=0x7f060039;
         public static final int userNamelayout=0x7f060038;
         public static final int user_cover=0x7f06003b;
-        public static final int users_list_layout=0x7f060056;
+        public static final int users_list_layout=0x7f060052;
         public static final int wrap_content=0x7f060005;
     }
     public static final class integer {
@@ -1227,10 +1223,9 @@ containing a value of this type.
         public static final int list_fragment=0x7f03001b;
         public static final int main=0x7f03001c;
         public static final int popup=0x7f03001d;
-        public static final int profile=0x7f03001e;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001f;
-        public static final int sherlock_spinner_item=0x7f030020;
-        public static final int user_tracks=0x7f030021;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
+        public static final int sherlock_spinner_item=0x7f03001f;
+        public static final int user_tracks=0x7f030020;
     }
     public static final class menu {
         public static final int activity_main=0x7f0d0000;
