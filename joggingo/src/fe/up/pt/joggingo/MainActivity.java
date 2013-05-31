@@ -63,12 +63,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	ViewPager mViewPager;
 	ActionBar mActionBar;
 	TabsAdapter mTabsAdapter;
-	String userToken;
-	String useMode ;
-	String userID;
-	String userRating;
-	String userName;
-	String title;
 	Bundle extras;
 	GPSTracker gps = null;
 	private int elapsed_time = 0;
@@ -144,11 +138,27 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final LinearLayout statistics_layout = (LinearLayout) findViewById(R.id.statistics_layout);
 		final View gradient_statistics = (View) findViewById(R.id.gradient_statistics);
 
+		final LinearLayout notifications_layout = (LinearLayout) findViewById(R.id.notifications_layout);
+		final TextView notifications_text = (TextView) findViewById(R.id.notification_text);
+		
 		db = new DatabaseHandler(this);
-
+		
+		
 		//RETIRAR QUANDO FOR A SÉRIO!
-
 		db.restartDB();
+		//
+		
+		
+		List<Track> tracks = db.getAllTracks();
+		
+		if(tracks.size() == 0)
+			notifications_layout.setVisibility(View.GONE);
+		else{
+			notifications_layout.setVisibility(View.VISIBLE);
+			notifications_text.setText(notificationMessage(tracks.size()));
+		}
+				
+		
 		begin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
@@ -200,6 +210,15 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		end.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
+				List<Track> tracks = db.getAllTracks();
+				
+				if(tracks.size() == 0)
+					notifications_layout.setVisibility(View.GONE);
+				else{
+					notifications_layout.setVisibility(View.VISIBLE);
+					notifications_text.setText(notificationMessage(tracks.size()));
+				}
+				
 				begin.setVisibility(View.VISIBLE);
 				begin.setText("Start again");
 				pause.setVisibility(View.GONE);
@@ -219,10 +238,11 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			public void onClick(View v) {
 
 				// Perform action on click
-
+				
 				String name = track_name.getText().toString();
 				elapsed_time = 0;
-
+				
+				notifications_layout.setVisibility(View.GONE);
 				pause.setVisibility(View.VISIBLE);
 				end.setVisibility(View.VISIBLE);
 
@@ -350,6 +370,23 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		}	
 	}
 
+	public void listTracksToSync(View v){
+		
+		Intent intent = new Intent(this, TracksActivity.class);
+		
+		startActivity(intent);
+	}
+	
+	public String notificationMessage(int i){
+			
+		String str = "You have ";
+		if(i==1)
+			return str+ i + " track to sincronize!";
+		else
+			return str+ i + " tracks to sincronize!";
+		
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);

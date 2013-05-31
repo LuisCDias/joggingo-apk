@@ -14,30 +14,24 @@ import android.widget.TextView;
 import fe.up.pt.joggingo.JoggingoAPI;
 import fe.up.pt.joggingo.R;
 
-public class ListAdapter extends BaseAdapter {
+public class TracksAdapter extends BaseAdapter {
     
     private Activity activity;
-    private ArrayList<String> titles;
-    private ArrayList<String> texts;
-    private ArrayList<String> images;
-    private ArrayList<String> owners;
+    private ArrayList<String> names;
+    private ArrayList<String> cities;
+
     private static LayoutInflater inflater=null;
-    private int flag ;
-    public ImageLoader imageLoader; 
+
     
-    public ListAdapter(Activity a, ArrayList<String> tlt, ArrayList<String> txt, ArrayList<String> i, ArrayList<String> o, int f) {
+    public TracksAdapter(Activity a, ArrayList<String> nam, ArrayList<String> cit) {
         activity = a;
-        titles=tlt;
-        texts=txt;
-        images=i;
-        owners = o;
-        flag = f;
+        names = nam;
+        cities = cit;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageLoader=new ImageLoader(activity.getApplicationContext());
     }
 
     public int getCount() {
-        return images.size();
+        return names.size();
     }
 
     public Object getItem(int position) {
@@ -53,12 +47,12 @@ public class ListAdapter extends BaseAdapter {
         if(convertView==null)
             vi = inflater.inflate(R.layout.user_tracks, null);
      
-       // TextView text=(TextView)vi.findViewById(R.id.user_offerText);
-        ImageView image=(ImageView)vi.findViewById(R.id.useLogo);
-
+        TextView name = (TextView) vi.findViewById(R.id.track_name);
+        TextView city = (TextView) vi.findViewById(R.id.track_city);
         
-        imageLoader.DisplayImage(JoggingoAPI.Strings.SERVER_URL + images.get(position), image,"offer");
-        Log.d("PIRATE", JoggingoAPI.Strings.SERVER_URL + images.get(position));
+        name.setText(names.get(position));
+        city.setText(cities.get(position));
+        
         return vi;
     }
 }
