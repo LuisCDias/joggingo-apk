@@ -26,7 +26,8 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 	TabsAdapter mTabsAdapter;
 	Bundle extras;
 	GPSTracker gps = null;
-
+	private DatabaseHandler db;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -94,6 +95,20 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		}
 	}
 
+	public void syncTrack(View v){
+		
+		db = new DatabaseHandler(this);
+		String id = null;
+		
+		if(extras != null){
+			
+			id = extras.getString("id");
+		
+			long track_id = Long.parseLong(id);
+			new DownloadFilesTask(track_id, this).execute(db);
+		}
+	}
+	
 
 	//--------------------------------------------------------------------------------------
 	public void getAdvancedSearch(View v){

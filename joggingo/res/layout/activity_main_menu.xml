@@ -245,7 +245,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/button_sincronize"
+            android:id="@+id/button_synchronize"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/button_map"
@@ -253,7 +253,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:onClick="goToMap"
-            android:text="Syncronize account"
+            android:text="Synchronize account"
             android:visibility="gone" />
     </RelativeLayout>
 

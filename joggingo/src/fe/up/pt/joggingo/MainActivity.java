@@ -126,7 +126,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final Button end = (Button) findViewById(R.id.button_stop);
 		final Button start_track = (Button) findViewById(R.id.button_start_tracking);
 		final Button map = (Button) findViewById(R.id.button_map);
-		final Button sync = (Button) findViewById(R.id.button_sincronize);
+		final Button sync = (Button) findViewById(R.id.button_synchronize);
 
 		final TextView coordinates_text = (TextView) findViewById(R.id.coordinates_text);
 		final EditText track_name = (EditText) findViewById(R.id.track_name);
@@ -281,12 +281,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				if(!name.matches("")){
 
 					Log.d("Track name: ", track_name.getText().toString());
-					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 1, 1,0,formattedDate));
+					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 2, 1,0,formattedDate));
 					Log.d("Track no:",track_id+"");
 				}
 				else{
 					Log.d("Track name: ", track_name.getHint().toString());
-					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 1, 1,0, formattedDate));
+					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 2, 1,0, formattedDate));
 					Log.d("Track no:",track_id+"");
 				}
 
@@ -300,7 +300,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				//TODO POST /tracks/
 				
 				//não sei se é a melhor forma de se fazer, mas funciona
-				new DownloadFilesTask().execute(db);
+				new DownloadFilesTask(-1, MainActivity.this).execute(db);
 			}
 		});
 	}	
@@ -330,7 +330,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 						float[] results = new float[3];
 						Location.distanceBetween(latitude, longitude, latitude_was, longitude_was,  results);
 						Log.d("distancia entre A e B results", Arrays.toString(results));
-
+						
 						distance_ran += Math.abs(results[0]);
 						distance_ran = (float)Math.round(distance_ran*100)/100;
 
@@ -339,6 +339,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 						 * porque senão não se viam alterações
 						 * Depois mudar para distance_ran/1000
 						 * */
+						Log.d("distance ran em km: ", String.valueOf(distance_ran/1000));
 						distance_ran_text.setText(String.valueOf(distance_ran)+" km");
 
 					}
@@ -399,10 +400,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			
 		String str = "You have ";
 		if(i==1)
-			return str+ i + " track to sincronize!";
+			return str+ i + " track to synchronize!";
 		else
-			return str+ i + " tracks to sincronize!";
-		
+			return str+ i + " tracks to synchronize!";
 	}
 	
 	@Override

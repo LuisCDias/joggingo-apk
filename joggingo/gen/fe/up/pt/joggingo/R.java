@@ -1143,9 +1143,9 @@ containing a value of this type.
         public static final int button_begin=0x7f06003f;
         public static final int button_map=0x7f06004b;
         public static final int button_pause=0x7f060040;
-        public static final int button_sincronize=0x7f06004c;
         public static final int button_start_tracking=0x7f060044;
         public static final int button_stop=0x7f060041;
+        public static final int button_synchronize=0x7f06004c;
         public static final int coordinates_text=0x7f060049;
         public static final int disableHome=0x7f06000d;
         public static final int distance_ran_text=0x7f060047;

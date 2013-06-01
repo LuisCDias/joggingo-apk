@@ -80,7 +80,8 @@ public class TracksFragment extends SherlockFragmentActivity {
 			
 						
 			Intent intent = new Intent(this.getSherlockActivity(), TrackActivity.class );
-
+			
+			intent.putExtra("id", ids.get(position));
 			intent.putExtra("name", names.get(position));
 			intent.putExtra("city", cities.get(position));
 			
