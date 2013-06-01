@@ -48,11 +48,9 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 		db = dbs[0];
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(URL);
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 
 		Log.d("async", db.getAllTracks().size()+"");
-		JSONObject json = new JSONObject();
-
+		
 		List<Track> tracks = new ArrayList<Track>();
 
 		if(track_id != -1){
@@ -67,7 +65,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 
 
 		for(Track t : tracks){
-
+			JSONObject json = new JSONObject();
 			Log.d("Posting track: ", t.getName());
 			try {
 				json.put("user_id", t.getUserId());
@@ -90,32 +88,6 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				}
 				json.put("points", pontos);
 				
-				Log.d("pontos",pontos+"");
-				
-//				JSONObject ponto = new JSONObject();
-//				ponto.put("latitude", "41.157671");
-//				ponto.put("longitude", "-8.627787");
-//				pontos.put(ponto);
-//				JSONObject ponto1 = new JSONObject();
-//				ponto1.put("latitude", "41.158818");
-//				ponto1.put("longitude", "-8.628495");
-//				pontos.put(ponto1);
-//				JSONObject ponto2 = new JSONObject();
-//				ponto2.put("latitude", "41.158725");
-//				ponto2.put("longitude", "-8.62982");
-//				pontos.put(ponto2);
-//				json.put("points", pontos);
-				
-				
-				nameValuePairs = new ArrayList<NameValuePair>(2);
-		        nameValuePairs.add(new BasicNameValuePair("user_id", "1"));
-		        nameValuePairs.add(new BasicNameValuePair("approved", "false"));
-		        nameValuePairs.add(new BasicNameValuePair("name", "asd"));
-		        nameValuePairs.add(new BasicNameValuePair("city", "Porto"));
-		        nameValuePairs.add(new BasicNameValuePair("country", "Portugal"));
-		        nameValuePairs.add(new BasicNameValuePair("initial_time", "2013:1:1:20:10:1:987"));
-		        nameValuePairs.add(new BasicNameValuePair("final_time", "2013:1:1:20:15:1:0"));
-		        
 				
 			} catch (JSONException e1) {
 				// TODO Auto-generated catch block
