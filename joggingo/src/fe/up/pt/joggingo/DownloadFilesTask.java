@@ -37,6 +37,8 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	private long track_id;
 	private Context ctx;
 	private HttpResponse response;
+	private List<Track> tracks;
+	private int cont = 0;
 	
 	public DownloadFilesTask(long id, Context c) {
 		super();
@@ -49,12 +51,10 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 		db = dbs[0];
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost(URL);
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 
 		Log.d("async", db.getAllTracks().size()+"");
-		JSONObject json = new JSONObject();
-
-		List<Track> tracks = new ArrayList<Track>();
+		
+		tracks = new ArrayList<Track>();
 
 		if(track_id != -1){
 			Log.d("track_id", track_id+"");
@@ -68,7 +68,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 
 
 		for(Track t : tracks){
-
+			JSONObject json = new JSONObject();
 			Log.d("Posting track: ", t.getName());
 			try {
 				json.put("user_id", t.getUserId());
@@ -91,17 +91,6 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				}
 				json.put("points", pontos);
 				
-				Log.d("pontos",pontos+"");
-					
-				nameValuePairs = new ArrayList<NameValuePair>(2);
-		        nameValuePairs.add(new BasicNameValuePair("user_id", "1"));
-		        nameValuePairs.add(new BasicNameValuePair("approved", "false"));
-		        nameValuePairs.add(new BasicNameValuePair("name", "asd"));
-		        nameValuePairs.add(new BasicNameValuePair("city", "Porto"));
-		        nameValuePairs.add(new BasicNameValuePair("country", "Portugal"));
-		        nameValuePairs.add(new BasicNameValuePair("initial_time", "2013:1:1:20:10:1:987"));
-		        nameValuePairs.add(new BasicNameValuePair("final_time", "2013:1:1:20:15:1:0"));
-		        
 				
 			} catch (JSONException e1) {
 				// TODO Auto-generated catch block
@@ -126,6 +115,12 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				String jsonString = EntityUtils.toString(response.getEntity());
 				Log.d("response", jsonString);
 				Log.d("responseStatus", response.getStatusLine().toString());
+				
+				if(response.getStatusLine().getStatusCode() == 200){
+					cont++;
+					db.deleteTrack(t);
+				}
+				
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -146,7 +141,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	// This is called when doInBackground() is finished
 	protected void onPostExecute(Long result) {
 		
-		if(response.getStatusLine().getStatusCode() == 200)
+		if(tracks.size() == cont)
 			Toast.makeText(ctx, "Successfully synchronized",
 					Toast.LENGTH_LONG).show();
 		else
