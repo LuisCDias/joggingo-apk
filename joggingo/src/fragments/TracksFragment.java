@@ -117,7 +117,7 @@ public static class TracksFragmentSynced extends SherlockListFragment {
 		private DatabaseHandler db;
 		
 		
-		/*
+		
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 			b= super.getArguments();
@@ -146,11 +146,11 @@ public static class TracksFragmentSynced extends SherlockListFragment {
 			// remove divider
 			this.getListView().setDividerHeight(0);
 
-			setListAdapter(new TracksAdapter(getActivity(), names, cities));
+			//setListAdapter(new TracksAdapter(getActivity(), names, cities));
 			
 
 		}
-*/
+
 		@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
 			

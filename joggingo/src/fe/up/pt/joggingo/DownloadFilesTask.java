@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -139,7 +140,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 
 	// This is called each time you call publishProgress()
 	protected void onProgressUpdate(Integer... progress) {
-
+		Log.d("Progress...", Arrays.toString(progress));
 	}
 
 	// This is called when doInBackground() is finished

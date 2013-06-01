@@ -47,8 +47,8 @@ public class JoggingoAPI {
     	String PLEASE_LOGIN = "Please Log in To use this Feature";
     	String CONFIRMATION_POPUP_BUNDLE = "confirmation_action";
     	String CONFIRMATION_POPUP_WISHLIST = "wishlist";
-    	String LOGIN = "Log In";
-    	String LOGOUT = "Log Out";
+    	String LOGIN = "Login";
+    	String LOGOUT = "Logout";
     	String DATE_FORMAT = "Delivery Date must be at least one day after Start Date";
     	String SELER = "Seller";
     	String BUYER = "Buyer";

@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import oauth2.OAuthAccessTokenActivity;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -60,11 +61,14 @@ import fragments.MainFragment_Results;
 
 public class MainActivity extends SherlockFragmentActivity implements TabListener {
 
+	SherlockFragmentActivity a =this;
 	ViewPager mViewPager;
 	ActionBar mActionBar;
 	TabsAdapter mTabsAdapter;
+	private String access_token;
 	Bundle extras;
 	GPSTracker gps = null;
+	
 	private int elapsed_time = 0;
 	private float distance_ran = 0;
 	private Handler handler = new Handler();
@@ -77,6 +81,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	private double latitude_was = 0.0;
 	private double longitude_was = 0.0;
 	private View vi;
+	public static Button sync;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,11 +89,23 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		super.onCreate(savedInstanceState);
 
 		Bundle b = new Bundle();
+		extras = getIntent().getExtras();
+		
+		access_token = null;
+		
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null)!=null){
 
+			access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
+		}
+		
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
+			Log.d("HEY", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
+		else
+			Log.d("HEY", "isto nulo");
+		
 		String tab_title = "Welcome to JogginGo!";
 
 		gps = new GPSTracker(this);
-
 
 		if(gps.canGetLocation()){
 
@@ -115,18 +132,19 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
 
-		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
-				MainFragment.MainFragmentAux.class, b);
+		//mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
+			//	MainFragment.MainFragmentAux.class, b);
 
 		setContentView(R.layout.activity_main_menu);
-
+		
 		final Button begin = (Button) findViewById(R.id.button_begin);
 		final Button pause = (Button) findViewById(R.id.button_pause);
 		final Button end = (Button) findViewById(R.id.button_stop);
 		final Button start_track = (Button) findViewById(R.id.button_start_tracking);
 		final Button map = (Button) findViewById(R.id.button_map);
-		final Button sync = (Button) findViewById(R.id.button_synchronize);
-
+		sync = (Button) findViewById(R.id.button_synchronize);
+		
+		
 		final TextView coordinates_text = (TextView) findViewById(R.id.coordinates_text);
 		final EditText track_name = (EditText) findViewById(R.id.track_name);
 		final TextView main_text = (TextView) findViewById(R.id.joggingo_main_text);
@@ -146,7 +164,11 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		//RETIRAR QUANDO FOR A SÉRIO!
 		db.restartDB();
 		//
-
+		
+		if(access_token == null)
+			sync.setText("Login to synchronize");
+		else
+			sync.setText("Synchronize account");
 
 
 		List<Track> tracks = db.getAllTracks();
@@ -297,11 +319,18 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		sync.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
-				vi = MainActivity.this.findViewById(android.R.id.content).getRootView();
-
-				//não sei se é a melhor forma de se fazer, mas funciona
-				new DownloadFilesTask(-1, MainActivity.this, vi ).execute(db);
+				
+				if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null){
+					
+					vi = MainActivity.this.findViewById(android.R.id.content).getRootView();
+					new DownloadFilesTask(-1, MainActivity.this, vi ).execute(db);
+				}
+				else{
+					Intent intent = new Intent(MainActivity.this,  OAuthAccessTokenActivity.class );
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+					//finish();	
+				}
 			}
 		});
 	}	
@@ -391,7 +420,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	public void listTracksToSync(View v){
 
 		Intent intent = new Intent(this, TracksActivity.class);
-
+		if(access_token!=null)
+			intent.putExtra("access_token", access_token);
 		startActivity(intent);
 	}
 
@@ -429,7 +459,14 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				//				coordenadas_text.setText(latitude + ", "+longitude);
 			}
 			return false;
-
+		
+		case R.id.menu_LogIn:
+			
+			Intent intent = new Intent(MainActivity.this,  OAuthAccessTokenActivity.class );
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			//finish();
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
