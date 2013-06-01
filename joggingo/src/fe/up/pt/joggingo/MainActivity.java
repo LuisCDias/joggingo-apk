@@ -49,6 +49,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	TabsAdapter mTabsAdapter;
 	private String access_token;
 	public static MenuItem menu_login;
+	public static RelativeLayout profile_button;
 	Bundle extras;
 	GPSTracker gps = null;
 
@@ -169,6 +171,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final LinearLayout notifications_layout = (LinearLayout) findViewById(R.id.notifications_layout);
 		final TextView notifications_text = (TextView) findViewById(R.id.notification_text);
 
+		
+		profile_button = (RelativeLayout) findViewById(R.id.button_profile_layout);
 		db = new DatabaseHandler(this);
 
 
@@ -200,6 +204,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				latitude_was = 0.0;
 				longitude_was = 0.0;
 
+				profile_button.setVisibility(View.GONE);
 				begin.setVisibility(View.GONE);
 				coordinates_text.setVisibility(View.GONE);
 				map.setVisibility(View.GONE);
@@ -268,7 +273,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				begin.setText("Start again");
 				pause.setVisibility(View.GONE);
 				end.setVisibility(View.GONE);
-
+				profile_button.setVisibility(View.VISIBLE);
+				
 				coordinates_text.setVisibility(View.GONE);
 				statistics_layout.setVisibility(View.VISIBLE);
 
@@ -372,7 +378,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					Toast.makeText(MainActivity.this, "Welcome, "+name,
 							Toast.LENGTH_LONG).show();
 					menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
-						
+					profile_button.setVisibility(View.VISIBLE);
+					
 				} catch (JSONException e) {
 					
 					user_id = 0;

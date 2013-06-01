@@ -220,6 +220,7 @@ public class OAuthAccessTokenActivity extends Activity {
 							Toast.LENGTH_LONG).show();
 					MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
 					MainActivity.sync.setEnabled(true);
+					MainActivity.profile_button.setVisibility(View.VISIBLE);
 					
 				} catch (JSONException e) {
 					
@@ -250,6 +251,8 @@ public class OAuthAccessTokenActivity extends Activity {
 		editor.remove("");
 		editor.commit();
 		MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
+		MainActivity.profile_button.setVisibility(View.GONE);
+		
 		Toast.makeText(OAuthAccessTokenActivity.this, "Successfully logged out.",
 				Toast.LENGTH_LONG).show();
 		//android.webkit.CookieManager.getInstance().removeAllCookie(); //this is used to clear the cookies of the webview

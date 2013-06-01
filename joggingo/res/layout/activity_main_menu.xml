@@ -38,7 +38,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/mysixlayout"
+            android:id="@+id/joggingo_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/notifications_layout"
@@ -59,7 +59,7 @@
                 android:src="@drawable/ic_launcher" />
 
             <LinearLayout
-                android:id="@+id/mysixlayout"
+                android:id="@+id/start_information"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -73,7 +73,7 @@
                     android:id="@+id/joggingo_main_text"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
@@ -122,18 +122,45 @@
             android:id="@+id/gradient0"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_below="@id/mysixlayout"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_below="@id/joggingo_layout"
+
             android:layout_marginTop="5dp"
-            android:background="@drawable/gradient" >
+            android:background="?attr/dividerVertical" >
         </View>
+
+        <RelativeLayout
+            android:id="@+id/button_profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/gradient0"
+            android:visibility="gone" >
+	
+            <View
+                android:id="@+id/button_profile_divider"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?attr/dividerVertical" />
+            <Button
+                android:id="@+id/button_profile"
+                android:layout_width="fill_parent"
+                android:layout_height="68dp"
+                android:background="?attr/selectableItemBackground"
+                android:text="My JogginGo!"
+                android:textColor="@color/white" />
+
+            <View
+                android:id="@+id/button_profile_divider"
+                android:layout_below="@+id/button_profile"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?attr/dividerVertical" />
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/track_name"
             android:layout_width="fill_parent"
             android:layout_height="75dp"
-            android:layout_below="@+id/gradient0"
+            android:layout_below="@+id/button_profile_layout"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
@@ -201,7 +228,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/gradient"
+            android:background="?attr/dividerVertical"
             android:visibility="gone" />
 
         <TextView
@@ -227,7 +254,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/gradient"
+            android:background="?attr/dividerVertical"
             android:visibility="gone" >
         </View>
 
