@@ -36,7 +36,8 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	private String URL = "http://belele.herokuapp.com/mobile";
 	private long track_id;
 	private Context ctx;
-
+	private HttpResponse response;
+	
 	public DownloadFilesTask(long id, Context c) {
 		super();
 		track_id = id;
@@ -91,22 +92,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				json.put("points", pontos);
 				
 				Log.d("pontos",pontos+"");
-				
-//				JSONObject ponto = new JSONObject();
-//				ponto.put("latitude", "41.157671");
-//				ponto.put("longitude", "-8.627787");
-//				pontos.put(ponto);
-//				JSONObject ponto1 = new JSONObject();
-//				ponto1.put("latitude", "41.158818");
-//				ponto1.put("longitude", "-8.628495");
-//				pontos.put(ponto1);
-//				JSONObject ponto2 = new JSONObject();
-//				ponto2.put("latitude", "41.158725");
-//				ponto2.put("longitude", "-8.62982");
-//				pontos.put(ponto2);
-//				json.put("points", pontos);
-				
-				
+					
 				nameValuePairs = new ArrayList<NameValuePair>(2);
 		        nameValuePairs.add(new BasicNameValuePair("user_id", "1"));
 		        nameValuePairs.add(new BasicNameValuePair("approved", "false"));
@@ -135,7 +121,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				e1.printStackTrace();
 			}   
 	        try {
-				HttpResponse response = httpclient.execute(httppost);
+				response = httpclient.execute(httppost);
 				
 				String jsonString = EntityUtils.toString(response.getEntity());
 				Log.d("response", jsonString);
@@ -159,13 +145,18 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 
 	// This is called when doInBackground() is finished
 	protected void onPostExecute(Long result) {
-		Toast.makeText(ctx, "Done",
-				Toast.LENGTH_LONG).show();
+		
+		if(response.getStatusLine().getStatusCode() == 200)
+			Toast.makeText(ctx, "Successfully synchronized",
+					Toast.LENGTH_LONG).show();
+		else
+			Toast.makeText(ctx, "Synchronize failed! Please try again",
+					Toast.LENGTH_LONG).show();
 		
 	}
 	
 	public void onError(ERROR_TYPE error) {
-		Toast.makeText(ctx, error.toString(),
+		Toast.makeText(ctx, "Synchronize failed! Please try again",
 				Toast.LENGTH_LONG).show();
 	}
 }
