@@ -34,6 +34,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -52,7 +53,9 @@ import fe.up.pt.joggingo.R;
 public class OAuthAccessTokenActivity extends Activity {
 
 	private SharedPreferences prefs;
+	private boolean logout = false;
 	Activity a = this;
+
 	@SuppressLint("NewApi")
 	@TargetApi(9)
 	@Override
@@ -62,7 +65,12 @@ public class OAuthAccessTokenActivity extends Activity {
 		//not the best practices but hey, short on time!
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy); 
-		//clearCredentials();
+		Bundle b = getIntent().getExtras();
+		
+		/*if(b != null && b.containsKey("logout")){
+			logout = true;
+			clearCredentials();
+		}*/
 	}
 
 	public SharedPreferences getPrefs() {
@@ -91,6 +99,7 @@ public class OAuthAccessTokenActivity extends Activity {
 
 	@Override
 	protected void onResume() {
+		
 		super.onResume();
 		WebView webview = new WebView(this);
 		webview.getSettings().setJavaScriptEnabled(true);
@@ -159,25 +168,15 @@ public class OAuthAccessTokenActivity extends Activity {
 							Log.i("JSONException: ", e.toString());
 						}
 						view.setVisibility(View.INVISIBLE);
-						//Intent i = new Intent( OAuthAccessTokenActivity.this,  MainActivity.class );
-						//i.putExtra(JoggingoAPI.Strings.LAUNCH_FLAG_BUNDLE, JoggingoAPI.Ints.LAUNCH_FLAG_MAIN_LOAD);
-						//i.putExtra("access_token",prefs.getString("access_token",null));
-						
-						//MainActivity.main_text = (TextView) v.findViewById(R.id.joggingo_main_text);
 						
 						MainActivity.sync.setText("Synchronize account");
-						getUserDetails(OAuth2ClientCredentials.SCOPE+"profile.json?access_token="+prefs.getString("access_token", null));
+						
+						Toast.makeText(OAuthAccessTokenActivity.this, "Logging in...",
+								Toast.LENGTH_SHORT).show();
+						getUserInfo(OAuth2ClientCredentials.SCOPE+"profile.json?access_token="+prefs.getString("access_token", null));
 						
 						finish();
 					}
-					/*
-					Log.i("access_token: ", prefs.getString("access_token", null));
-					Log.i("expires_in: ", new Date(prefs.getLong("expires_in", 0)).toString() );
-					Log.i("refresh_token: ", prefs.getString("refresh_token", null));
-					view.setVisibility(View.INVISIBLE);
-					 
-
-					*/
 
 				}
 			}
@@ -194,40 +193,67 @@ public class OAuthAccessTokenActivity extends Activity {
 			Log.i("access_token: ", this.prefs.getString("access_token", null));
 			//Log.i("expires_in: ", new Date(this.prefs.getLong("expires_in", 0)).toString() );
 			//Log.i("refresh_token: ", this.prefs.getString("refresh_token", null));
-			getUserDetails(OAuth2ClientCredentials.SCOPE+"profile.json?access_token="+this.prefs.getString("access_token", null));
-			finish();
+			/*getUserDetails(OAuth2ClientCredentials.SCOPE+"profile.json?access_token="+this.prefs.getString("access_token", null));
+			finish();*/
+			clearCredentials();
 		}
 	}
 
-	public void getUserDetails(String URL){
-		Log.d("USER_URL",URL);
+	private void getUserInfo(String URL) {
+
+		this.getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 		JoggingoAPI.requestURL(URL, new ResponseCommand() {
-			
-			
+
 			public void onResultReceived(Object... results) {
-
-				Log.d("results",results[0].toString());
-
 				
+				JSONObject personal_data = (JSONObject) results[0];
 
+				Log.d("resultados", personal_data.toString());
+
+				try {
+					String name = personal_data.getString("username");
+					MainActivity.user_id = personal_data.getInt("id");
+
+					Toast.makeText(OAuthAccessTokenActivity.this, "Welcome, "+name,
+							Toast.LENGTH_LONG).show();
+					MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
+					MainActivity.sync.setEnabled(true);
+					
+				} catch (JSONException e) {
+					
+					MainActivity.user_id = 0;
+					Toast.makeText(OAuthAccessTokenActivity.this, "Error logging in...",
+							Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}
 			}
 
 			@Override
 			public void onError(ERROR_TYPE error) {
-				// TODO Auto-generated method stub
-				Log.d("ERRO",error.toString());
-			}});
-
+				
+				MainActivity.user_id = 0;
+				
+			}
+		});
+		// }
 	}
 	
 	public void clearCredentials() {
-		Editor editor = prefs.edit();		
+		
+		Editor editor = prefs.edit();
+		MainActivity.user_id = 0;
+		MainActivity.sync.setText("Login to synchronize");
+		
 		editor.remove("access_token");
-		editor.remove("expires_in");
-		editor.remove("refresh_token");
 		editor.remove("");
 		editor.commit();
-		android.webkit.CookieManager.getInstance().removeAllCookie(); //this is used to clear the cookies of the webview
+		MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
+		Toast.makeText(OAuthAccessTokenActivity.this, "Successfully logged out.",
+				Toast.LENGTH_LONG).show();
+		//android.webkit.CookieManager.getInstance().removeAllCookie(); //this is used to clear the cookies of the webview
+		finish();
 	}
 
 

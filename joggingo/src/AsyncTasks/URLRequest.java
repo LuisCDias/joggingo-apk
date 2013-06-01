@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import AsyncTasks.ResponseCommand.ERROR_TYPE;
 
 public class URLRequest extends AsyncRequest {
@@ -24,7 +26,7 @@ public class URLRequest extends AsyncRequest {
     protected ERROR_TYPE doInBackground(Object... urls) {
 
             HttpClient httpclient = new DefaultHttpClient();
-            
+
             HttpGet request = new HttpGet((String)urls[0]);
             ResponseHandler<String> handler = new BasicResponseHandler();
             

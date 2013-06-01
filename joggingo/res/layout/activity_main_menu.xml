@@ -129,7 +129,6 @@
             android:background="@drawable/gradient" >
         </View>
 
-
         <EditText
             android:id="@+id/track_name"
             android:layout_width="fill_parent"

@@ -105,7 +105,7 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 			id = extras.getString("id");
 			
 			long track_id = Long.parseLong(id);
-			new DownloadFilesTask(track_id, this, null).execute(db);
+			new DownloadFilesTask(track_id, this, null,0).execute(db);
 		}
 	}
 	

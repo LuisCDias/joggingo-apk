@@ -158,7 +158,7 @@ public class JoggingoAPI {
     public static AsyncTask<Object, Void, ResponseCommand.ERROR_TYPE> requestURL(
                     String URL, ResponseCommand command) {
             
-          return new URLRequest(command, "Request URL").execute(JoggingoAPI.getURL() + URL);
+          return new URLRequest(command, "Request URL").execute(URL);
 
     }
 

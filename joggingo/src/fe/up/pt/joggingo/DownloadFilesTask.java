@@ -39,16 +39,18 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	private DatabaseHandler db;
 	private String URL = "http://belele.herokuapp.com/mobile";
 	private long track_id;
+	private int user_id;
 	private Context ctx;
 	private HttpResponse response;
 	private List<Track> tracks;
 	private int cont = 0;
 	private View v;
-	public DownloadFilesTask(long id, Context c, View vi) {
+	public DownloadFilesTask(long id, Context c, View vi, int user) {
 		super();
 		track_id = id;
 		ctx = c;
 		v = vi;
+		user_id = user;
 	}
 
 	// Do the long-running work in here
@@ -76,7 +78,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 			JSONObject json = new JSONObject();
 			Log.d("Posting track: ", t.getName());
 			try {
-				json.put("user_id", t.getUserId());
+				json.put("user_id", user_id);
 				json.put("approved", (t.isApproved() == 1? true:false));
 				json.put("name", t.getName());
 				json.put("city", t.getCity());
@@ -140,7 +142,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 
 	// This is called each time you call publishProgress()
 	protected void onProgressUpdate(Integer... progress) {
-		Log.d("Progress...", Arrays.toString(progress));
+		
 	}
 
 	// This is called when doInBackground() is finished
@@ -156,8 +158,10 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 		if(tracks.size() == cont){
 			Toast.makeText(ctx, "Successfully synchronized",
 					Toast.LENGTH_LONG).show();
-			if(v !=null)
+			if(v !=null){
 				notifications_layout.setVisibility(View.GONE);
+				MainActivity.sync.setVisibility(View.GONE);
+			}
 		}
 		else{
 			Toast.makeText(ctx, "Synchronize failed! Please try again",
