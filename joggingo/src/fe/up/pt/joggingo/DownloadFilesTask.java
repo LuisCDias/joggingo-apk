@@ -71,61 +71,75 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 			Log.d("Posting track: ", t.getName());
 			try {
 				json.put("user_id", t.getUserId());
-				json.put("approved", t.isApproved());
+				json.put("approved", (t.isApproved() == 1? true:false));
 				json.put("name", t.getName());
 				json.put("city", t.getCity());
 				json.put("country", t.getCountry());
-				json.put("private", t.isPrivat());
-				json.put("initial_time", "2013:1:1:20:10:1:987");
-				json.put("final_time", "2013:1:1:20:15:1:0");
+				json.put("private", (t.isPrivat()== 1? true:false));
 
+				json.put("initial_time", t.getInitial_time());
+				json.put("final_time", t.getFinal_time());
+				
 				JSONArray pontos = new JSONArray();
-				JSONObject ponto = new JSONObject();
-				ponto.put("latitude", "41.157671");
-				ponto.put("longitude", "-8.627787");
-				pontos.put(ponto);
-				JSONObject ponto1 = new JSONObject();
-				ponto1.put("latitude", "41.158818");
-				ponto1.put("longitude", "-8.628495");
-				pontos.put(ponto1);
-				JSONObject ponto2 = new JSONObject();
-				ponto2.put("latitude", "41.158725");
-				ponto2.put("longitude", "-8.62982");
-				pontos.put(ponto2);
+				
+				for(Point p : db.getAllPoint(t.getId())){
+					JSONObject ponto = new JSONObject();
+					ponto.put("latitude", p.getLatitude());
+					ponto.put("longitude", p.getLongitude());
+					pontos.put(ponto);
+				}
 				json.put("points", pontos);
-
-
+				
+				Log.d("pontos",pontos+"");
+				
+//				JSONObject ponto = new JSONObject();
+//				ponto.put("latitude", "41.157671");
+//				ponto.put("longitude", "-8.627787");
+//				pontos.put(ponto);
+//				JSONObject ponto1 = new JSONObject();
+//				ponto1.put("latitude", "41.158818");
+//				ponto1.put("longitude", "-8.628495");
+//				pontos.put(ponto1);
+//				JSONObject ponto2 = new JSONObject();
+//				ponto2.put("latitude", "41.158725");
+//				ponto2.put("longitude", "-8.62982");
+//				pontos.put(ponto2);
+//				json.put("points", pontos);
+				
+				
 				nameValuePairs = new ArrayList<NameValuePair>(2);
-				nameValuePairs.add(new BasicNameValuePair("user_id", "1"));
-				nameValuePairs.add(new BasicNameValuePair("approved", "false"));
-				nameValuePairs.add(new BasicNameValuePair("name", "asd"));
-				nameValuePairs.add(new BasicNameValuePair("city", "Porto"));
-				nameValuePairs.add(new BasicNameValuePair("country", "Portugal"));
-				nameValuePairs.add(new BasicNameValuePair("initial_time", "2013:1:1:20:10:1:987"));
-				nameValuePairs.add(new BasicNameValuePair("final_time", "2013:1:1:20:15:1:0"));
-
-
+		        nameValuePairs.add(new BasicNameValuePair("user_id", "1"));
+		        nameValuePairs.add(new BasicNameValuePair("approved", "false"));
+		        nameValuePairs.add(new BasicNameValuePair("name", "asd"));
+		        nameValuePairs.add(new BasicNameValuePair("city", "Porto"));
+		        nameValuePairs.add(new BasicNameValuePair("country", "Portugal"));
+		        nameValuePairs.add(new BasicNameValuePair("initial_time", "2013:1:1:20:10:1:987"));
+		        nameValuePairs.add(new BasicNameValuePair("final_time", "2013:1:1:20:15:1:0"));
+		        
+				
 			} catch (JSONException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Log.d("SYNC", json.toString());
-			try {
-				StringEntity se = new StringEntity(json.toString());  
-				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+		    Log.d("SYNC", json.toString());
+		    try {
+		    	StringEntity se = new StringEntity(json.toString(), HTTP.UTF_8);  
+	            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+	            
 				httppost.setEntity(se);
-				//httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
+		    	//httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	            
 				//httppost.setHeader( "Content-Type", "application/json" );
 			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}   
-			try {
+	        try {
 				HttpResponse response = httpclient.execute(httppost);
-
+				
 				String jsonString = EntityUtils.toString(response.getEntity());
 				Log.d("response", jsonString);
+				Log.d("responseStatus", response.getStatusLine().toString());
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

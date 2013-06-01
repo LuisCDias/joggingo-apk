@@ -210,17 +210,15 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		end.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				//Get the final time
-				Calendar c = Calendar.getInstance(); 
-				Log.d("current",c.getTime()+""); 
-				SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
-				String formattedDate = df.format(c.getTime());
+				//Get final time
+				Calendar c = Calendar.getInstance();
+				SimpleDateFormat df = new SimpleDateFormat("yyyy:MM:d:HH:mm:ss:SS");
+				String final_time = df.format(c.getTime());
 
 				//TODO GUARDAR NA BD
 				Track t = db.getTrack((int) track_id);
-				t.setFinal_time(formattedDate);
-
-
+				t.setFinal_time(final_time);
+				db.updateTrack(t);
 				
 				
 				List<Track> tracks = db.getAllTracks();
@@ -275,18 +273,21 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				
 				//Get initial time
 				Calendar c = Calendar.getInstance();
-				SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
-				String formattedDate = df.format(c.getTime());
+				SimpleDateFormat df = new SimpleDateFormat("yyyy:MM:d:HH:mm:ss:SS");
+				String initial_time = df.format(c.getTime());
 				
 				if(!name.matches("")){
 
 					Log.d("Track name: ", track_name.getText().toString());
-					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 2, 1,0,formattedDate));
+
+					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 2, 1,0,initial_time));
 					Log.d("Track no:",track_id+"");
 				}
 				else{
 					Log.d("Track name: ", track_name.getHint().toString());
-					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 2, 1,0, formattedDate));
+
+					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 2, 1,0, initial_time));
+
 					Log.d("Track no:",track_id+"");
 				}
 
@@ -297,8 +298,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		sync.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				//TODO POST /tracks/
-				
 				//não sei se é a melhor forma de se fazer, mas funciona
 				new DownloadFilesTask(-1, MainActivity.this).execute(db);
 			}
@@ -351,8 +350,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					elapsed_time_text.setText(result);
 
 					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),track_id));
-					Log.d("latitude",Double.toString(latitude)+"");
-					Log.d("longitude",Double.toString(longitude)+"");
 
 					if(latitude_was != latitude)
 						latitude_was = latitude;
