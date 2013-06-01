@@ -88,9 +88,10 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
 
-		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
+		mTabsAdapter.addTab(mActionBar.newTab().setText("Unsynchronized"),
 				TracksFragment.TracksFragmentAux.class, null);
-		
+		mTabsAdapter.addTab(mActionBar.newTab().setText("Synchronized"),
+				TracksFragment.TracksFragmentSynced.class, null);
 	}
 
 	@Override
