@@ -27,22 +27,29 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
-class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
+	
+	private DatabaseHandler db;
+	private String URL = "http://belele.herokuapp.com/mobile";
+	
     // Do the long-running work in here
-    protected Long doInBackground(URL... urls) {
-
+    protected Long doInBackground(DatabaseHandler... dbs) {
+    	db = dbs[0];
     	HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost("http://belele.herokuapp.com/mobile");
+	    HttpPost httppost = new HttpPost(URL);
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-
+	    
+	    Log.d("async", db.getAllTracks().size()+"");
 	    JSONObject json = new JSONObject();
+	    
+	    Track t = db.getAllTracks().get(0);
 	    try {
-			json.put("user_id", 1);
-			json.put("approved", false);
-			json.put("name", "asd");
-			json.put("city", "Porto");
-			json.put("country", "Portugal");
-			json.put("private", true);
+			json.put("user_id", t.getUserId());
+			json.put("approved", t.isApproved());
+			json.put("name", t.getName());
+			json.put("city", t.getCity());
+			json.put("country", t.getCountry());
+			json.put("private", t.isPrivat());
 			json.put("initial_time", "2013:1:1:20:10:1:987");
 			json.put("final_time", "2013:1:1:20:15:1:0");
 			

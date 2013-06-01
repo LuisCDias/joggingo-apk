@@ -210,8 +210,22 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		end.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
-				List<Track> tracks = db.getAllTracks();
+				//Get the final time
+				Calendar c = Calendar.getInstance(); 
+				Log.d("current",c.getTime()+""); 
+				SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
+				String formattedDate = df.format(c.getTime());
+
+				//TODO GUARDAR NA BD
+				Track t = db.getTrack((int) track_id);
+				t.setFinal_time(formattedDate);
+
+
 				
+				
+				List<Track> tracks = db.getAllTracks();
+				List<Point> points = db.getAllPoint(track_id);
+
 				if(tracks.size() == 0)
 					notifications_layout.setVisibility(View.GONE);
 				else{
@@ -268,15 +282,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 					Log.d("Track name: ", track_name.getText().toString());
 					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 1, 1,0,formattedDate));
-					Log.d("track id",track_id+"");
+					Log.d("Track no:",track_id+"");
 				}
 				else{
 					Log.d("Track name: ", track_name.getHint().toString());
-					//track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 1, 1,0, formattedDate));
-					track_id = db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0,formattedDate));
-					Log.d("track id",track_id+"");
-					Track t = db.getTrack((int)track_id);
-					Log.d("track criada",t.getName()+"");
+					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 1, 1,0, formattedDate));
+					Log.d("Track no:",track_id+"");
 				}
 
 				handler.postDelayed(runnable, 1000);
@@ -287,15 +298,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			public void onClick(View v) {
 
 				//TODO POST /tracks/
-
-				URL url;
-				try {
-					url = new URL("http://belele.herokuapp.com/mobile");
-					new DownloadFilesTask().execute(url);
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				//não sei se é a melhor forma de se fazer, mas funciona
+				new DownloadFilesTask().execute(db);
 			}
 		});
 	}	
@@ -345,6 +350,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					elapsed_time_text.setText(result);
 
 					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),track_id));
+					Log.d("latitude",Double.toString(latitude)+"");
+					Log.d("longitude",Double.toString(longitude)+"");
 
 					if(latitude_was != latitude)
 						latitude_was = latitude;
