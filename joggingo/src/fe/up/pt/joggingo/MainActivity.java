@@ -76,7 +76,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 	private double latitude_was = 0.0;
 	private double longitude_was = 0.0;
-
+	private View vi;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		setContentView(R.layout.activity_main_menu);
 
-
 		final Button begin = (Button) findViewById(R.id.button_begin);
 		final Button pause = (Button) findViewById(R.id.button_pause);
 		final Button end = (Button) findViewById(R.id.button_stop);
@@ -140,25 +139,26 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		final LinearLayout notifications_layout = (LinearLayout) findViewById(R.id.notifications_layout);
 		final TextView notifications_text = (TextView) findViewById(R.id.notification_text);
-		
+
 		db = new DatabaseHandler(this);
-		
-		
+
+
 		//RETIRAR QUANDO FOR A SÉRIO!
 		db.restartDB();
 		//
-		
-		
+
+
+
 		List<Track> tracks = db.getAllTracks();
-		
+
 		if(tracks.size() == 0)
 			notifications_layout.setVisibility(View.GONE);
 		else{
 			notifications_layout.setVisibility(View.VISIBLE);
 			notifications_text.setText(notificationMessage(tracks.size()));
 		}
-				
-		
+
+
 		begin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
@@ -219,8 +219,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				Track t = db.getTrack((int) track_id);
 				t.setFinal_time(final_time);
 				db.updateTrack(t);
-				
-				
+
+
 				List<Track> tracks = db.getAllTracks();
 				List<Point> points = db.getAllPoint(track_id);
 
@@ -230,7 +230,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					notifications_layout.setVisibility(View.VISIBLE);
 					notifications_text.setText(notificationMessage(tracks.size()));
 				}
-				
+
 				begin.setVisibility(View.VISIBLE);
 				begin.setText("Start again");
 				pause.setVisibility(View.GONE);
@@ -250,10 +250,10 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			public void onClick(View v) {
 
 				// Perform action on click
-				
+
 				String name = track_name.getText().toString();
 				elapsed_time = 0;
-				
+
 				notifications_layout.setVisibility(View.GONE);
 				pause.setVisibility(View.VISIBLE);
 				end.setVisibility(View.VISIBLE);
@@ -270,12 +270,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				start_track.setVisibility(View.GONE);
 
 				Log.d("Insert: ", "Inserting ..");
-				
+
 				//Get initial time
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat df = new SimpleDateFormat("yyyy:MM:d:HH:mm:ss:SS");
 				String initial_time = df.format(c.getTime());
-				
+
 				if(!name.matches("")){
 
 					Log.d("Track name: ", track_name.getText().toString());
@@ -298,8 +298,10 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		sync.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 
+				vi = MainActivity.this.findViewById(android.R.id.content).getRootView();
+
 				//não sei se é a melhor forma de se fazer, mas funciona
-				new DownloadFilesTask(-1, MainActivity.this).execute(db);
+				new DownloadFilesTask(-1, MainActivity.this, vi ).execute(db);
 			}
 		});
 	}	
@@ -329,7 +331,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 						float[] results = new float[3];
 						Location.distanceBetween(latitude, longitude, latitude_was, longitude_was,  results);
 						Log.d("distancia entre A e B results", Arrays.toString(results));
-						
+
 						distance_ran += Math.abs(results[0]);
 						distance_ran = (float)Math.round(distance_ran*100)/100;
 
@@ -387,21 +389,21 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	}
 
 	public void listTracksToSync(View v){
-		
+
 		Intent intent = new Intent(this, TracksActivity.class);
-		
+
 		startActivity(intent);
 	}
-	
-	public String notificationMessage(int i){
-			
+
+	public static String notificationMessage(int i){
+
 		String str = "You have ";
 		if(i==1)
 			return str+ i + " track to synchronize!";
 		else
 			return str+ i + " tracks to synchronize!";
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);

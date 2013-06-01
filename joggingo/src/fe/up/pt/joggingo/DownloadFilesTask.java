@@ -28,6 +28,9 @@ import AsyncTasks.ResponseCommand.ERROR_TYPE;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
@@ -39,11 +42,12 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	private HttpResponse response;
 	private List<Track> tracks;
 	private int cont = 0;
-	
-	public DownloadFilesTask(long id, Context c) {
+	private View v;
+	public DownloadFilesTask(long id, Context c, View vi) {
 		super();
 		track_id = id;
 		ctx = c;
+		v = vi;
 	}
 
 	// Do the long-running work in here
@@ -141,13 +145,25 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	// This is called when doInBackground() is finished
 	protected void onPostExecute(Long result) {
 		
-		if(tracks.size() == cont)
+		LinearLayout notifications_layout = null;
+		TextView notifications_text = null;
+		
+		if(v !=null){
+			notifications_layout = (LinearLayout) v.findViewById(R.id.notifications_layout);
+			notifications_text = (TextView) v.findViewById(R.id.notification_text);
+		}
+		if(tracks.size() == cont){
 			Toast.makeText(ctx, "Successfully synchronized",
 					Toast.LENGTH_LONG).show();
-		else
+			if(v !=null)
+				notifications_layout.setVisibility(View.GONE);
+		}
+		else{
 			Toast.makeText(ctx, "Synchronize failed! Please try again",
 					Toast.LENGTH_LONG).show();
-		
+			if(v !=null)
+				notifications_text.setText(MainActivity.notificationMessage(tracks.size()));
+		}
 	}
 	
 	public void onError(ERROR_TYPE error) {
