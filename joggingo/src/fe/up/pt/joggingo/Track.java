@@ -9,12 +9,18 @@ public class Track {
 	int user_id;
 	int privat;
 	int approved;
+	String initial_time;
+	String final_time;
+	double vMedia;
+	double distance;
 	
+	
+
 	public Track() {
 	}
 	
 	public Track(String name, String city, String country, int user_id,
-			int privat, int approved) {
+			int privat, int approved, String initial_time) {
 		super();
 		this.name = name;
 		this.city = city;
@@ -22,12 +28,12 @@ public class Track {
 		this.user_id = user_id;
 		this.privat = privat;
 		this.approved = approved;
+		this.initial_time = initial_time;
 	}
 	
-	/*Isto não vai ser usado*/
 	
 	public Track(int id, String name, String city, String country, int user_id,
-			int privat, int approved) {
+			int privat, int approved,  String initial_time) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -36,6 +42,23 @@ public class Track {
 		this.user_id = user_id;
 		this.privat = privat;
 		this.approved = approved;
+		this.initial_time = initial_time;
+	}
+	
+	public Track(int id, String name, String city, String country, int user_id,
+			int privat, int approved,  String initial_time, String final_time, double vmedia, double distance) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.city = city;
+		this.country = country;
+		this.user_id = user_id;
+		this.privat = privat;
+		this.approved = approved;
+		this.initial_time = initial_time;
+		this.final_time = final_time;
+		this.vMedia = vmedia;
+		this.distance = distance;
 	}
 	
 	public int getId() {
@@ -80,8 +103,38 @@ public class Track {
 	public void setApproved(int approved) {
 		this.approved = approved;
 	}
+
+	public String getInitial_time() {
+		return initial_time;
+	}
+
+	public void setInitial_time(String initial_time) {
+		this.initial_time = initial_time;
+	}
+
+	public String getFinal_time() {
+		return final_time;
+	}
+
+	public void setFinal_time(String final_time) {
+		this.final_time = final_time;
+	}
 	
-	
+	public double getvMedia() {
+		return vMedia;
+	}
+
+	public void setvMedia(double vMedia) {
+		this.vMedia = vMedia;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
 	
 
 }

@@ -258,14 +258,25 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				start_track.setVisibility(View.GONE);
 
 				Log.d("Insert: ", "Inserting ..");
+				
+				//Get initial time
+				Calendar c = Calendar.getInstance();
+				SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
+				String formattedDate = df.format(c.getTime());
+				
 				if(!name.matches("")){
 
 					Log.d("Track name: ", track_name.getText().toString());
-					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 1, 1,0));
+					track_id = db.addTrack(new Track(track_name.getText().toString(),"Porto", "Portugal", 1, 1,0,formattedDate));
+					Log.d("track id",track_id+"");
 				}
 				else{
 					Log.d("Track name: ", track_name.getHint().toString());
-					track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 1, 1,0));
+					//track_id = db.addTrack(new Track(track_name.getHint().toString(),"Porto", "Portugal", 1, 1,0, formattedDate));
+					track_id = db.addTrack(new Track("Trilho lindo","Porto", "Portugal", 1, 1,0,formattedDate));
+					Log.d("track id",track_id+"");
+					Track t = db.getTrack((int)track_id);
+					Log.d("track criada",t.getName()+"");
 				}
 
 				handler.postDelayed(runnable, 1000);

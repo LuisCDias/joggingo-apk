@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
 	// All Static variables
@@ -29,6 +30,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     private static final String TRACK_KEY_USERID = "user_id";
     private static final String TRACK_KEY_PRIVATE = "private";
     private static final String TRACK_KEY_APPROVED = "approved";
+    private static final String TRACK_KEY_VMEDIA = "vMedia";
+    private static final String TRACK_KEY_DISTANCE = "distant";
+    private static final String TRACK_KEY_INITIAL_TIME = "initial_time";
+    private static final String TRACK_KEY_FINAL_TIME = "final_time";
     
     // Point Table Columns names
     private static final String POINT_KEY_ID = "id";
@@ -46,6 +51,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         String CREATE_TRACKS_TABLE = "CREATE TABLE " + TABLE_TRACKS + "("
                 + TRACK_KEY_ID + " INTEGER PRIMARY KEY," + TRACK_KEY_NAME + " TEXT,"
                 + TRACK_KEY_CITY + " TEXT," + TRACK_KEY_COUNTRY + " TEXT,"
+                + TRACK_KEY_INITIAL_TIME + " TEXT,"+ TRACK_KEY_FINAL_TIME + " TEXT,"
+                + TRACK_KEY_VMEDIA + " TEXT," + TRACK_KEY_DISTANCE + " TEXT,"
                 + TRACK_KEY_USERID + " INTEGER,"+ TRACK_KEY_PRIVATE + " INTEGER,"
                 + TRACK_KEY_APPROVED + " INTEGER"
                 +")";
@@ -80,6 +87,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         values.put(TRACK_KEY_USERID, track.getUserId());
         values.put(TRACK_KEY_PRIVATE, track.isPrivat());
         values.put(TRACK_KEY_APPROVED, track.isApproved());
+        values.put(TRACK_KEY_INITIAL_TIME, track.getInitial_time());
+        values.put(TRACK_KEY_FINAL_TIME, track.getFinal_time());
+        values.put(TRACK_KEY_VMEDIA, track.getvMedia());
+        values.put(TRACK_KEY_DISTANCE, track.getDistance());
      
         // Inserting Row
         i = db.insert(TABLE_TRACKS, null, values);
@@ -94,15 +105,31 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         Cursor cursor = db.query(TABLE_TRACKS, new String[] { TRACK_KEY_ID,
         		TRACK_KEY_NAME, TRACK_KEY_CITY,
         		TRACK_KEY_COUNTRY, TRACK_KEY_USERID,
-        		TRACK_KEY_PRIVATE, TRACK_KEY_APPROVED}, TRACK_KEY_ID + "=?",
+        		TRACK_KEY_PRIVATE, TRACK_KEY_APPROVED,
+        		TRACK_KEY_INITIAL_TIME, TRACK_KEY_FINAL_TIME,
+        		TRACK_KEY_VMEDIA, TRACK_KEY_DISTANCE}, TRACK_KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+            
+        /*0 - int id, 
+         * 1 - String name, 
+         * 2 - String city, 
+         * 3 - String country, 
+         * 4 - int user_id,
+			5 - int privat, 
+			6 - int approved,  
+			7 - String initial_time, 
+			8 - String final_time
+			9 - double vMedia;
+			10 - double distance;
+		*/
         
-     
         Track track = new Track(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), Integer.parseInt(cursor.getString(4)), 1, 0);
-        // return contact
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), Integer.parseInt(cursor.getString(4)),
+                Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), cursor.getString(7),
+                cursor.getString(8), Double.parseDouble(cursor.getString(9)), Double.parseDouble(cursor.getString(10)));
+        // return track
         return track;
     }
      
@@ -110,32 +137,35 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public List<Track> getAllTracks() {
         List<Track> trackList = new ArrayList<Track>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_TRACKS;
+        String selectQuery = "SELECT  " + TRACK_KEY_ID+"," +TRACK_KEY_NAME + "," + TRACK_KEY_CITY + "," +
+        		TRACK_KEY_COUNTRY + "," + TRACK_KEY_USERID+ ","+
+        		TRACK_KEY_PRIVATE +"," +TRACK_KEY_APPROVED+ ","+
+        		TRACK_KEY_INITIAL_TIME +","+ TRACK_KEY_FINAL_TIME+","+
+        		TRACK_KEY_VMEDIA+","+ TRACK_KEY_DISTANCE+" FROM " + TABLE_TRACKS;
      
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
      
-        /*
-        0 - TRACK_KEY_ID + " INTEGER PRIMARY KEY," 
-        1 - TRACK_KEY_NAME + " TEXT,"
-        2 - TRACK_KEY_CITY + " TEXT," 
-        3 - TRACK_KEY_COUNTRY + " TEXT,"
-        4 - TRACK_KEY_USERID +" INTEGER,"
-        5 - TRACK_KEY_PRIVATE + "BOOLEAN, "+ 
-        6 - TRACK_KEY_APPROVED + "BOOLEAN"
-        */
+        /*0 - int id, 
+         * 1 - String name, 
+         * 2 - String city, 
+         * 3 - String country, 
+         * 4 - int user_id,
+			5 - int privat, 
+			6 - int approved,  
+			7 - String initial_time, 
+			8 - String final_time
+			9 - double vMedia;
+			10 - double distance;
+		*/
         
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Track track = new Track();
-                track.setId(Integer.parseInt(cursor.getString(0)));
-                track.setName(cursor.getString(1));
-                track.setCity(cursor.getString(2));
-                track.setCountry(cursor.getString(3));
-                track.setUserId(Integer.parseInt(cursor.getString(4)));
-                track.setPrivat(0);
-                track.setApproved(1);
+            	Track track = new Track(Integer.parseInt(cursor.getString(0)),
+                        cursor.getString(1), cursor.getString(2), cursor.getString(3), Integer.parseInt(cursor.getString(4)),
+                        Integer.parseInt(cursor.getString(5)), Integer.parseInt(cursor.getString(6)), cursor.getString(7),
+                        cursor.getString(8), Double.parseDouble(cursor.getString(9)), Double.parseDouble(cursor.getString(10)));
                 
                 // Adding contact to list
                 trackList.add(track);
