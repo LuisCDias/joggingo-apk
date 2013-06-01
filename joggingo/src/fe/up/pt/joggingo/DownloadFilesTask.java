@@ -45,28 +45,40 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	    Track t = db.getAllTracks().get(0);
 	    try {
 			json.put("user_id", t.getUserId());
-			json.put("approved", t.isApproved());
+			json.put("approved", (t.isApproved() == 1? true:false));
 			json.put("name", t.getName());
 			json.put("city", t.getCity());
 			json.put("country", t.getCountry());
-			json.put("private", t.isPrivat());
-			json.put("initial_time", "2013:1:1:20:10:1:987");
-			json.put("final_time", "2013:1:1:20:15:1:0");
+			json.put("private", (t.isPrivat()== 1? true:false));
+
+			json.put("initial_time", t.getInitial_time());
+			json.put("final_time", t.getFinal_time());
 			
 			JSONArray pontos = new JSONArray();
-			JSONObject ponto = new JSONObject();
-			ponto.put("latitude", "41.157671");
-			ponto.put("longitude", "-8.627787");
-			pontos.put(ponto);
-			JSONObject ponto1 = new JSONObject();
-			ponto1.put("latitude", "41.158818");
-			ponto1.put("longitude", "-8.628495");
-			pontos.put(ponto1);
-			JSONObject ponto2 = new JSONObject();
-			ponto2.put("latitude", "41.158725");
-			ponto2.put("longitude", "-8.62982");
-			pontos.put(ponto2);
+			
+			for(Point p : db.getAllPoint(t.getId())){
+				JSONObject ponto = new JSONObject();
+				ponto.put("latitude", p.getLatitude());
+				ponto.put("longitude", p.getLongitude());
+				pontos.put(ponto);
+			}
 			json.put("points", pontos);
+			
+			Log.d("pontos",pontos+"");
+			
+//			JSONObject ponto = new JSONObject();
+//			ponto.put("latitude", "41.157671");
+//			ponto.put("longitude", "-8.627787");
+//			pontos.put(ponto);
+//			JSONObject ponto1 = new JSONObject();
+//			ponto1.put("latitude", "41.158818");
+//			ponto1.put("longitude", "-8.628495");
+//			pontos.put(ponto1);
+//			JSONObject ponto2 = new JSONObject();
+//			ponto2.put("latitude", "41.158725");
+//			ponto2.put("longitude", "-8.62982");
+//			pontos.put(ponto2);
+//			json.put("points", pontos);
 			
 			
 			nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -85,8 +97,9 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 		}
 	    Log.d("SYNC", json.toString());
 	    try {
-	    	StringEntity se = new StringEntity(json.toString());  
+	    	StringEntity se = new StringEntity(json.toString(), HTTP.UTF_8);  
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            
 			httppost.setEntity(se);
 	    	//httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             
@@ -97,9 +110,10 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 		}   
         try {
 			HttpResponse response = httpclient.execute(httppost);
-
+			
 			String jsonString = EntityUtils.toString(response.getEntity());
 			Log.d("response", jsonString);
+			Log.d("responseStatus", response.getStatusLine().toString());
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,37 +121,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    /*
-	     * {
-			\"user_id\":1,
-			\"approved\":false,
-			\"name\": \"Trilho da Boavista\",
-			\"city\": \"Porto\",
-			\"private\":true,
-			\"initial_time\": \"2013:1:1:20:10:1:987\",
-			\"final_time\": \"2013:1:1:20:15:1:0\",
-			\"points\":[{\"latitude\": \"41.157671\",
-				\"longitude\": \"-8.627787\"},
-				{\"latitude\": \"41.158818\",
-				\"longitude\": \"-8.628495\"},
-				{\"latitude\": \"41.158725\",
-				\"longitude\": \"-8.62982\"},
-				{\"latitude\": \"41.157898\",
-				\"longitude\": \"-8.63034\"},
-				{\"latitude\": \"41.157009\",
-				\"longitude\": \"-8.629589\"},
-				{\"latitude\": \"41.15734\",
-				\"longitude\": \"-8.625716\"},
-				{\"latitude\": \"41.15709\",
-				\"longitude\": \"-8.624107\"},
-				{\"latitude\": \"41.156896\",
-				\"longitude\": \"-8.623055\"},
-				{\"latitude\": \"41.156702\",
-				\"longitude\": \"-8.6218\"},
-				{\"latitude\": \"41.156492\",
-				\"longitude\": \"-8.62077\"}
-				]
-			}*/
+
         return (long) 1;
     }
 

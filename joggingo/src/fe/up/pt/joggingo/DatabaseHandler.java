@@ -183,6 +183,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db.close();
     }
     
+    //Delete all tracks
     public void deleteAllTracks(){
     	SQLiteDatabase db = this.getWritableDatabase();
     	db.delete(TABLE_TRACKS, null, null);
@@ -271,5 +272,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     	db.close();
     }
 
+    public void updateTrack(Track t){
+    	Log.d("update", t.getId()+"");
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	ContentValues cv = new ContentValues();
+    	cv.put(TRACK_KEY_FINAL_TIME,t.getFinal_time()); //These Fields should be your String values of actual column names
+    	db.update(TABLE_TRACKS, cv, TRACK_KEY_ID+"="+t.getId(), null);
+    	db.close();
+    }
     
 }
