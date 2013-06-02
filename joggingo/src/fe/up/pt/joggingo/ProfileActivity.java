@@ -1,16 +1,13 @@
 package fe.up.pt.joggingo;
 
 
-import oauth2.OAuthAccessTokenActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -23,16 +20,13 @@ import fe.up.pt.joggingo.R;
 
 import fragments.TrackFragment;
 
-public class TrackActivity extends SherlockFragmentActivity implements TabListener {
-
-	public static MenuItem menu_login;
-	public static int user_id;
+public class ProfileActivity extends SherlockFragmentActivity implements TabListener {
+	
 	Activity a = this;
 	ViewPager mViewPager;
 	ActionBar mActionBar;
 	TabsAdapter mTabsAdapter;
 	Bundle extras;
-	private String access_token = null;
 	GPSTracker gps = null;
 	private DatabaseHandler db;
 	
@@ -46,11 +40,6 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		String tab_title = null;
 		if(extras != null)
 			tab_title = extras.getString("name");
-		
-		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
-			access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
-			extras.putString("access_token", access_token);
-		}
 
 		mViewPager = new ViewPager(this);
 		mViewPager.setId(R.id.pager);
@@ -72,12 +61,9 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
-		menu_login = (MenuItem) menu.findItem(R.id.menu_LogIn);
-		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
-			menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
-		else
-			menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
-		
+		MenuItem LogInItemMenu = menu.findItem(R.id.menu_LogIn);
+
+		LogInItemMenu.setTitle(JoggingoAPI.Strings.LOGIN);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -87,17 +73,6 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		case android.R.id.home:
 			
 			return false;
-
-		case R.id.menu_LogIn:
-
-			Intent intent = new Intent(TrackActivity.this,  OAuthAccessTokenActivity.class );
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
-				intent.putExtra("logout", "true");
-			
-			
-			startActivity(intent);
-			//finish();
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -124,24 +99,15 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 
 	public void syncTrack(View v){
 		
-		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
-			
-			db = new DatabaseHandler(this);
-			String id = null;
+		db = new DatabaseHandler(this);
+		String id = null;
 		
-			if(extras != null){			
-				id = extras.getString("id");
-				Toast.makeText(TrackActivity.this, "Synchronizing...",
-						Toast.LENGTH_SHORT).show();
-				long track_id = Long.parseLong(id);
-				new DownloadFilesTask(a,track_id, this, null,MainActivity.user_id).execute(db);
-			}
-		}
-		else{
-			TrackFragment.sync_one.setEnabled(false);
-			Intent intent = new Intent(TrackActivity.this,  OAuthAccessTokenActivity.class );
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+		if(extras != null){
+			
+			id = extras.getString("id");
+			
+			long track_id = Long.parseLong(id);
+			new DownloadFilesTask(a,track_id, this, null,0).execute(db);
 		}
 	}
 	

@@ -369,6 +369,7 @@
                 android:layout_height="68dp"
                 android:background="?attr/selectableItemBackground"
                 android:text="My JogginGo!"
+                android:onClick="listUserTracks"
                 android:textColor="@color/white" />
 
             <View
@@ -399,7 +400,7 @@
             android:layout_height="1dip"
             android:layout_below="@id/button_synchronize"
             android:background="?attr/dividerVertical"
-            android:visibility="gone" >
+            android:visibility="visible" >
         </View>
         
         <Button

@@ -94,7 +94,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	public static Button map;
 	public static Button button_restart;
 	public static RelativeLayout profile_button;
-
+	public static LinearLayout statistics_time_layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,13 +110,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		elapsed_time = 0;
 		distance_ran = 0;
 
-		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
-
-			access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
-			getUserInfo("http://belele.herokuapp.com/profile.json?access_token="+access_token);
-			Toast.makeText(MainActivity.this, "Getting user information...",
-					Toast.LENGTH_LONG).show();
-		}		
 		
 		String tab_title = "Welcome to JogginGo!";
 
@@ -133,8 +126,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		else{
 			gps.showSettingsAlert();
 		}
-
-
+		
 		mViewPager = new ViewPager(this);
 		mViewPager.setId(R.id.pager);
 		mViewPager.setBackgroundColor(Color.BLACK);
@@ -149,7 +141,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		
 		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
-
 		setContentView(R.layout.activity_main_menu);
 
 		final Button begin = (Button) findViewById(R.id.button_begin);
@@ -173,7 +164,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final TextView elapsed_time_text = (TextView) findViewById(R.id.elapsed_time_text);
 		final TextView distance_ran_text = (TextView) findViewById(R.id.distance_ran_text);
 		
-		final LinearLayout statistics_time_layout = (LinearLayout) findViewById(R.id.statistics_time_layout);
+		statistics_time_layout = (LinearLayout) findViewById(R.id.statistics_time_layout);
 		final View gradient_between_statistics = (View) findViewById(R.id.gradient_between_statistics);
 		final LinearLayout statistics_distance_layout = (LinearLayout) findViewById(R.id.statistics_distance_layout);
 		
@@ -192,19 +183,25 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		
 		profile_button = (RelativeLayout) findViewById(R.id.button_profile_layout);
 		
-		final Button profile_or_new_track_button = (Button) findViewById(R.id.button_profile);
+		
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
+			
+			sync.setText("Login to synchonize");
+			sync.setEnabled(false);
+			
+			access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
+			getUserInfo("http://belele.herokuapp.com/profile.json?access_token="+access_token);
+			Toast.makeText(MainActivity.this, "Getting user information...",
+					Toast.LENGTH_LONG).show();
+		}		
+		
 		
 		db = new DatabaseHandler(this);
 
 
 		//RETIRAR QUANDO FOR A SÉRIO!
-		db.restartDB();
+		//db.restartDB();
 		//
-
-		if(access_token == null)
-			sync.setText("Login to synchronize");
-		else
-			sync.setText("Synchronize account");
 
 
 		List<Track> tracks = db.getAllTracks();
@@ -212,6 +209,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		if(tracks.size() == 0)
 			notifications_layout.setVisibility(View.GONE);
 		else{
+			sync.setVisibility(View.VISIBLE);
 			notifications_layout.setVisibility(View.VISIBLE);
 			notifications_text.setText(notificationMessage(tracks.size()));
 		}
@@ -310,11 +308,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				//TODO visivel botao de new track
 				
 				gradient_coordinates.setVisibility(View.GONE);
-				gradient_final.setVisibility(View.GONE);
+				gradient_final.setVisibility(View.VISIBLE);
 				statistics_time_layout.setVisibility(View.VISIBLE);
 				gradient_between_statistics.setVisibility(View.VISIBLE);
 				statistics_distance_layout.setVisibility(View.VISIBLE);
-
+				button_restart.setVisibility(View.VISIBLE);
+				
 				map.setVisibility(View.VISIBLE);
 				
 				if(user_id != 0)
@@ -399,7 +398,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					Toast.makeText(MainActivity.this, "Synchronizing...",
 							Toast.LENGTH_SHORT).show();
 					vi = MainActivity.this.findViewById(android.R.id.content).getRootView();
-					new DownloadFilesTask(-1, MainActivity.this, vi, user_id).execute(db);
+					new DownloadFilesTask(a,-1, MainActivity.this, vi, user_id).execute(db);
 				}
 				else{
 					sync.setEnabled(false);
@@ -435,6 +434,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 							Toast.LENGTH_LONG).show();
 					menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
 					profile_button.setVisibility(View.VISIBLE);
+					
+					sync.setText("Synchronize account");
+					sync.setEnabled(true);
 					
 				} catch (JSONException e) {
 					
@@ -547,6 +549,19 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
 		startActivity(intent);
 	}
+	
+	public void listUserTracks(View v){
+		
+		Log.d("My", "JogginGo");
+		Intent intent = new Intent(this, TracksActivity.class);
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
+			intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
+		if(user_id != 0) //acho que vai ser sempre, mas para ter a certeza
+			intent.putExtra("user_id", user_id);
+		
+		startActivity(intent);
+	}
+	
 
 	public static String notificationMessage(int i){
 

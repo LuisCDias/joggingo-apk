@@ -46,23 +46,28 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/gradient1"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_below="@id/track_info_layout"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/gradient" >
-    </View>
+          android:id="@+id/gradient1"
+          android:layout_below="@+id/track_info_layout"
+          android:layout_width="fill_parent"
+          android:layout_height="1dip"
+          android:background="?attr/dividerVertical" />
 
     <Button
-        android:id="@+id/button_start_tracking"
+        android:id="@+id/button_sync"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/gradient1"
+        android:background="?attr/selectableItemBackground"
         android:onClick="syncTrack"
         android:text="Synchronize"
+        android:textColor="@color/white"
         android:visibility="visible" />
+    
+    <View
+          android:id="@+id/gradient2"
+          android:layout_below="@+id/button_sync"
+          android:layout_width="fill_parent"
+          android:layout_height="1dip"
+          android:background="?attr/dividerVertical" />
 
 </RelativeLayout>

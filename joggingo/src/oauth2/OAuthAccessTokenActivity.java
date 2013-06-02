@@ -43,6 +43,8 @@ import android.widget.Toast;
 import fe.up.pt.joggingo.JoggingoAPI;
 import fe.up.pt.joggingo.MainActivity;
 import fe.up.pt.joggingo.R;
+import fe.up.pt.joggingo.TrackActivity;
+import fragments.TrackFragment;
 /**
  * Execute the OAuthRequestTokenTask to retrieve the request, and authorize the
  * request. After the request is authorized by the user, the callback URL will
@@ -216,13 +218,25 @@ public class OAuthAccessTokenActivity extends Activity {
 
 				try {
 					String name = personal_data.getString("username");
+					
 					MainActivity.user_id = personal_data.getInt("id");
-
+					TrackActivity.user_id = personal_data.getInt("id");
+					
 					Toast.makeText(OAuthAccessTokenActivity.this, "Welcome, "+name,
 							Toast.LENGTH_LONG).show();
+					
 					MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
+					if(TrackActivity.menu_login!=null)
+						TrackActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
+					
 					MainActivity.sync.setEnabled(true);
 					MainActivity.sync.setVisibility(View.VISIBLE);
+					
+					if(TrackFragment.sync_one !=null){
+						TrackFragment.sync_one.setEnabled(true);
+						TrackFragment.sync_one.setText("Synchronize this track");
+					}
+					
 					MainActivity.profile_button.setVisibility(View.VISIBLE);
 					
 				} catch (JSONException e) {
@@ -250,9 +264,15 @@ public class OAuthAccessTokenActivity extends Activity {
 		MainActivity.user_id = 0;
 		MainActivity.sync.setText("Login to synchronize");
 		
+		if(TrackFragment.sync_one!=null)
+			TrackFragment.sync_one.setText("Login to synchronize");
+		if(TrackActivity.menu_login != null)
+			TrackActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
+		
 		editor.remove("access_token");
 		editor.remove("");
 		editor.commit();
+		
 		MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
 		MainActivity.profile_button.setVisibility(View.GONE);
 		

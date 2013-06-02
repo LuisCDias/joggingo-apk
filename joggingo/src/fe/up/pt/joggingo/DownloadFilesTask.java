@@ -26,8 +26,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import AsyncTasks.ResponseCommand.ERROR_TYPE;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -36,6 +39,7 @@ import android.widget.Toast;
 
 class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 
+	Activity a;
 	private DatabaseHandler db;
 	private String URL = "http://belele.herokuapp.com/mobile";
 	private long track_id;
@@ -45,8 +49,9 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 	private List<Track> tracks;
 	private int cont = 0;
 	private View v;
-	public DownloadFilesTask(long id, Context c, View vi, int user) {
+	public DownloadFilesTask(Activity act,long id, Context c, View vi, int user) {
 		super();
+		a = act;
 		track_id = id;
 		ctx = c;
 		v = vi;
@@ -163,8 +168,20 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				MainActivity.sync.setVisibility(View.GONE);
 				MainActivity.map.setVisibility(View.GONE);
 				MainActivity.profile_button.setVisibility(View.VISIBLE);
-				MainActivity.button_restart.setVisibility(View.VISIBLE);
+				if(MainActivity.statistics_time_layout.getVisibility() == View.VISIBLE)
+					MainActivity.button_restart.setVisibility(View.VISIBLE);
+			
 			}
+			if(track_id != -1){
+				Intent intent = new Intent(a.getApplicationContext(),TracksActivity.class);
+				if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
+					intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
+					a.startActivity(intent);
+				}
+				a.finish();
+				
+			}
+				
 		}
 		else{
 			Toast.makeText(ctx, "Synchronize failed! Please try again",

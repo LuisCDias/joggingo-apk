@@ -80,14 +80,6 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 		extras = new Bundle();
 		
 		extras = getIntent().getExtras();
-		if(extras != null){
-			
-			if(extras.containsKey("user_id"))
-				user_id = extras.getInt("user_id");			
-			
-			//if(extras.containsKey("access_token"))
-				//access_token = extras.getString("access_token");
-		}
 		
 		
 
@@ -104,12 +96,19 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
 
+		
 		mTabsAdapter.addTab(mActionBar.newTab().setText("Unsynchronized"), //precisa do user_id para sincronizar
 				TracksFragment.TracksFragmentAux.class, extras);
 		if(access_token!=null){
 			mTabsAdapter.addTab(mActionBar.newTab().setText("Synchronized"), //precisa do access_token para /profile/tracks
 					TracksFragment.TracksFragmentSynced.class, extras);
+		
+			if(extras != null)
+				if(extras.containsKey("user_id"))	
+					mActionBar.setSelectedNavigationItem(1);
+		
 		}
+		
 	}
 
 	@Override

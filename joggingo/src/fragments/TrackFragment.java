@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ListAdapter.TracksAdapter;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import fe.up.pt.joggingo.DatabaseHandler;
@@ -27,6 +29,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 public class TrackFragment extends SherlockFragmentActivity {
 	
 	
+	public static Button sync_one;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,9 +54,20 @@ public class TrackFragment extends SherlockFragmentActivity {
 
 			TextView name_text = (TextView) v.findViewById(R.id.track_name);
 			TextView city_text = (TextView) v.findViewById(R.id.track_city);
+			sync_one = (Button) v.findViewById(R.id.button_sync);
 			
 			name_text.setText(name);
 			city_text.setText(city);
+			
+			if(b.getString("type").equals("synched"))
+				sync_one.setVisibility(View.GONE);
+			
+			if(b.containsKey("access_token")){
+				sync_one.setText("Synchronize this track");
+			}
+			else{
+				sync_one.setText("Login to synchronize");
+			}
 
 			return v;
 		}

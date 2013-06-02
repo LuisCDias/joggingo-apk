@@ -1153,6 +1153,7 @@ containing a value of this type.
         public static final int button_start_stop_layout=0x7f060040;
         public static final int button_start_tracking=0x7f060047;
         public static final int button_stop=0x7f060053;
+        public static final int button_sync=0x7f060065;
         public static final int button_synchronize=0x7f060058;
         public static final int disableHome=0x7f06000d;
         public static final int distance_aux_text=0x7f06004d;
@@ -1161,22 +1162,24 @@ containing a value of this type.
         public static final int elapsed_time_text=0x7f06004a;
         public static final int fragment_container=0x7f06005d;
         public static final int gradient0=0x7f060044;
-        public static final int gradient1=0x7f060063;
+        public static final int gradient1=0x7f060064;
+        public static final int gradient2=0x7f060066;
         public static final int gradient_between_statistics=0x7f06004b;
         public static final int gradient_coordinates=0x7f060054;
         public static final int gradient_final=0x7f060059;
         public static final int gradient_statistics=0x7f06004f;
         public static final int homeAsUp=0x7f06000a;
         public static final int hybrid=0x7f060004;
-        public static final int icon=0x7f06005e;
+        public static final int icon=0x7f06005f;
         public static final int joggingo_layout=0x7f06003b;
         public static final int joggingo_logo=0x7f06003c;
         public static final int joggingo_main_text=0x7f06003e;
         public static final int legal=0x7f06005c;
         public static final int listMode=0x7f060006;
         public static final int map=0x7f060037;
-        public static final int menu_LogIn=0x7f060067;
-        public static final int menu_settings=0x7f060066;
+        public static final int menu_LogIn=0x7f06006a;
+        public static final int menu_settings=0x7f060069;
+        public static final int no_results=0x7f06005e;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
         public static final int notification_divider=0x7f06003a;
@@ -1188,7 +1191,7 @@ containing a value of this type.
         public static final int showCustom=0x7f06000c;
         public static final int showHome=0x7f060009;
         public static final int showTitle=0x7f06000b;
-        public static final int snippet=0x7f060060;
+        public static final int snippet=0x7f060061;
         public static final int start_information=0x7f06003d;
         public static final int start_stop_layout=0x7f06003f;
         public static final int statistics_distance_layout=0x7f06004c;
@@ -1196,12 +1199,12 @@ containing a value of this type.
         public static final int tabMode=0x7f060007;
         public static final int terrain=0x7f060003;
         public static final int time_aux_text=0x7f060049;
-        public static final int title=0x7f06005f;
-        public static final int track_city=0x7f060062;
-        public static final int track_cover=0x7f060065;
-        public static final int track_info_layout=0x7f060061;
+        public static final int title=0x7f060060;
+        public static final int track_city=0x7f060063;
+        public static final int track_cover=0x7f060068;
+        public static final int track_info_layout=0x7f060062;
         public static final int track_name=0x7f060045;
-        public static final int tracks_list_layout=0x7f060064;
+        public static final int tracks_list_layout=0x7f060067;
         public static final int useLogo=0x7f060008;
         public static final int wrap_content=0x7f060005;
     }
@@ -1238,11 +1241,12 @@ containing a value of this type.
         public static final int legal=0x7f03001a;
         public static final int list_fragment=0x7f03001b;
         public static final int main=0x7f03001c;
-        public static final int popup=0x7f03001d;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001e;
-        public static final int sherlock_spinner_item=0x7f03001f;
-        public static final int track_view=0x7f030020;
-        public static final int user_tracks=0x7f030021;
+        public static final int no_results=0x7f03001d;
+        public static final int popup=0x7f03001e;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001f;
+        public static final int sherlock_spinner_item=0x7f030020;
+        public static final int track_view=0x7f030021;
+        public static final int user_tracks=0x7f030022;
     }
     public static final class menu {
         public static final int activity_main=0x7f0d0000;

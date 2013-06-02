@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import AsyncTasks.ResponseCommand;
 import AsyncTasks.ResponseCommand.ERROR_TYPE;
+import ListAdapter.EmptyAdapter;
 import ListAdapter.ListAdapter;
 import ListAdapter.TracksAdapter;
 import android.content.Intent;
@@ -87,7 +88,10 @@ public class TracksFragment extends SherlockFragmentActivity {
 				// remove divider
 				this.getListView().setDividerHeight(0);
 
-				setListAdapter(new TracksAdapter(getActivity(), names, cities, countries));
+				if(tracks.size()!=0)
+					setListAdapter(new TracksAdapter(getActivity(), names, cities, countries));
+				else
+					setListAdapter(new EmptyAdapter(getActivity(), 1));
 
 		}
 
@@ -101,7 +105,8 @@ public class TracksFragment extends SherlockFragmentActivity {
 			intent.putExtra("name", names.get(position));
 			intent.putExtra("city", cities.get(position));
 			intent.putExtra("country", countries.get(position));
-
+			intent.putExtra("type", "unsynched");
+			
 			startActivity(intent);
 
 
@@ -162,9 +167,10 @@ public class TracksFragment extends SherlockFragmentActivity {
 						i++;
 					}
 
-					
-					setListAdapter(new TracksAdapter(getActivity(), names, cities, countries));
-
+					if(i!=0)
+						setListAdapter(new TracksAdapter(getActivity(), names, cities, countries));
+					else
+						setListAdapter(new EmptyAdapter(getActivity(), 2));
 				}
 
 				@Override
@@ -201,7 +207,8 @@ public class TracksFragment extends SherlockFragmentActivity {
 			intent.putExtra("name", names.get(position));
 			intent.putExtra("city", cities.get(position));
 			intent.putExtra("country", countries.get(position));
-
+			intent.putExtra("type", "synched");
+			
 			startActivity(intent);
 
 		}
