@@ -229,7 +229,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 
 		//RETIRAR QUANDO FOR A SÉRIO!
-		db.restartDB();
+		//db.restartDB();
 		//
 
 
@@ -636,7 +636,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
 		menu_login = (MenuItem) menu.findItem(R.id.menu_LogIn);
-		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null || !isOnline())
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) == null)
 			menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
 		else
 			menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);

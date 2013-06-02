@@ -34,6 +34,8 @@ import android.hardware.Camera.Size;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -114,9 +116,12 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
-		MenuItem LogInItemMenu = menu.findItem(R.id.menu_LogIn);
-
-		LogInItemMenu.setTitle(JoggingoAPI.Strings.LOGIN);
+		MenuItem menu_login = (MenuItem) menu.findItem(R.id.menu_LogIn);
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) == null)
+			menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
+		else
+			menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -150,7 +155,17 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 		}
 	}
 
-
+	public boolean isOnline(){
+		
+		ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		if ( conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED 
+			    ||  conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED)
+			return false;
+		else
+			return true;
+		
+		
+	}
 	//--------------------------------------------------------------------------------------
 	public void getAdvancedSearch(View v){
 

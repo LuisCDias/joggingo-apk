@@ -1148,7 +1148,7 @@ containing a value of this type.
         public static final int button_profile=0x7f060057;
         public static final int button_profile_divider=0x7f060041;
         public static final int button_profile_layout=0x7f060056;
-        public static final int button_remove=0x7f060067;
+        public static final int button_remove=0x7f060068;
         public static final int button_restart=0x7f06005a;
         public static final int button_start_layout=0x7f060042;
         public static final int button_start_stop_layout=0x7f060040;
@@ -1165,7 +1165,8 @@ containing a value of this type.
         public static final int gradient0=0x7f060044;
         public static final int gradient1=0x7f060064;
         public static final int gradient2=0x7f060066;
-        public static final int gradient3=0x7f060068;
+        public static final int gradient3=0x7f060067;
+        public static final int gradient4=0x7f060069;
         public static final int gradient_between_statistics=0x7f06004b;
         public static final int gradient_coordinates=0x7f060054;
         public static final int gradient_final=0x7f060059;
@@ -1179,8 +1180,8 @@ containing a value of this type.
         public static final int legal=0x7f06005c;
         public static final int listMode=0x7f060006;
         public static final int map=0x7f060037;
-        public static final int menu_LogIn=0x7f06006c;
-        public static final int menu_settings=0x7f06006b;
+        public static final int menu_LogIn=0x7f06006d;
+        public static final int menu_settings=0x7f06006c;
         public static final int no_results=0x7f06005e;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
@@ -1203,10 +1204,10 @@ containing a value of this type.
         public static final int time_aux_text=0x7f060049;
         public static final int title=0x7f060060;
         public static final int track_city=0x7f060063;
-        public static final int track_cover=0x7f06006a;
+        public static final int track_cover=0x7f06006b;
         public static final int track_info_layout=0x7f060062;
         public static final int track_name=0x7f060045;
-        public static final int tracks_list_layout=0x7f060069;
+        public static final int tracks_list_layout=0x7f06006a;
         public static final int useLogo=0x7f060008;
         public static final int wrap_content=0x7f060005;
     }

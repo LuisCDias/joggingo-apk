@@ -70,11 +70,29 @@
           android:layout_height="1dip"
           android:background="?attr/dividerVertical" />
     
+    <Button
+        android:id="@+id/button_map"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/gradient2"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="goToMap"
+        android:text="See on Map" 
+        android:textColor="@color/white"
+        android:visibility="visible" />
+    
+    <View
+          android:id="@+id/gradient3"
+          android:layout_below="@+id/button_map"
+          android:layout_width="fill_parent"
+          android:layout_height="1dip"
+          android:background="?attr/dividerVertical" />
+    
      <Button
         android:id="@+id/button_remove"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/gradient2"
+        android:layout_below="@+id/gradient3"
         android:background="?attr/selectableItemBackground"
         android:onClick="removeTrack"
         android:text="Remove" 
@@ -82,10 +100,12 @@
         android:visibility="visible" />
     
     <View
-          android:id="@+id/gradient3"
+          android:id="@+id/gradient4"
           android:layout_below="@+id/button_remove"
           android:layout_width="fill_parent"
           android:layout_height="1dip"
           android:background="?attr/dividerVertical" />
+    
+    
 
 </RelativeLayout>

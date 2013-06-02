@@ -38,7 +38,7 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 	TabsAdapter mTabsAdapter;
 	Bundle extras;
 	private String access_token = null;
-	private int track_id;
+	private long track_id;
 	GPSTracker gps = null;
 	private DatabaseHandler db;
 	
@@ -52,7 +52,8 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		String tab_title = null;
 		if(extras != null){
 			tab_title = extras.getString("name");
-			track_id = extras.getInt("id");
+			String id =extras.getString("id");
+			track_id = Long.valueOf(id);
 		}
 		
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
@@ -132,6 +133,28 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		}
 	}
 
+	public void goToMap(View v){
+
+		gps = new GPSTracker(this);
+
+		if(gps.canGetLocation()){
+
+			double latitude = gps.getLatitude(); // returns latitude
+			double longitude = gps.getLongitude(); // returns longitude
+
+			Intent intent = new Intent(this, MainMapActivity.class);
+
+			intent.putExtra("track", track_id);
+			intent.putExtra("latitude", latitude);
+			intent.putExtra("longitude", longitude);
+
+			startActivity(intent);
+		}
+		else{
+			gps.showSettingsAlert();
+		}	
+	}
+	
 	public void syncTrack(View v){
 		
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
