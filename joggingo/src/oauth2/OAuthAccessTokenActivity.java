@@ -196,6 +196,8 @@ public class OAuthAccessTokenActivity extends Activity {
 			/*getUserDetails(OAuth2ClientCredentials.SCOPE+"profile.json?access_token="+this.prefs.getString("access_token", null));
 			finish();*/
 			clearCredentials();
+			Toast.makeText(OAuthAccessTokenActivity.this, "Successfully logged out.",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -253,8 +255,6 @@ public class OAuthAccessTokenActivity extends Activity {
 		MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
 		MainActivity.profile_button.setVisibility(View.GONE);
 		
-		Toast.makeText(OAuthAccessTokenActivity.this, "Successfully logged out.",
-				Toast.LENGTH_LONG).show();
 		//android.webkit.CookieManager.getInstance().removeAllCookie(); //this is used to clear the cookies of the webview
 		finish();
 	}

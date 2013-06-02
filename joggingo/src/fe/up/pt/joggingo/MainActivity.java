@@ -48,6 +48,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -144,7 +145,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
-
+		
 		mTabsAdapter.addTab(mActionBar.newTab().setText(tab_title),
 				MainFragment.MainFragmentAux.class, b);
 
@@ -156,23 +157,39 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final Button start_track = (Button) findViewById(R.id.button_start_tracking);
 		final Button map = (Button) findViewById(R.id.button_map);
 		sync = (Button) findViewById(R.id.button_synchronize);
-
-
-		final TextView coordinates_text = (TextView) findViewById(R.id.coordinates_text);
+		
+		final LinearLayout button_start_stop_layout = (LinearLayout) findViewById(R.id.button_start_stop_layout);
+		
 		final EditText track_name = (EditText) findViewById(R.id.track_name);
 		final TextView main_text = (TextView) findViewById(R.id.joggingo_main_text);
 		final View gradient_text = (View) findViewById(R.id.gradient_coordinates);
+		final View gradient_final = (View) findViewById(R.id.gradient_final);
+		
 
 		final TextView elapsed_time_text = (TextView) findViewById(R.id.elapsed_time_text);
 		final TextView distance_ran_text = (TextView) findViewById(R.id.distance_ran_text);
-		final LinearLayout statistics_layout = (LinearLayout) findViewById(R.id.statistics_layout);
+		
+		final LinearLayout statistics_time_layout = (LinearLayout) findViewById(R.id.statistics_time_layout);
+		final View gradient_between_statistics = (View) findViewById(R.id.gradient_between_statistics);
+		final LinearLayout statistics_distance_layout = (LinearLayout) findViewById(R.id.statistics_distance_layout);
+		
 		final View gradient_statistics = (View) findViewById(R.id.gradient_statistics);
-
+		final View gradient_coordinates = (View) findViewById(R.id.gradient_coordinates);
+		final View gradient0 = (View) findViewById(R.id.gradient0);
+		final View button_begin_gradient = (View) findViewById(R.id.button_begin_gradient);
+		
+		
 		final LinearLayout notifications_layout = (LinearLayout) findViewById(R.id.notifications_layout);
 		final TextView notifications_text = (TextView) findViewById(R.id.notification_text);
-
+		
+		final LinearLayout pause_stop_buttons_layout = (LinearLayout) findViewById(R.id.pause_stop_buttons_layout);
+		final ImageView joggingo_logo = (ImageView) findViewById(R.id.joggingo_logo);
+		final LinearLayout start_information = (LinearLayout) findViewById(R.id.start_information);
 		
 		profile_button = (RelativeLayout) findViewById(R.id.button_profile_layout);
+		
+		final Button profile_or_new_track_button = (Button) findViewById(R.id.button_profile);
+		
 		db = new DatabaseHandler(this);
 
 
@@ -198,7 +215,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		begin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
+				
 				elapsed_time = 0;
 				distance_ran = 0;
 				latitude_was = 0.0;
@@ -206,11 +223,17 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 				profile_button.setVisibility(View.GONE);
 				begin.setVisibility(View.GONE);
-				coordinates_text.setVisibility(View.GONE);
+				button_start_stop_layout.setVisibility(View.GONE);
+				
 				map.setVisibility(View.GONE);
 				sync.setVisibility(View.GONE);
 				main_text.setText("Enter track name!");
-				statistics_layout.setVisibility(View.GONE);
+				
+				statistics_time_layout.setVisibility(View.GONE);
+				gradient_between_statistics.setVisibility(View.GONE);
+				statistics_distance_layout.setVisibility(View.GONE);
+				
+				
 				elapsed_time_text.setText("00:00:00");
 				distance_ran_text.setText("0.0 km");
 				gradient_statistics.setVisibility(View.GONE);
@@ -223,6 +246,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				track_name.setHint(formattedDate);
 				track_name.setVisibility(View.VISIBLE);
 				start_track.setVisibility(View.VISIBLE);
+				button_begin_gradient.setVisibility(View.VISIBLE);
+				gradient_coordinates.setVisibility(View.VISIBLE);
 
 			}
 		});
@@ -233,7 +258,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				if(paused){
 					paused = false;
 					pause.setText("Pause");
-					main_text.setText("Go!");
+					main_text.setText("Resume");
 					handler.postDelayed(runnable, 1000);
 				}
 				else{
@@ -273,10 +298,16 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				begin.setText("Start again");
 				pause.setVisibility(View.GONE);
 				end.setVisibility(View.GONE);
-				profile_button.setVisibility(View.VISIBLE);
+				pause_stop_buttons_layout.setVisibility(View.GONE);
 				
-				coordinates_text.setVisibility(View.GONE);
-				statistics_layout.setVisibility(View.VISIBLE);
+				profile_button.setVisibility(View.VISIBLE);
+				profile_or_new_track_button.setText("New track"); //TODO controlar quando é para que efeito
+				
+				gradient_coordinates.setVisibility(View.GONE);
+				gradient_final.setVisibility(View.GONE);
+				statistics_time_layout.setVisibility(View.VISIBLE);
+				gradient_between_statistics.setVisibility(View.VISIBLE);
+				statistics_distance_layout.setVisibility(View.VISIBLE);
 
 				map.setVisibility(View.VISIBLE);
 				
@@ -299,18 +330,25 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				notifications_layout.setVisibility(View.GONE);
 				pause.setVisibility(View.VISIBLE);
 				end.setVisibility(View.VISIBLE);
-
-				coordinates_text.setVisibility(View.VISIBLE);
+				pause_stop_buttons_layout.setVisibility(View.VISIBLE);
+				
 				gradient_text.setVisibility(View.VISIBLE);
-
-				statistics_layout.setVisibility(View.VISIBLE);
+				gradient0.setVisibility(View.GONE);
+				
+				statistics_time_layout.setVisibility(View.VISIBLE);
+				gradient_between_statistics.setVisibility(View.VISIBLE);
+				statistics_distance_layout.setVisibility(View.VISIBLE);
+				joggingo_logo.setVisibility(View.GONE);
+				start_information.setVisibility(View.GONE);
+				
 				gradient_statistics.setVisibility(View.VISIBLE);
 
 				map.setVisibility(View.GONE);
 				main_text.setText("Go!");
 				track_name.setVisibility(View.GONE);
 				start_track.setVisibility(View.GONE);
-
+				button_begin_gradient.setVisibility(View.GONE);
+				
 				Log.d("Insert: ", "Inserting ..");
 
 				//Get initial time
@@ -337,7 +375,50 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				handler.postDelayed(runnable, 1000);
 			}
 		});
+		
+		profile_or_new_track_button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				
+				if(profile_or_new_track_button.getText().equals("New track")){
+					elapsed_time = 0;
+					distance_ran = 0;
+					latitude_was = 0.0;
+					longitude_was = 0.0;
 
+					profile_button.setVisibility(View.GONE);
+					begin.setVisibility(View.GONE);
+					button_start_stop_layout.setVisibility(View.GONE);
+					
+					map.setVisibility(View.GONE);
+					sync.setVisibility(View.GONE);
+					main_text.setText("Enter track name!");
+					
+					statistics_time_layout.setVisibility(View.GONE);
+					gradient_between_statistics.setVisibility(View.GONE);
+					statistics_distance_layout.setVisibility(View.GONE);
+					
+					
+					elapsed_time_text.setText("00:00:00");
+					distance_ran_text.setText("0.0 km");
+					gradient_statistics.setVisibility(View.GONE);
+
+					Calendar c = Calendar.getInstance(); 
+					Log.d("current",c.getTime()+""); 
+					SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
+					String formattedDate = df.format(c.getTime());
+
+					track_name.setHint(formattedDate);
+					track_name.setVisibility(View.VISIBLE);
+					start_track.setVisibility(View.VISIBLE);
+					button_begin_gradient.setVisibility(View.VISIBLE);
+					gradient_coordinates.setVisibility(View.VISIBLE);
+					joggingo_logo.setVisibility(View.VISIBLE);
+					start_information.setVisibility(View.VISIBLE);
+				}
+					
+			}
+		});
+				
 		sync.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				
@@ -419,7 +500,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					double latitude = gps.getLatitude(); // returns latitude
 					double longitude = gps.getLongitude(); // returns longitude
 
-					TextView coordenadas_text = (TextView) findViewById(R.id.coordinates_text);
 					TextView elapsed_time_text = (TextView) findViewById(R.id.elapsed_time_text);
 					TextView distance_ran_text = (TextView) findViewById(R.id.distance_ran_text);
 
@@ -446,7 +526,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					elapsed_time +=1;
 					String result = String.format("%02d:%02d:%02d", elapsed_time / 3600, elapsed_time / 60 % 60, elapsed_time % 60);
 
-					coordenadas_text.setText(latitude + ", "+longitude);
 					elapsed_time_text.setText(result);
 
 					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),track_id));

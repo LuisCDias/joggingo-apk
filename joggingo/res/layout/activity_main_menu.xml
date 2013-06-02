@@ -30,7 +30,7 @@
                 android:textColor="@color/red"
                 android:textSize="12dp" />
 
-            <View
+             <View
                 android:id="@+id/notification_divider"
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
@@ -50,7 +50,7 @@
             android:orientation="horizontal" >
 
             <ImageView
-                android:id="@+id/user_cover"
+                android:id="@+id/joggingo_logo"
                 android:layout_width="140dp"
                 android:layout_height="156dp"
                 android:layout_marginLeft="5dp"
@@ -73,7 +73,7 @@
                     android:id="@+id/joggingo_main_text"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
@@ -92,28 +92,59 @@
                     android:orientation="horizontal"
                     android:weightSum="1" >
 
-                    <Button
-                        android:id="@+id/button_begin"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Start track" />
+                    <LinearLayout
+                        android:id="@+id/button_start_stop_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/layoutstyle"
+                        android:orientation="vertical" >
 
-                    <Button
-                        android:id="@+id/button_pause"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="Pause"
-                        android:visibility="gone" />
+                        <View
+                            android:id="@+id/button_profile_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="?attr/dividerVertical" />
 
-                    <Button
-                        android:id="@+id/button_stop"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="Stop"
-                        android:visibility="gone" />
+                        <LinearLayout
+                            android:id="@+id/button_start_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/layoutstyle"
+                            android:orientation="horizontal"
+                            android:weightSum="1" >
+
+                            <View
+                                android:id="@+id/button_profile_divider"
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="0.01"
+                                android:background="?attr/dividerVertical" />
+
+                            <Button
+                                android:id="@+id/button_begin"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="0.98"
+                                android:background="?attr/selectableItemBackground"
+                                android:text="Start track"
+                                android:textColor="@color/white" />
+
+                            <View
+                                android:id="@+id/button_profile_divider"
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="0.01"
+                                android:background="?attr/dividerVertical" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/button_profile_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="?attr/dividerVertical" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -123,23 +154,213 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_below="@id/joggingo_layout"
-
             android:layout_marginTop="5dp"
             android:background="?attr/dividerVertical" >
         </View>
 
+        
+        <EditText
+            android:id="@+id/track_name"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:layout_below="@+id/gradient0"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="Enter track name..."
+            android:inputType="text"
+            android:visibility="gone" />
+		
+        <View
+              android:id="@+id/button_begin_gradient"
+              android:layout_below="@+id/track_name"
+              android:layout_width="fill_parent"
+              android:layout_height="1dip"
+              android:background="?attr/dividerVertical"
+              android:visibility="gone"/>
+        <Button
+            android:id="@+id/button_start_tracking"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/button_begin_gradient"
+            android:background="?attr/selectableItemBackground"
+           	android:textColor="@color/white"
+            android:text="Begin!"
+            android:visibility="gone" />
+
+        <!-- Colocar em layout horizontal juntamente com outra textview para os km -->
+
+        <LinearLayout
+            android:id="@+id/statistics_time_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="125dp"
+            android:layout_below="@+id/button_start_tracking"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/layoutstyle"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/time_aux_text"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.4"
+                android:gravity="left|center_vertical"
+                android:text="Time: "
+                android:textColor="@color/white"
+                android:textSize="28dp" />
+
+            <TextView
+                android:id="@+id/elapsed_time_text"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.6"
+                android:gravity="center"
+                android:text="00:00:00"
+                android:textColor="@color/white"
+                android:textSize="28dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient_between_statistics"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/statistics_time_layout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="?attr/dividerVertical"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/statistics_distance_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="125dp"
+            android:layout_below="@+id/gradient_between_statistics"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/layoutstyle"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/distance_aux_text"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:gravity="left|center_vertical"
+                android:text="Distance: "
+                android:textColor="@color/white"
+                android:textSize="28dp" />
+
+            <TextView
+                android:id="@+id/distance_ran_text"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="0 km"
+                android:textColor="@color/white"
+                android:textSize="28dp" />
+
+            <!--  -->
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient_statistics"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@id/statistics_distance_layout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="?attr/dividerVertical"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/pause_stop_buttons_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/gradient_statistics"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/layoutstyle"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1" >
+
+            <Button
+                android:id="@+id/button_pause"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.495"
+                android:background="?attr/selectableItemBackground"
+                android:textColor="@color/white"
+                android:text="Pause"
+                 />
+			
+            <View
+                android:id="@+id/button_pause_stop_divider"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="?attr/dividerVertical" />
+            
+            <Button
+                android:id="@+id/button_stop"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.495"
+                android:background="?attr/selectableItemBackground"
+                android:text="Stop"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/gradient_coordinates"
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:layout_below="@id/pause_stop_buttons_layout"
+            android:background="?attr/dividerVertical"
+            android:visibility="gone" >
+        </View>
+       
+
+        <Button
+            android:id="@+id/button_map"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/gradient_coordinates"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/white"
+            android:onClick="goToMap"
+            android:text="Go to map"
+            android:visibility="gone" />
+	
+        
         <RelativeLayout
             android:id="@+id/button_profile_layout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_below="@+id/gradient0"
+            android:layout_below="@+id/button_map"
             android:visibility="gone" >
-	
+
             <View
                 android:id="@+id/button_profile_divider"
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
                 android:background="?attr/dividerVertical" />
+
             <Button
                 android:id="@+id/button_profile"
                 android:layout_width="fill_parent"
@@ -150,137 +371,34 @@
 
             <View
                 android:id="@+id/button_profile_divider"
-                android:layout_below="@+id/button_profile"
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
+                android:layout_below="@+id/button_profile"
                 android:background="?attr/dividerVertical" />
         </RelativeLayout>
-
-        <EditText
-            android:id="@+id/track_name"
-            android:layout_width="fill_parent"
-            android:layout_height="75dp"
-            android:layout_below="@+id/button_profile_layout"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:gravity="top"
-            android:hint="Enter track name..."
-            android:inputType="text"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/button_start_tracking"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/track_name"
-            android:text="Begin!"
-            android:visibility="gone" />
-
-        <!-- Colocar em layout horizontal juntamente com outra textview para os km -->
-
-        <LinearLayout
-            android:id="@+id/statistics_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/button_start_tracking"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/layoutstyle"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="1" >
-
-            <TextView
-                android:id="@+id/elapsed_time_text"
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.6"
-                android:gravity="center"
-                android:text="00:00:00"
-                android:textColor="@color/white"
-                android:textSize="28dp" />
-
-            <TextView
-                android:id="@+id/distance_ran_text"
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="0.4"
-                android:gravity="left"
-                android:text="0.0 km"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-            <!--  -->
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/gradient_statistics"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_below="@id/statistics_layout"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:background="?attr/dividerVertical"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/coordinates_text"
-            android:layout_width="fill_parent"
-            android:layout_height="70dp"
-            android:layout_below="@+id/gradient_statistics"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Getting coordinates..."
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:visibility="gone" />
-
-        <View
-            android:id="@+id/gradient_coordinates"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_below="@id/coordinates_text"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:background="?attr/dividerVertical"
-            android:visibility="gone" >
-        </View>
-
-        <Button
-            android:id="@+id/button_map"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/coordinates_text"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:onClick="goToMap"
-            android:text="Go to map"
-            android:visibility="gone" />
-
+        
+        
         <Button
             android:id="@+id/button_synchronize"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/button_map"
+            android:layout_height="70dp"
+            android:layout_below="@+id/button_profile_layout"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/white"
             android:onClick="goToMap"
             android:text="Synchronize account"
             android:visibility="gone" />
+        
+        <View
+            android:id="@+id/gradient_final"
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:layout_below="@id/button_synchronize"
+            android:background="?attr/dividerVertical"
+            android:visibility="visible" >
+        </View>
     </RelativeLayout>
 
 </ScrollView>

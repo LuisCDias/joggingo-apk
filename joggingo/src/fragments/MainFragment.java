@@ -41,9 +41,6 @@ public class MainFragment extends SherlockFragmentActivity {
 
 			View v = inflater.inflate(R.layout.activity_main_menu, container, false);
 
-			TextView coordenadas_text = (TextView) v.findViewById(R.id.coordinates_text);
-			coordenadas_text.setText(String.valueOf(latitude) + ", "+ String.valueOf(longitude));
-
 			return v;
 		}
 	}
