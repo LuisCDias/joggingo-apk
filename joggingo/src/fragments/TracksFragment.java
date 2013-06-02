@@ -209,14 +209,33 @@ public class TracksFragment extends SherlockFragmentActivity {
 			intent.putExtra("country", countries.get(position));
 			intent.putExtra("type", "synched");
 			
-			startActivity(intent);
+			startActivityForResult(intent, 0);
 
 		}
+		
+		@Override
+		public void onActivityResult(int requestCode, int resultCode, Intent data) {
+			Log.d("Vai", "entrar");
+			if(resultCode==0){
+				Log.d("Sim", "entrou");
+				getActivity().finish();
+			}
+		}
 
+		
+		
 		@Override
 		public void onStop() {
+			getActivity().setResult(0);
 			super.onStop();
 
 		}
+		@Override
+		public void onDestroy() {
+			getActivity().setResult(0);
+		    super.onDestroy();
+		}
+		
+		
 	}
 }

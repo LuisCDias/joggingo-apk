@@ -99,6 +99,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	public static RelativeLayout profile_button;
 	public static LinearLayout statistics_time_layout;
 
+	public static LinearLayout notifications_layout;
+	public static TextView notifications_text;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -177,8 +180,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final View button_begin_gradient = (View) findViewById(R.id.button_begin_gradient);
 		
 		
-		final LinearLayout notifications_layout = (LinearLayout) findViewById(R.id.notifications_layout);
-		final TextView notifications_text = (TextView) findViewById(R.id.notification_text);
+		notifications_layout = (LinearLayout) findViewById(R.id.notifications_layout);
+		notifications_text = (TextView) findViewById(R.id.notification_text);
 		
 		final LinearLayout pause_stop_buttons_layout = (LinearLayout) findViewById(R.id.pause_stop_buttons_layout);
 		final ImageView joggingo_logo = (ImageView) findViewById(R.id.joggingo_logo);

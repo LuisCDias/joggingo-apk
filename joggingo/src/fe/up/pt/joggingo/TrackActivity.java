@@ -13,6 +13,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -113,17 +115,19 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 	@Override
 	protected void onStop() {
 		setResult(0);
+		db.close();
 		super.onStop();
 	}
 	@Override
 	protected void onDestroy() {
 		setResult(0);
+		db.close();
 		super.onDestroy();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode==3){
+		if(resultCode==0){
 			finish();
 		}
 	}
@@ -165,11 +169,20 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		 * MUDAR A NOTIFICACAO
 		 * */
 		
+		List<Track> tracks = db.getAllTracks();
+		
+		if(tracks.size() == 0)
+			MainActivity.notifications_layout.setVisibility(View.GONE);
+		else
+			MainActivity.notifications_text.setText(MainActivity.notificationMessage(tracks.size()));
+		
 		Intent intent = new Intent(TrackActivity.this,TracksActivity.class);
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
 			intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
 			startActivity(intent);
 		}
+		
+		setResult(0);
 		finish();
 	
 	}

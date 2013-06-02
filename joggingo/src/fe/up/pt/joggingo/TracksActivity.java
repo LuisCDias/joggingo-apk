@@ -145,7 +145,7 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode==3){
+		if(resultCode==0){
 			finish();
 		}
 	}
