@@ -226,7 +226,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 
 		//RETIRAR QUANDO FOR A SÉRIO!
-		//db.restartDB();
+		db.restartDB();
 		//
 
 
@@ -265,7 +265,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				
 				
 				elapsed_time_text.setText("00:00:00");
-				distance_ran_text.setText("0.0 km");
+				distance_ran_text.setText("0.0 m");
 				gradient_statistics.setVisibility(View.GONE);
 
 				Calendar c = Calendar.getInstance(); 
@@ -347,6 +347,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				sync.setVisibility(View.VISIBLE);
 				main_text.setText("Well done!");
 				handler.removeCallbacks(runnable);
+				handler.removeCallbacks(time_runnable);
 			}
 		});
 
@@ -403,7 +404,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					Log.d("Track no:",track_id+"");
 				}
 
-				handler.postDelayed(runnable, 1000);
+				handler.postDelayed(runnable, 1000*10);
+				handler.postDelayed(time_runnable, 1000);
 			}
 		});
 		
@@ -501,6 +503,30 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				if(gps.canGetLocation()){
 					double latitude = gps.getLatitude(); // returns latitude
 					double longitude = gps.getLongitude(); // returns longitude
+					
+					Log.d("Adicionou", Double.toString(latitude)+" , "+Double.toString(longitude));
+					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),track_id));
+
+
+				}
+				/* and here comes the "trick" */
+				handler.postDelayed(this, 1000*10);
+			}
+		}
+	};
+	
+	
+	
+	private Runnable time_runnable = new Runnable() {
+
+		@Override
+		public void run() {
+			/* do what you need to do */
+			if(!paused){
+				gps = new GPSTracker(MainActivity.this);
+				if(gps.canGetLocation()){
+					double latitude = gps.getLatitude(); // returns latitude
+					double longitude = gps.getLongitude(); // returns longitude
 
 					TextView elapsed_time_text = (TextView) findViewById(R.id.elapsed_time_text);
 					TextView distance_ran_text = (TextView) findViewById(R.id.distance_ran_text);
@@ -512,16 +538,24 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 						Location.distanceBetween(latitude, longitude, latitude_was, longitude_was,  results);
 						Log.d("distancia entre A e B results", Arrays.toString(results));
 
-						distance_ran += Math.abs(results[0]);
-						distance_ran = (float)Math.round(distance_ran*100)/100;
+						//ignorar quando ele bate mal e adiciona pra aí 500m
+						if(Math.abs(results[0])<500){
+							Log.d("vai adicionar",Math.abs(results[0])+"");
+							distance_ran += Math.abs(results[0]);
+							distance_ran = (float)Math.round(distance_ran*100)/100;
+						}
 
 						/*TODO 
 						 * Para já está a ser guardado o valor em metros como se fossem KM
 						 * porque senão não se viam alterações
 						 * Depois mudar para distance_ran/1000
 						 * */
+						
+						
 						Log.d("distance ran em km: ", String.valueOf(distance_ran/1000));
-						distance_ran_text.setText(String.valueOf(distance_ran)+" km");
+						
+					
+						distance_ran_text.setText(String.valueOf(distance_ran)+" m");
 
 					}
 
@@ -529,8 +563,6 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					String result = String.format("%02d:%02d:%02d", elapsed_time / 3600, elapsed_time / 60 % 60, elapsed_time % 60);
 
 					elapsed_time_text.setText(result);
-
-					db.addPoint(new Point(Double.toString(latitude), Double.toString(longitude),track_id));
 
 					if(latitude_was != latitude)
 						latitude_was = latitude;

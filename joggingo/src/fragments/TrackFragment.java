@@ -55,12 +55,15 @@ public class TrackFragment extends SherlockFragmentActivity {
 			TextView name_text = (TextView) v.findViewById(R.id.track_name);
 			TextView city_text = (TextView) v.findViewById(R.id.track_city);
 			sync_one = (Button) v.findViewById(R.id.button_sync);
+			Button remove = (Button) v.findViewById(R.id.button_remove);
 			
 			name_text.setText(name);
 			city_text.setText(city);
 			
-			if(b.getString("type").equals("synched"))
+			if(b.getString("type").equals("synched")){
 				sync_one.setVisibility(View.GONE);
+				remove.setVisibility(View.GONE);
+			}
 			
 			if(b.containsKey("access_token")){
 				sync_one.setText("Synchronize this track");

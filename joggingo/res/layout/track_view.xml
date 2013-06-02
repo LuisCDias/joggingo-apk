@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/track_info_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
@@ -66,6 +66,24 @@
     <View
           android:id="@+id/gradient2"
           android:layout_below="@+id/button_sync"
+          android:layout_width="fill_parent"
+          android:layout_height="1dip"
+          android:background="?attr/dividerVertical" />
+    
+     <Button
+        android:id="@+id/button_remove"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/gradient2"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="removeTrack"
+        android:text="Remove" 
+        android:textColor="@color/white"
+        android:visibility="visible" />
+    
+    <View
+          android:id="@+id/gradient3"
+          android:layout_below="@+id/button_remove"
           android:layout_width="fill_parent"
           android:layout_height="1dip"
           android:background="?attr/dividerVertical" />

@@ -176,10 +176,10 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
     
     // Deleting single Track
-    public void deleteTrack(Track track) {
+    public void deleteTrack(int track_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TRACKS, TRACK_KEY_ID + " = ?",
-                new String[] { String.valueOf(track.getId()) });
+                new String[] { String.valueOf(track_id) });
         db.close();
     }
     

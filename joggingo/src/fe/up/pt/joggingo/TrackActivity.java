@@ -1,6 +1,8 @@
 package fe.up.pt.joggingo;
 
 
+import java.util.List;
+
 import oauth2.OAuthAccessTokenActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 	TabsAdapter mTabsAdapter;
 	Bundle extras;
 	private String access_token = null;
+	private int track_id;
 	GPSTracker gps = null;
 	private DatabaseHandler db;
 	
@@ -42,10 +46,12 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		super.onCreate(savedInstanceState);
 
 		extras = getIntent().getExtras();	
-		
+		db = new DatabaseHandler(this);
 		String tab_title = null;
-		if(extras != null)
+		if(extras != null){
 			tab_title = extras.getString("name");
+			track_id = extras.getInt("id");
+		}
 		
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
 			access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
@@ -126,7 +132,7 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
 			
-			db = new DatabaseHandler(this);
+			
 			String id = null;
 		
 			if(extras != null){			
@@ -143,6 +149,29 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
+	}
+	
+	public void removeTrack(View v){
+		
+
+		String id = null;
+	
+		if(extras != null)	
+			id = extras.getString("id");
+		
+		db.deleteTrack(Integer.parseInt(id));
+		
+		/*
+		 * MUDAR A NOTIFICACAO
+		 * */
+		
+		Intent intent = new Intent(TrackActivity.this,TracksActivity.class);
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
+			intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
+			startActivity(intent);
+		}
+		finish();
+	
 	}
 	
 

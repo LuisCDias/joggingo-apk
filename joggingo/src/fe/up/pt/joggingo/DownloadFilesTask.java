@@ -130,7 +130,7 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 				
 				if(response.getStatusLine().getStatusCode() == 200){
 					cont++;
-					db.deleteTrack(t);
+					db.deleteTrack(t.getId());
 				}
 				
 			} catch (ClientProtocolException e) {
