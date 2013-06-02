@@ -123,7 +123,10 @@ public class OAuthAccessTokenActivity extends Activity {
 				if (url.startsWith(OAuth2ClientCredentials.REDIRECT_URI)) {
 
 					if (url.indexOf("code=") != -1) {
-
+						
+						MainActivity.sync.setEnabled(false);
+						MainActivity.sync.setVisibility(View.GONE);
+						
 						String code = url.substring(OAuth2ClientCredentials.SCOPE.length() + 6, url.indexOf('&'));
 						Log.d("url", url);
 						Log.d("code", code);
@@ -131,7 +134,6 @@ public class OAuthAccessTokenActivity extends Activity {
 							// Create Post Header
 							HttpPost httppost = new HttpPost(OAuth2ClientCredentials.SCOPE+"oauth/token");
 							
-							// Add your data
 							List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 
 							nameValuePairs.add(new BasicNameValuePair("client_id", OAuth2ClientCredentials.CLIENT_ID));

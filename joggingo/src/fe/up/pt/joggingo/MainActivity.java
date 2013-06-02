@@ -32,11 +32,14 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.hardware.Camera.Size;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -184,16 +187,39 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		profile_button = (RelativeLayout) findViewById(R.id.button_profile_layout);
 		
 		
+		ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		//final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+		
+		if (!isOnline()) {
+
+			Log.d("is", "offline");
+			Editor editor = PreferenceManager.getDefaultSharedPreferences(a).edit();
+			editor.remove("access_token");
+			editor.remove("");
+			editor.commit();
+		}
+		
+		
+		
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
 			
-			sync.setText("Login to synchonize");
-			sync.setEnabled(false);
+			Log.d("has", "access_token");
+			sync.setText("Synchronize account");
+			sync.setEnabled(true);
 			
 			access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
 			getUserInfo("http://belele.herokuapp.com/profile.json?access_token="+access_token);
 			Toast.makeText(MainActivity.this, "Getting user information...",
 					Toast.LENGTH_LONG).show();
-		}		
+		}
+		else
+		{
+			sync.setText("Login to synchronize account");
+			sync.setEnabled(true);	
+			
+		}
+		
+		
 		
 		
 		db = new DatabaseHandler(this);
@@ -401,8 +427,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 					new DownloadFilesTask(a,-1, MainActivity.this, vi, user_id).execute(db);
 				}
 				else{
-					sync.setEnabled(false);
-					sync.setVisibility(View.GONE);
+					
 					
 					Intent intent = new Intent(MainActivity.this,  OAuthAccessTokenActivity.class );
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -576,7 +601,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
 		menu_login = (MenuItem) menu.findItem(R.id.menu_LogIn);
-		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
+		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null || !isOnline())
 			menu_login.setTitle(JoggingoAPI.Strings.LOGIN);
 		else
 			menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
@@ -593,14 +618,20 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		case R.id.menu_LogIn:
 
-			Intent intent = new Intent(MainActivity.this,  OAuthAccessTokenActivity.class );
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
-				intent.putExtra("logout", "true");
-			
-			
-			startActivity(intent);
-			//finish();
+			if(!isOnline()){
+				Toast.makeText(MainActivity.this, "Check connection",
+						Toast.LENGTH_SHORT).show();
+				
+			}
+			else{
+					
+				Intent intent = new Intent(MainActivity.this,  OAuthAccessTokenActivity.class );
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null && isOnline())
+					intent.putExtra("logout", "true");
+				
+				startActivity(intent);
+			}
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -625,7 +656,19 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		}
 	}
 
-
+	
+	public boolean isOnline(){
+		
+		ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		if ( conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED 
+			    ||  conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED)
+			return false;
+		else
+			return true;
+		
+		
+	}
+	
 	//--------------------------------------------------------------------------------------
 	public void getAdvancedSearch(View v){
 
