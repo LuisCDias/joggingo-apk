@@ -56,6 +56,7 @@ public class TrackFragment extends SherlockFragmentActivity {
 			TextView city_text = (TextView) v.findViewById(R.id.track_city);
 			sync_one = (Button) v.findViewById(R.id.button_sync);
 			Button remove = (Button) v.findViewById(R.id.button_remove);
+			Button goMap = (Button) v.findViewById(R.id.button_map);
 			
 			name_text.setText(name);
 			city_text.setText(city);
@@ -63,6 +64,8 @@ public class TrackFragment extends SherlockFragmentActivity {
 			if(b.getString("type").equals("synched")){
 				sync_one.setVisibility(View.GONE);
 				remove.setVisibility(View.GONE);
+				goMap.setVisibility(View.GONE);
+				
 			}
 			
 			if(b.containsKey("access_token")){
