@@ -347,19 +347,21 @@
             android:text="Go to map"
             android:visibility="gone" />
 	
+                	<View
+                android:id="@+id/button_profile_divider"
+                android:layout_width="fill_parent"
+                android:layout_below="@+id/button_map"
+                android:layout_height="1dip"
+                android:background="?attr/dividerVertical"
+                 />
+        
         
         <RelativeLayout
             android:id="@+id/button_profile_layout"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_below="@+id/button_map"
+            android:layout_below="@+id/button_profile_divider"
             android:visibility="gone" >
-
-            <View
-                android:id="@+id/button_profile_divider"
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="?attr/dividerVertical" />
 
             <Button
                 android:id="@+id/button_profile"
@@ -397,8 +399,22 @@
             android:layout_height="1dip"
             android:layout_below="@id/button_synchronize"
             android:background="?attr/dividerVertical"
-            android:visibility="visible" >
+            android:visibility="gone" >
         </View>
+        
+        <Button
+            android:id="@+id/button_restart"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_below="@+id/gradient_final"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:textColor="@color/white"
+            android:onClick="goToMap"
+            android:text="New track"
+            android:visibility="gone" />
+        
     </RelativeLayout>
 
 </ScrollView>

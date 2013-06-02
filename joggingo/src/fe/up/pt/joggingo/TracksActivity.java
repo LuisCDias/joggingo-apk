@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import oauth2.OAuthAccessTokenActivity;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -61,21 +62,36 @@ import fragments.TracksFragment;
 
 public class TracksActivity extends SherlockFragmentActivity implements TabListener {
 
+	Activity a = this;
 	ViewPager mViewPager;
 	ActionBar mActionBar;
 	TabsAdapter mTabsAdapter;
 	Bundle extras;
 	GPSTracker gps = null;
-
+	private int user_id = 0;
+	private String access_token = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 
-		Bundle b = new Bundle();
+		access_token = PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null);
+		extras = new Bundle();
+		
+		extras = getIntent().getExtras();
+		if(extras != null){
+			
+			if(extras.containsKey("user_id"))
+				user_id = extras.getInt("user_id");			
+			
+			//if(extras.containsKey("access_token"))
+				//access_token = extras.getString("access_token");
+		}
+		
+		
 
-		String tab_title = "Tracks";
-
+		
 		mViewPager = new ViewPager(this);
 		mViewPager.setId(R.id.pager);
 		mViewPager.setBackgroundColor(Color.BLACK);
@@ -88,10 +104,12 @@ public class TracksActivity extends SherlockFragmentActivity implements TabListe
 
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
 
-		mTabsAdapter.addTab(mActionBar.newTab().setText("Unsynchronized"),
-				TracksFragment.TracksFragmentAux.class, null);
-		mTabsAdapter.addTab(mActionBar.newTab().setText("Synchronized"),
-				TracksFragment.TracksFragmentSynced.class, null);
+		mTabsAdapter.addTab(mActionBar.newTab().setText("Unsynchronized"), //precisa do user_id para sincronizar
+				TracksFragment.TracksFragmentAux.class, extras);
+		if(access_token!=null){
+			mTabsAdapter.addTab(mActionBar.newTab().setText("Synchronized"), //precisa do access_token para /profile/tracks
+					TracksFragment.TracksFragmentSynced.class, extras);
+		}
 	}
 
 	@Override

@@ -161,6 +161,9 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 			if(v !=null){
 				notifications_layout.setVisibility(View.GONE);
 				MainActivity.sync.setVisibility(View.GONE);
+				MainActivity.map.setVisibility(View.GONE);
+				MainActivity.profile_button.setVisibility(View.VISIBLE);
+				MainActivity.button_restart.setVisibility(View.VISIBLE);
 			}
 		}
 		else{

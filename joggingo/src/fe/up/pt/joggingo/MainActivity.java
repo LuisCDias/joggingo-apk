@@ -73,7 +73,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	TabsAdapter mTabsAdapter;
 	private String access_token;
 	public static MenuItem menu_login;
-	public static RelativeLayout profile_button;
+
 	Bundle extras;
 	GPSTracker gps = null;
 
@@ -91,8 +91,9 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 	private double longitude_was = 0.0;
 	private View vi;
 	public static Button sync;
-
-
+	public static Button map;
+	public static Button button_restart;
+	public static RelativeLayout profile_button;
 
 
 	@Override
@@ -155,7 +156,10 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 		final Button pause = (Button) findViewById(R.id.button_pause);
 		final Button end = (Button) findViewById(R.id.button_stop);
 		final Button start_track = (Button) findViewById(R.id.button_start_tracking);
-		final Button map = (Button) findViewById(R.id.button_map);
+		button_restart = (Button) findViewById(R.id.button_restart);
+		
+		
+		map = (Button) findViewById(R.id.button_map);
 		sync = (Button) findViewById(R.id.button_synchronize);
 		
 		final LinearLayout button_start_stop_layout = (LinearLayout) findViewById(R.id.button_start_stop_layout);
@@ -222,6 +226,8 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				longitude_was = 0.0;
 
 				profile_button.setVisibility(View.GONE);
+				button_restart.setVisibility(View.GONE);
+				
 				begin.setVisibility(View.GONE);
 				button_start_stop_layout.setVisibility(View.GONE);
 				
@@ -296,12 +302,12 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 				begin.setVisibility(View.VISIBLE);
 				begin.setText("Start again");
+				
 				pause.setVisibility(View.GONE);
 				end.setVisibility(View.GONE);
 				pause_stop_buttons_layout.setVisibility(View.GONE);
 				
-				profile_button.setVisibility(View.VISIBLE);
-				profile_or_new_track_button.setText("New track"); //TODO controlar quando é para que efeito
+				//TODO visivel botao de new track
 				
 				gradient_coordinates.setVisibility(View.GONE);
 				gradient_final.setVisibility(View.GONE);
@@ -376,46 +382,13 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 			}
 		});
 		
-		profile_or_new_track_button.setOnClickListener(new View.OnClickListener() {
+		button_restart.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				
-				if(profile_or_new_track_button.getText().equals("New track")){
-					elapsed_time = 0;
-					distance_ran = 0;
-					latitude_was = 0.0;
-					longitude_was = 0.0;
-
-					profile_button.setVisibility(View.GONE);
-					begin.setVisibility(View.GONE);
-					button_start_stop_layout.setVisibility(View.GONE);
-					
-					map.setVisibility(View.GONE);
-					sync.setVisibility(View.GONE);
-					main_text.setText("Enter track name!");
-					
-					statistics_time_layout.setVisibility(View.GONE);
-					gradient_between_statistics.setVisibility(View.GONE);
-					statistics_distance_layout.setVisibility(View.GONE);
-					
-					
-					elapsed_time_text.setText("00:00:00");
-					distance_ran_text.setText("0.0 km");
-					gradient_statistics.setVisibility(View.GONE);
-
-					Calendar c = Calendar.getInstance(); 
-					Log.d("current",c.getTime()+""); 
-					SimpleDateFormat df = new SimpleDateFormat("EEE, d/MMM/yyyy HH:mm");
-					String formattedDate = df.format(c.getTime());
-
-					track_name.setHint(formattedDate);
-					track_name.setVisibility(View.VISIBLE);
-					start_track.setVisibility(View.VISIBLE);
-					button_begin_gradient.setVisibility(View.VISIBLE);
-					gradient_coordinates.setVisibility(View.VISIBLE);
-					joggingo_logo.setVisibility(View.VISIBLE);
-					start_information.setVisibility(View.VISIBLE);
-				}
-					
+				joggingo_logo.setVisibility(View.VISIBLE);
+				start_information.setVisibility(View.VISIBLE);
+				begin.requestFocus();
+				begin.performClick();
 			}
 		});
 				
@@ -424,12 +397,14 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 				
 				if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null){
 					Toast.makeText(MainActivity.this, "Synchronizing...",
-							Toast.LENGTH_LONG).show();
+							Toast.LENGTH_SHORT).show();
 					vi = MainActivity.this.findViewById(android.R.id.content).getRootView();
 					new DownloadFilesTask(-1, MainActivity.this, vi, user_id).execute(db);
 				}
 				else{
 					sync.setEnabled(false);
+					sync.setVisibility(View.GONE);
+					
 					Intent intent = new Intent(MainActivity.this,  OAuthAccessTokenActivity.class );
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
@@ -569,7 +544,7 @@ public class MainActivity extends SherlockFragmentActivity implements TabListene
 
 		Intent intent = new Intent(this, TracksActivity.class);
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token", null) != null)
-			intent.putExtra("access_token", access_token);
+			intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
 		startActivity(intent);
 	}
 

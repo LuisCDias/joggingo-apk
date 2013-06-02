@@ -19,14 +19,16 @@ public class TracksAdapter extends BaseAdapter {
     private Activity activity;
     private ArrayList<String> names;
     private ArrayList<String> cities;
+    private ArrayList<String> countries;
 
     private static LayoutInflater inflater=null;
 
     
-    public TracksAdapter(Activity a, ArrayList<String> nam, ArrayList<String> cit) {
+    public TracksAdapter(Activity a, ArrayList<String> nam, ArrayList<String> cit, ArrayList<String> count) {
         activity = a;
         names = nam;
         cities = cit;
+        countries = count;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

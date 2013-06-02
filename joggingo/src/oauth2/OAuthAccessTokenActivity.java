@@ -222,6 +222,7 @@ public class OAuthAccessTokenActivity extends Activity {
 							Toast.LENGTH_LONG).show();
 					MainActivity.menu_login.setTitle(JoggingoAPI.Strings.LOGOUT);
 					MainActivity.sync.setEnabled(true);
+					MainActivity.sync.setVisibility(View.VISIBLE);
 					MainActivity.profile_button.setVisibility(View.VISIBLE);
 					
 				} catch (JSONException e) {
