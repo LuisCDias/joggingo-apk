@@ -202,9 +202,9 @@ public class TrackActivity extends SherlockFragmentActivity implements TabListen
 		Intent intent = new Intent(TrackActivity.this,TracksActivity.class);
 		if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
 			intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
-			startActivity(intent);
+			
 		}
-		
+		startActivity(intent);
 		setResult(0);
 		finish();
 	

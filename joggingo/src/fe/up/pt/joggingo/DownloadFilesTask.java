@@ -173,11 +173,23 @@ class DownloadFilesTask extends AsyncTask<DatabaseHandler, Integer, Long> {
 			
 			}
 			if(track_id != -1){
+				
+				Log.d("só", "uma");
+				
+				List<Track> tracks = db.getAllTracks();
+				
+				if(tracks.size() == 0)
+					MainActivity.notifications_layout.setVisibility(View.GONE);
+				else
+					MainActivity.notifications_text.setText(MainActivity.notificationMessage(tracks.size()));
+				
 				Intent intent = new Intent(a.getApplicationContext(),TracksActivity.class);
 				if(PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null) != null){
 					intent.putExtra("access_token", PreferenceManager.getDefaultSharedPreferences(a).getString("access_token",null));
-					a.startActivity(intent);
+					
 				}
+				a.startActivity(intent);
+				
 				a.finish();
 				
 			}
