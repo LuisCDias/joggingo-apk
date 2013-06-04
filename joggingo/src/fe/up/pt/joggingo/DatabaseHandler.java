@@ -179,8 +179,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public void deleteTrack(int track_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TRACKS, TRACK_KEY_ID + " = ?",
-                new String[] { String.valueOf(track_id) });
+                new String[] { String.valueOf(track_id) });        
         db.close();
+        deleteAllPoints(track_id);
     }
     
     //Delete all tracks
@@ -261,6 +262,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     public void deleteAllPoints(){
     	SQLiteDatabase db = this.getWritableDatabase();
     	db.delete(TABLE_POINTS, null, null);
+    	db.close();
+    }
+    
+    public void deleteAllPoints(int track_id){
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	db.delete(TABLE_POINTS, POINT_KEY_TRACK + " = ?",
+                new String[] { String.valueOf(track_id) });
     	db.close();
     }
     
